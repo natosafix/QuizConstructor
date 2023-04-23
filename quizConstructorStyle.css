@@ -1,0 +1,19 @@
+.unit {
+    width: 50%;
+    margin: 0 auto;
+    border-radius: 10px;
+    background: aqua;
+}
+
+.unit > label {
+    margin-bottom: 2%;
+    display: block;
+}
+
+.unit {
+    margin-bottom: 0.3%;
+}
+
+.longText, .oneList, .severalList, .dropList {
+    display: none;
+}

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Конструктор опроса</title>
+    <link rel="stylesheet" href="quizConstructorStyle.css"/>
+</head>
+<body>
+
+<form class="quiz-header">
+    <fieldset class="unit">
+        <label>
+            <input type="text" name="title" placeholder="Название опроса">
+        </label>
+        <label>
+            <textarea name="description" placeholder="Описание"></textarea>
+        </label>
+    </fieldset>
+</form>
+
+<div>
+    <button type="button" id="add-unit-button" name="add-unit">Добавить вопрос</button>
+</div>
+
+<form class="quiz-question">
+    <fieldset class="unit">
+        <label>
+            <textarea name="question" placeholder="Вопрос"></textarea>
+        </label>
+        <div>
+            <button type="button" class="question-add-image">image</button>
+        </div>
+        <select class="answer-type-selector">
+            <option value="shortText">Текст(строка)</option>
+            <option value="longText">Текст(абзац)</option>
+            <option value="oneList">Один из списка</option>
+            <option value="severalList">Несколько из списка</option>
+            <option value="dropList">Раскрывающийся список</option>
+        </select>
+        <div class="answer-configuration">
+            <div class="shortText">
+                <label>
+                    <input type="text" placeholder="Короткий ответ" readonly>
+                </label>
+            </div>
+            <div class="longText">
+                <textarea placeholder="Развернутый ответ" readonly></textarea>
+            </div>
+            <div class="oneList">
+                <label class="oneList-option">
+                    <input type="radio" disabled>
+                    <input type="text" name="choice1text" placeholder="Вариант 1">
+                </label>
+            </div>
+            <div class="severalList">
+                <label class="severalList-option">
+                    <input type="checkbox" disabled>
+                    <input type="text" name="checkbox1text" placeholder="Вариант 1">
+                </label>
+            </div>
+            <div class="dropList">
+                <label class="oneList-option">
+                    1. <input type="text" name="choice1text" placeholder="Вариант 1">
+                </label>
+            </div>
+        </div>
+        <label>
+            Автопроверка
+            <input type="checkbox" name="autocheck">
+        </label>
+        <div>
+            <button type="button" class="remove-unit" onclick="removeQuestion(event)">Удалить вопрос</button>
+        </div>
+    </fieldset>
+</form>
+
+<script src="quizConstructor.js"></script>
+</body>
+</html>
