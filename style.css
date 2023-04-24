@@ -15,22 +15,6 @@ html {
     margin: 0 auto;
 }
 
-.under-blocks {
-    margin-top: 20px;
-    margin-bottom: 50px;
-}
-
-.submit-button {
-    padding: 15px 20px;
-    background-color: var(--main-color);
-    border: none;
-    border-radius: 13px;
-    cursor: pointer;
-
-    color: var(--block-bg-color);
-    font-size: 17px;
-}
-
 .block {
     background-color: var(--block-bg-color);
     border-radius: 10px;
@@ -51,10 +35,6 @@ html {
 h2 {
     font-size: 20px;
     padding-bottom: 10px;
-}
-
-.vertical {
-    display: block;
 }
 
 .element-choice {
@@ -94,6 +74,22 @@ img {
 
 .element-choice > label {
     cursor: pointer;
+}
+
+.under-blocks {
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+.submit-button {
+    padding: 15px 20px;
+    background-color: var(--main-color);
+    border: none;
+    border-radius: 13px;
+    cursor: pointer;
+
+    color: var(--block-bg-color);
+    font-size: 17px;
 }
 
 
