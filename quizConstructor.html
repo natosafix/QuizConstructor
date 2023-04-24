@@ -22,7 +22,7 @@
     <button type="button" id="add-unit-button" name="add-unit">Добавить вопрос</button>
 </div>
 
-<form class="quiz-question">
+<form class="quiz-question" name="q1">
     <fieldset class="unit">
         <label>
             <textarea name="question" placeholder="Вопрос"></textarea>
@@ -30,7 +30,7 @@
         <div>
             <button type="button" class="question-add-image">image</button>
         </div>
-        <select class="answer-type-selector">
+        <select class="answer-type-selector" onchange="changeQuestionType(event)">
             <option value="shortText">Текст(строка)</option>
             <option value="longText">Текст(абзац)</option>
             <option value="oneList">Один из списка</option>
@@ -49,19 +49,22 @@
             <div class="oneList">
                 <label class="oneList-option">
                     <input type="radio" disabled>
-                    <input type="text" name="choice1text" placeholder="Вариант 1">
+                    <input type="text" name="choice1text" placeholder="Вариант 1" class="answer">
                 </label>
             </div>
             <div class="severalList">
                 <label class="severalList-option">
                     <input type="checkbox" disabled>
-                    <input type="text" name="checkbox1text" placeholder="Вариант 1">
+                    <input type="text" name="checkbox1text" placeholder="Вариант 1" class="answer">
                 </label>
             </div>
             <div class="dropList">
-                <label class="oneList-option">
-                    1. <input type="text" name="choice1text" placeholder="Вариант 1">
+                <label class="dropList-option">
+                    1. <input type="text" name="drop1text" placeholder="Вариант 1" class="answer">
                 </label>
+            </div>
+            <div>
+                <button type="button" class="add-option" onclick="addOption(event)">Добавить вариант ответа</button>
             </div>
         </div>
         <label>
