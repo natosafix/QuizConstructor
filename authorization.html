@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="public/css/authorization.css">
+</head>
+<body>
+    <div class="login">
+        <h1>Вход</h1>
+        <form method="post" action="http://localhost:8080/api/user">
+            <label>
+                <input type="text" name="u" placeholder="Username" required />
+            </label>
+            <label>
+                <input type="password" name="p" placeholder="Password" required />
+            </label>
+            <button type="submit" class="btn btn-primary btn-block btn-large">Login</button>
+        </form>
+    </div>
+</body>
+</html>
