@@ -7,112 +7,111 @@
 </head>
 <body>
 <div class="main">
-    <div class="block">
-        <form>
-            <h2>Анкета</h2>
+    <form class="block">
+        <h2>Анкета</h2>
 
-            <div class="element one-line">
+        <div class="element one-line">
+            <label>
+                <div class="element-description">Имя</div>
+                <input class="element-input" type="text">
+            </label>
+        </div>
+
+        <div class="element multi-line">
+            <label>
+                <div class="element-description">Расскажите о себе</div>
+                <textarea class="element-input"></textarea>
+            </label>
+        </div>
+
+        <div class="element one-line">
+            <label>
+                <div class="element-description">Фамилия</div>
+                <input class="element-input" type="text">
+            </label>
+        </div>
+
+        <div class="element single-choice">
+            <div class="element-description">Пол</div>
+            <div class="element-choice">
                 <label>
-                    <div class="element-description">Имя</div>
-                    <input class="element-input" type="text">
+                    <input type="radio" name="gender" value="man">
+                    Мужчина
                 </label>
             </div>
-
-            <div class="element one-line">
+            <div class="element-choice">
                 <label>
-                    <div class="element-description">Фамилия</div>
-                    <input class="element-input" type="text">
+                    <input type="radio" name="gender" value="woman" checked>
+                    Женщина
                 </label>
             </div>
-
-            <div class="element single-choice">
-                <div class="element-description">Пол</div>
-                <div class="element-choice">
-                    <label>
-                        <input type="radio" name="gender" value="man">
-                        Мужчина
-                    </label>
-                </div>
-                <div class="element-choice">
-                    <label>
-                        <input type="radio" name="gender" value="woman" checked>
-                        Женщина
-                    </label>
-                </div>
-                <div class="element-choice">
-                    <label>
-                        <input type="radio" name="gender" value="unknown">
-                        Трансформер
-                    </label>
-                </div>
-            </div>
-
-            <div class="element multi-line">
+            <div class="element-choice">
                 <label>
-                    <div class="element-description">Расскажите о себе</div>
-                    <textarea class="element-input"></textarea>
+                    <input type="radio" name="gender" value="unknown">
+                    Трансформер
                 </label>
             </div>
+        </div>
 
-            <div class="element multi-choice">
-                <div class="element-description">Multi-option choice</div>
-                <div class="element-choice">
-                    <label>
-                        <input type="checkbox" name="gender" value="man" checked>
-                        Мужчина
-                    </label>
-                </div>
-                <div class="element-choice">
-                    <label>
-                        <input type="checkbox" name="gender" value="woman">
-                        Женщина
-                    </label>
-                </div>
-                <div class="element-choice">
-                    <label>
-                        <input type="checkbox" name="gender" value="unknown">
-                        Трансформер
-                    </label>
-                </div>
+        <div class="element multi-choice">
+            <div class="element-description">Multi-option choice</div>
+            <div class="element-choice">
+                <label>
+                    <input type="checkbox" name="gender" value="man" checked>
+                    Мужчина
+                </label>
             </div>
-
-            <div class="element image">
-                <div class="element-description">Image</div>
-                <img src="img.jpg" alt="img">
+            <div class="element-choice">
+                <label>
+                    <input type="checkbox" name="gender" value="woman">
+                    Женщина
+                </label>
             </div>
-
-            <div class="element single-choice">
-                <div class="element-description">
-                    Что выведет этот код?
-                    <div class="element-code">def foo(t):
-    print(&quot;Hello&quot; + t)</div>
-                </div>
-                <div class="element-choice">
-                    <label>
-                        <input type="radio" name="gender" value="man">
-                        Мужчина
-                    </label>
-                </div>
-                <div class="element-choice">
-                    <label>
-                        <input type="radio" name="gender" value="woman" checked>
-                        Женщина
-                    </label>
-                </div>
-                <div class="element-choice">
-                    <label>
-                        <input type="radio" name="gender" value="unknown">
-                        Хз
-                    </label>
-                </div>
+            <div class="element-choice">
+                <label>
+                    <input type="checkbox" name="gender" value="unknown">
+                    Трансформер
+                </label>
             </div>
+        </div>
 
-        </form>
-    </div>
+        <div class="element image">
+            <div class="element-description">Image</div>
+            <img src="img.jpg" alt="img">
+        </div>
+
+        <div class="element single-choice">
+            <div class="element-description">
+                Что выведет этот код?
+                <div class="element-code">def foo(t):
+print(&quot;Hello&quot; + t)</div>
+            </div>
+            <div class="element-choice">
+                <label>
+                    <input type="radio" name="gender" value="man">
+                    Мужчина
+                </label>
+            </div>
+            <div class="element-choice">
+                <label>
+                    <input type="radio" name="gender" value="woman" checked>
+                    Женщина
+                </label>
+            </div>
+            <div class="element-choice">
+                <label>
+                    <input type="radio" name="gender" value="unknown">
+                    Хз
+                </label>
+            </div>
+        </div>
+
+    </form>
 
     <div class="under-blocks">
         <button class="submit-button" onclick="alert(1)" type="submit">Отправить</button>
     </div>
 </div>
 </body>
+<script>parse()</script>
 </html>
