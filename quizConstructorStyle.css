@@ -1,19 +1,132 @@
-.unit {
-    width: 50%;
-    margin: 0 auto;
-    border-radius: 10px;
-    background: aqua;
-}
-
 .unit > label {
-    margin-bottom: 2%;
     display: block;
-}
-
-.unit {
-    margin-bottom: 0.3%;
 }
 
 .longText, .oneList, .severalList, .dropList {
     display: none;
+}
+
+:root {
+    --main-color: seagreen;
+    --block-bg-color: whitesmoke;
+    --custom-border: solid 2px var(--main-color)
+}
+
+html {
+    background-color: darkseagreen;
+    font-family: Trebuchet MS, serif;
+    font-size: 16px;
+}
+
+.main {
+    width: 35%;
+    margin: 0 auto;
+}
+
+.under-blocks {
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+.submit-button {
+    padding: 15px 20px;
+    background-color: var(--main-color);
+    border: none;
+    border-radius: 13px;
+    cursor: pointer;
+
+    color: var(--block-bg-color);
+    font-size: 17px;
+}
+
+.block {
+    background-color: var(--block-bg-color);
+    border-radius: 10px;
+    padding: 5px 20px 1px;
+    margin-bottom: 20px;
+}
+
+.element {
+    margin-bottom: 25px;
+}
+
+.element-input {
+    background-color: var(--block-bg-color);
+    font-size: 15px;
+    width: 99%;
+}
+
+h2 {
+    font-size: 20px;
+    padding-bottom: 10px;
+}
+
+.vertical {
+    display: block;
+}
+
+.element-choice {
+    padding: 2px 0;
+}
+
+input {
+    border: none;
+    border-bottom: var(--custom-border);
+}
+
+textarea {
+    resize: vertical;
+    border: var(--custom-border);
+    border-radius: 5px;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+}
+
+img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.element-description {
+    padding-bottom: 5px;
+}
+
+.element-code {
+    font-family: monospace;
+    font-size: 17px;
+    white-space: pre;
+    padding: 6px 0;
+}
+
+.element-choice > label {
+    cursor: pointer;
+}
+
+
+input[type='radio'], input[type='checkbox']  {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+
+    border: 2px solid #999;
+    transition: 0.2s all linear;
+    margin-right: 5px;
+
+    position: relative;
+    top: 4px;
+}
+
+input[type='checkbox'] {
+    border-radius: 4px;
+}
+
+input[type='radio']:checked, input[type='checkbox']:checked {
+    border: 6px solid var(--main-color);
+    outline: unset !important /* Edge (chromium) support */
 }
