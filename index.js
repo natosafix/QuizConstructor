@@ -6,7 +6,8 @@ let json = {
     "q1": {
         "type": "one-line",
         "prompt": "Имя",
-        "placeholder": "Ваше имя"
+        "placeholder": "Ваше имя",
+        "required": "true"
     },
     "q2": {
         "type": "multi-line",
@@ -21,6 +22,7 @@ let json = {
     "q4": {
         "type": "single-choice",
         "prompt": "Пол",
+        "required": "true",
         "options": {
             "o1": "Мужчина",
             "o2": "Женщина",
@@ -42,9 +44,8 @@ let json = {
 json = JSON.stringify(json);
 
 function parse() {
-    const form = document.createElement("form");
-    form.className = "block";
-    document.querySelector(".main").prepend(form);
+    const form = document.querySelector("form");
+    form.addEventListener("submit", (event) => event.preventDefault());
 
     const data = JSON.parse(json);
 
@@ -91,6 +92,12 @@ function createElementDescription(question) {
     return e;
 }
 
+function isRequired(question) {
+    if (question["required"] === undefined)
+        return false;
+    return question["required"];
+}
+
 function createLineElement(question, questionName) {
     const div = createElementMainDiv(question);
     const label = document.createElement("label");
@@ -111,6 +118,7 @@ function createLineElement(question, questionName) {
 
     inputElement.className = "element-input";
     inputElement.name = questionName;
+    inputElement.required = isRequired(question);
 
     label.append(descriptionDiv);
     label.append(inputElement);
@@ -150,6 +158,7 @@ function createOption(question, key, option, questionName) {
 
     input.name = questionName;
     input.value = key;
+    input.required = isRequired(question);
 
     label.append(input);
     label.append(option);

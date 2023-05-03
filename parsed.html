@@ -5,12 +5,16 @@
     <title>Title</title>
     <link rel="stylesheet" href="style.css">
     <script type="text/javascript" src='index.js'></script>
+    <script type="text/javascript" src='getAnswers.js'></script>
 </head>
 <body>
 <div class="main">
+    <form class="block" id="myForm">
+
+    </form>
 
     <div class="under-blocks">
-        <button class="submit-button" onclick="alert(1)" type="submit">Отправить</button>
+        <button form="myForm" class="submit-button" onclick="submitClicked()">Отправить</button>
     </div>
 </div>
 </body>
