@@ -46,7 +46,7 @@ function addOption(event) { // добавляет новые варианты о
     last.after(newOption);
 }
 
-function deleteOption(event) {
+function deleteOption(event) { // удаляет вариант ответа
     let prevType = question2PrevType[getQuestionNum(event)];
     let configuration = event.target.closest('.answer-configuration');
     let options = configuration.querySelectorAll(`.${prevType}-option`);
@@ -55,7 +55,7 @@ function deleteOption(event) {
         option.remove();
 }
 
-function changeAutocheck(event) {
+function changeAutocheck(event) { // тыкнули на автопроверку
     if (event.target.checked) {
         let prevType = question2PrevType[getQuestionNum(event)];;
         if (choiceTypes.includes(prevType))
@@ -70,7 +70,7 @@ function changeAutocheck(event) {
     }
 }
 
-function changeChoiceOptionsAutocheck(event, prevType, disable=false) {
+function changeChoiceOptionsAutocheck(event, prevType, disable=false) { // включает выключает автопроверку
     let configuration = event.target.closest('.quiz-question').querySelector('.answer-configuration');
     let options = configuration.querySelectorAll(`.${prevType}-option`);
     for (option of options) {
@@ -83,7 +83,7 @@ function changeChoiceOptionsAutocheck(event, prevType, disable=false) {
     }
 }
 
-function getQuestionNum(event) {
+function getQuestionNum(event) { // определяет номер вопроса
     return parseInt(event.target.closest('.quiz-question').name.slice(1));
 }
 
@@ -109,5 +109,52 @@ function removeQuestion(event) { // удаляет вопрос
     const currentQuestion= event.target.closest(".quiz-question");
     currentQuestion.remove();
     questionCount--;
+}
+
+
+class QuizForm {
+    title = undefined;
+    description = undefined;
+    questions = [];
+}
+
+class QuizQuestion {
+    question = undefined;
+    answerType = undefined;
+    image = undefined;
+    isAutocheckEnabled = undefined;
+    answers = [];
+}
+
+class QuizAnswer {
+    answer = undefined;
+    isCorrect = undefined;
+}
+
+function buildConstructor(event) {
+    let quizForm = new QuizForm();
+    quizForm.title = document.getElementsByName('title');
+    quizForm.description = document.getElementsByName('description');
+    let questionsHolder = event.target.parentNode;
+    let questions = questionsHolder.querySelectorAll('.quiz-question');
+    for (const question of questions) {
+        let quizQuestion = new QuizQuestion();
+        quizQuestion.question = question.querySelector('.question').value;
+        quizQuestion.answerType = question.querySelector('.answer-type-selector').value;
+        if (choiceTypes.includes(quizQuestion.answerType)) {
+            let answerHolder = question.querySelector(`.${quizQuestion.answerType}`);
+            let answers = answerHolder.querySelectorAll(`.${quizQuestion.answerType}-option`)
+            quizQuestion.isAutocheckEnabled = question.querySelector('.autocheck-button').checked;
+            for (const answer of answers) {
+                let quizAnswer = new QuizAnswer();
+                quizAnswer.answer = answer.querySelector('.answer').value;
+                if (quizQuestion.isAutocheckEnabled)
+                    quizAnswer.isCorrect = answer.querySelector('.autocheck-choice').checked;
+                quizQuestion.answers.push(quizAnswer);
+            }
+        }
+        quizForm.questions.push(quizQuestion);
+    }
+    let tmp = quizForm;
 }
 
