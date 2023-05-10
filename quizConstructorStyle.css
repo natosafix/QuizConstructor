@@ -2,7 +2,7 @@
     display: block;
 }
 
-.longText, .oneList, .severalList, .dropList {
+.longText, .oneList, .severalList, .dropList, .codeEditor {
     display: none;
 }
 
@@ -46,14 +46,89 @@ html {
     margin-bottom: 20px;
 }
 
-.element {
+.quiz-group {
     margin-bottom: 25px;
+    margin-top: 25px;
+<!-- border: solid;  DEBUG TODO DELETE -->
 }
 
-.element-input {
+.quiz-form-header {
+
+}
+
+.quiz-group-header {
+    font-size: 20px;
+}
+
+.quiz-form-header .quiz-group-header {
+
+}
+
+.quiz-element-input {
     background-color: var(--block-bg-color);
+    margin-top: 5px;
     font-size: 15px;
     width: 99%;
+}
+
+.oneList-option {
+    display: flex;
+}
+
+.severalList-option {
+    display: flex;
+}
+
+.autocheck-choice {
+    display: flex;
+    align-items: end;
+    justify-content: flex-end;
+    margin: auto;
+}
+
+.answer {
+    flex: 2;
+    margin: 10px;
+}
+
+.delete-option {
+    background-color: transparent;
+    border: none;
+    color: #333; /* цвет крестика */
+    cursor: pointer;
+    font-size: 30px;
+    outline: none;
+    display: flex;
+    align-items: end;
+    justify-content: flex-end;
+}
+
+.delete-option::after {
+    content: "×"; /* символ крестика */
+    text-align: end;
+}
+
+/* Стиль для кнопки при наведении курсора */
+.delete-option:hover {
+    color: #f00; /* цвет крестика при наведении курсора */
+}
+
+.CodeMirror pre.CodeMirror-placeholder{
+    opacity: 0.5;
+}
+
+button {
+    box-sizing: border-box;
+    padding: 10px;
+    height: 40px;
+    justify-content: center;
+    display: block;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
 }
 
 h2 {
@@ -67,6 +142,18 @@ h2 {
 
 .element-choice {
     padding: 2px 0;
+}
+
+.tmp {
+    width: 100%;
+}
+
+select {
+    padding: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 50%;
+    border-style: double;
 }
 
 input {

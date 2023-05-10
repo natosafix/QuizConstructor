@@ -1,3 +1,21 @@
+// TODO сохранить конфигурацию после обновления страницы
+
+const codeMirrorOptions = {
+    mode: 'javascript',
+    lineNumbers: true,
+    indentUnit: 4,
+    matchBrackets: true,
+    theme: 'eclipse',
+    extraKeys: { "Tab": "insertSoftTab" },
+    placeholder: 'Введите для автопроверки...'
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    let editorItem = document.getElementById('codeEditor1');
+    editorItem.CodeMirror = CodeMirror.fromTextArea(editorItem, codeMirrorOptions);
+    editorItem.CodeMirror.setSize("100%", "100%");
+});
+
 const quizQuestion = document.querySelector(".quiz-question");
 const questionType = quizQuestion.querySelector(".answer-type-selector");
 let question2PrevType = {1: 'shortText'};
@@ -6,47 +24,139 @@ const choiceTypes = ['oneList', 'severalList', 'dropList'];
 
 //questionType.addEventListener('change', changeQuestionType)
 
-function changeQuestionType(event) { // меняет тип вариантов ответа на вопрос
+// меняет тип вариантов ответа на вопрос
+function changeQuestionType(event) {
     let questionNum = getQuestionNum(event);
-    let prevType = question2PrevType[questionNum];
-    let configuration = event.target.parentNode.querySelector('.answer-configuration');
-    let type = event.target.value;
-    let oldTypeHolder = configuration.querySelector(`.${prevType}`);
-    let newTypeHolder = configuration.querySelector(`.${type}`);
-    oldTypeHolder.style.display = 'none';
-    newTypeHolder.style.display = 'block';
-    let curAddOptionButton = configuration.querySelector('.add-option');
-    if (choiceTypes.includes(type))
-        curAddOptionButton.style.display = 'block';
-    question2PrevType[questionNum] = type;
+    let configuration = event.target.parentNode.parentNode.parentNode.querySelector('.answer-configuration');
 
+    let allGroups = configuration.querySelectorAll(".quiz-group");
+    for (let group of allGroups) {
+        group.style.display = 'none';
+    }
+
+    let newType = event.target.value;
+    let newTypeHolder = configuration.querySelector(`.${newType}`);
+    newTypeHolder.style.display = 'block';
+
+    if (newType === 'codeEditor') {
+        // https://github.com/codemirror/codemirror5/issues/5985#issuecomment-525363039
+        let codeInput = configuration.querySelector(`#codeEditor${questionNum}`);
+        codeInput.CodeMirror.refresh();
+    }
+
+    let curAddOptionButton = configuration.querySelector('.add-option-btn');
+    if (choiceTypes.includes(newType))
+        curAddOptionButton.style.display = 'block';
+    else
+        curAddOptionButton.style.display = 'none';
+
+    question2PrevType[questionNum] = newType;
 }
 
 const optionsCopy = {
     oneList: quizQuestion.querySelector(".oneList-option").cloneNode(true),
     severalList: quizQuestion.querySelector(".severalList-option").cloneNode(true),
     dropList: quizQuestion.querySelector(".dropList-option").cloneNode(true)}
-const addOptionButton = quizQuestion.querySelector(".add-option");
+const addOptionButton = quizQuestion.querySelector(".add-option-btn");
 //addOptionButton.addEventListener('click', addOption);
 addOptionButton.style.display = 'none';
 
-function addOption(event) { // добавляет новые варианты ответа
+// добавляет новые варианты ответа
+function addOption(event) {
     let prevType = question2PrevType[getQuestionNum(event)];
     let configuration = event.target.closest('.answer-configuration');
     let options = configuration.querySelectorAll(`.${prevType}-option`);
     let last = options[options.length - 1];
     let newOption = optionsCopy[prevType].cloneNode(true);
+    let separatorIdx = last.id.indexOf('-');
+    newOption.id = last.id.slice(0, separatorIdx) + (+last.id.slice(separatorIdx) + 1);
+
     let inp = newOption.querySelector('.answer');
     inp.name = inp.name.slice(0, -5) + (options.length + 1).toString() + 'text';
-    inp.placeholder = inp.placeholder.slice(0, -1) + (options.length + 1).toString();
-    let a = inp.previousElementSibling;
-    inp.previousElementSibling.disabled = !(last.closest(`.${prevType}`).querySelector('.autocheck-button').checked);
+    inp.value = `Вариант ${options.length + 1}`;
+
     if (prevType === 'dropList')
         inp.previousSibling.textContent = (options.length + 1).toString() + '.';
+
     last.after(newOption);
+
+    inp.focus();
+    inp.select();
 }
 
-function deleteOption(event) { // удаляет вариант ответа
+// Если новое имя - пустое, присваивает значение по умолчанию
+function onSeveralListAnswerChange(event) {
+    // удаление пробелов
+    let str = event.target.value.replace(/\s/g, '');
+    if (str.length === 0) {
+        let count = countPreviousSiblings(event.target.parentNode);
+        event.target.value = `Вариант ${count}`;
+    }
+}
+
+function onLoadImage(event, questionNum) {
+    const preview = document.getElementById(`imagePreview${questionNum}`);
+    const deleteBtn = document.getElementById(`deleteImage${questionNum}`);
+
+    preview.src = event.target.result;
+    preview.style.display = 'block';
+    deleteBtn.style.display = 'block';
+}
+
+function onChangeImage(event) {
+    let questionNum = getQuestionNum(event);
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = (evt) => onLoadImage(evt, questionNum);
+        reader.readAsDataURL(file);
+    }
+}
+
+function onDeleteImage(event) {
+    event.preventDefault();
+    let questionNum = getQuestionNum(event);
+    const preview = document.getElementById(`imagePreview${questionNum}`);
+    const imageInput = document.getElementById(`imageInput${questionNum}`);
+    const deleteBtn = document.getElementById(`deleteImage${questionNum}`);
+
+    imageInput.value = null;
+    preview.style.display = 'none';
+    deleteBtn.style.display = 'none';
+}
+
+function onModeChange(event) {
+    const qNum = getQuestionNum(event);
+    let newMode = event.target.value;
+    let codeInput = document.querySelector(`#codeEditor${qNum}`);
+    let editor = codeInput.CodeMirror;
+    editor.setOption('mode', newMode);
+}
+
+// uncheck radio при нажатии на неё и Ctrl
+function uncheckRadioOnCtrl(event) {
+    if(event.ctrlKey || event.metaKey) {
+        event.target.checked = false;
+    }
+}
+
+// Подсчет количества предыдущих элементов внутри этого же родителя
+function countPreviousSiblings(element) {
+    let currentId = element.id;
+    let parent = element.parentNode;
+
+    let count = 0;
+    for (let child of parent.childNodes) {
+        if (child.id === currentId)
+            break;
+        count++;
+    }
+
+    return count;
+}
+
+// удаляет вариант ответа
+function deleteOption(event) {
     let prevType = question2PrevType[getQuestionNum(event)];
     let configuration = event.target.closest('.answer-configuration');
     let options = configuration.querySelectorAll(`.${prevType}-option`);
@@ -55,25 +165,27 @@ function deleteOption(event) { // удаляет вариант ответа
         option.remove();
 }
 
-function changeAutocheck(event) { // тыкнули на автопроверку
+// тыкнули на автопроверку
+function changeAutocheck(event) {
     if (event.target.checked) {
-        let prevType = question2PrevType[getQuestionNum(event)];;
+        let prevType = question2PrevType[getQuestionNum(event)];
         if (choiceTypes.includes(prevType))
             changeChoiceOptionsAutocheck(event, prevType)
         else {
 
         }
     } else {
-        let prevType = question2PrevType[getQuestionNum(event)];;
+        let prevType = question2PrevType[getQuestionNum(event)];
         if (choiceTypes.includes(prevType))
             changeChoiceOptionsAutocheck(event, prevType, true)
     }
 }
 
-function changeChoiceOptionsAutocheck(event, prevType, disable=false) { // включает выключает автопроверку
+// включает выключает автопроверку
+function changeChoiceOptionsAutocheck(event, prevType, disable=false) {
     let configuration = event.target.closest('.quiz-question').querySelector('.answer-configuration');
     let options = configuration.querySelectorAll(`.${prevType}-option`);
-    for (option of options) {
+    for (let option of options) {
         let autocheckChoice =
             option.querySelector('.autocheck-choice');
         if (disable) {
@@ -83,7 +195,8 @@ function changeChoiceOptionsAutocheck(event, prevType, disable=false) { // вк�
     }
 }
 
-function getQuestionNum(event) { // определяет номер вопроса
+// определяет номер вопроса
+function getQuestionNum(event) {
     return parseInt(event.target.closest('.quiz-question').name.slice(1));
 }
 
@@ -96,6 +209,21 @@ addButton.addEventListener('click', addQuestion)
 function addQuestion(event) { // добавляет новые вопросы
     let newQuestion = quizQuestionCopy.cloneNode(true);
     let questions = document.querySelectorAll(".quiz-question");
+
+    let imageInput = newQuestion.querySelector(`#imageInput1`);
+    imageInput.id = `imageInput${questionCount + 1}`;
+    let imagePreview = newQuestion.querySelector(`#imagePreview1`);
+    imagePreview.id = `imagePreview${questionCount + 1}`;
+    let imageDeleteBtn = newQuestion.querySelector(`#deleteImage1`);
+    imageDeleteBtn.id = `deleteImage${questionCount + 1}`;
+
+    let codeEditor = newQuestion.querySelector(`#codeEditor1`);
+    codeEditor.id = `codeEditor${questionCount + 1}`;
+    codeEditor.CodeMirror = CodeMirror.fromTextArea(codeEditor, codeMirrorOptions);
+    codeEditor.CodeMirror.setSize("100%", "100%");
+    let codeEditorLabel = newQuestion.querySelector(`#labelForCodeEditor1`);
+    codeEditorLabel.id = `codeEditorLabel${questionCount + 1}`;
+
     newQuestion.name = newQuestion.name[0] + (questions.length + 1).toString();
     question2PrevType[questions.length + 1] = 'shortText';
     let lastQuestion = questions[questions.length - 1];
@@ -144,7 +272,15 @@ function buildConstructor(event) {
         if (choiceTypes.includes(quizQuestion.answerType)) {
             let answerHolder = question.querySelector(`.${quizQuestion.answerType}`);
             let answers = answerHolder.querySelectorAll(`.${quizQuestion.answerType}-option`)
-            quizQuestion.isAutocheckEnabled = question.querySelector('.autocheck-button').checked;
+
+            // TODO исправить автопроверку для всех типов вопроса
+            // Если хотя бы один вариант отмечен - автопроверка включена
+            quizQuestion.isAutocheckEnabled = false;
+            for (const answer of answers) {
+                if (answer.querySelector('.autocheck-choice').checked)
+                    quizQuestion.isAutocheckEnabled = true;
+            }
+
             for (const answer of answers) {
                 let quizAnswer = new QuizAnswer();
                 quizAnswer.answer = answer.querySelector('.answer').value;
@@ -155,6 +291,5 @@ function buildConstructor(event) {
         }
         quizForm.questions.push(quizQuestion);
     }
-    let tmp = quizForm;
 }
 
