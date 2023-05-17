@@ -1,44 +1,42 @@
 let json = {
-    "form": {
-        "title": "Анкета",
-        "description": "Это анкета которую нужно заполнить"
-    },
-    "q1": {
-        "type": "one-line",
-        "prompt": "Имя",
-        "placeholder": "Ваше имя",
-        "required": "true"
-    },
-    "q2": {
-        "type": "multi-line",
-        "prompt": "Расскажите о себе",
-        "placeholder": ""
-    },
-    "q3": {
-        "type": "multi-line",
-        "prompt": "Расскажите о себе",
-        "placeholder": ""
-    },
-    "q4": {
-        "type": "single-choice",
-        "prompt": "Пол",
-        "required": "true",
-        "options": {
-            "o1": "Мужчина",
-            "o2": "Женщина",
-            "o3": "Трансформер"
+    "title": "Анкета",
+    "description": "Это анкета которую нужно заполнить",
+    "questions": [
+        {
+            "type": "one-line",
+            "question": "Имя",
+            "required": "true"
+        },
+        {
+            "type": "one-line",
+            "question": "Матвей леха?",
+            "required": "true"
+        },
+        {
+            "type": "multi-line",
+            "question": "Расскажите о себе",
+        },
+        {
+            "type": "single-choice",
+            "question": "Пол",
+            "required": "true",
+            "options": [
+                "Мужчина",
+                "Женщина",
+                "Трансформер"
+            ]
+        },
+        {
+            "type": "multi-choice",
+            "question": "Пол",
+            "options": [
+                "Мужчина",
+                "Женщина",
+                "Да",
+                "Нет"
+            ]
         }
-    },
-    "q5": {
-        "type": "multi-choice",
-        "prompt": "Пол",
-        "options": {
-            "o1": "Мужчина",
-            "o2": "Женщина",
-            "o3": "Да",
-            "o4": "Нет",
-        }
-    }
+    ]
 };
 
 json = JSON.stringify(json);
@@ -49,30 +47,25 @@ function parse() {
 
     const data = JSON.parse(json);
 
-    const h2 = document.createElement("h2");
-    h2.innerHTML = data.form.title;
-    form.append(h2);
+    const header = document.createElement("h2");
+    header.innerHTML = data.title;
+    form.append(header);
 
     let i = 1;
-    while (true) {
-        const key = "q" + i;
-        if (data[key] === undefined) {
-            break;
-        }
-        const question = data[key];
-
-        let e;
+    for (const question of data.questions) {
+        const name = "q" + i;
+        let element;
 
         if (["one-line", "multi-line"].includes(question.type)) {
-            e = createLineElement(question, key);
+            element = createLineElement(question, name);
         }
         else if (["single-choice", "multi-choice"].includes(question.type)) {
-            e = createChoiceElement(question, key);
+            element = createChoiceElement(question, name);
         }
         else { console.log("unknown question type: " + question.type) }
 
-        if (e !== undefined) {
-            form.append(e);
+        if (element !== undefined) {
+            form.append(element);
         }
 
         i++;
@@ -88,14 +81,13 @@ function createElementMainDiv(question) {
 function createElementDescription(question) {
     const e = document.createElement("div");
     e.className = "element-description";
-    e.innerHTML = question.prompt;
+    e.innerHTML = question.question;
     return e;
 }
 
 function isRequired(question) {
-    if (question["required"] === undefined)
-        return false;
-    return question["required"];
+    const required = question["required"];
+    return required === undefined ? false : required;
 }
 
 function createLineElement(question, questionName) {
@@ -105,13 +97,11 @@ function createLineElement(question, questionName) {
 
     let inputElement;
 
-    if (question.type === "one-line")
-    {
+    if (question.type === "one-line") {
         inputElement = document.createElement("input");
         inputElement.type = "text";
     }
-    else if (question.type === "multi-line")
-    {
+    else if (question.type === "multi-line") {
         inputElement = document.createElement("textarea");
     }
     else { console.log("unknown line type: " + question.type); }
@@ -132,16 +122,15 @@ function createChoiceElement(question, questionName) {
     const div = createElementMainDiv(question);
     div.append(createElementDescription(question));
 
-    for (const key in question.options) {
-        const option = question.options[key];
-        const choiceDiv = createOption(question, key, option, questionName);
+    for (const option of question.options) {
+        const choiceDiv = createOption(question, option, questionName);
         div.append(choiceDiv);
     }
 
     return div;
 }
 
-function createOption(question, key, option, questionName) {
+function createOption(question, option, questionName) {
     const choiceDiv = document.createElement("div");
     choiceDiv.className = "element-choice";
 
@@ -157,7 +146,7 @@ function createOption(question, key, option, questionName) {
     else { console.log("unknown question type when input.type: " + question.type); }
 
     input.name = questionName;
-    input.value = key;
+    input.value = option;
     input.required = isRequired(question);
 
     label.append(input);

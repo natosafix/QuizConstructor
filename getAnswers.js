@@ -5,26 +5,27 @@ function submitClicked() {
 }
 
 function parseAnswers() {
-    const data = {};
+    const answers = []
+    const questionCount = document.querySelectorAll(".element").length;
 
-    let i = 0;
-    for (const elem of document.querySelectorAll(".element")) {
-        i++;
-        const name = "q" + i;
-        const nodes = document.getElementsByName(name);
+    for (let i = 1; i <= questionCount; i++) {
+        const nodes = document.getElementsByName("q" + i);
 
         if (nodes.length === 1) {
-            data[name] = nodes[0].value;
+            answers.push(nodes[0].value);
             continue;
         }
 
-        data[name] = [];
+        const t = [];
 
         for (const q of nodes) {
-            if (q.checked)
-                data[name].push(q.value);
+            if (q.checked) {
+                t.push(q.value);
+            }
         }
+
+        answers.push(t);
     }
 
-    console.log(data)
+    alert(JSON.stringify(answers))
 }
