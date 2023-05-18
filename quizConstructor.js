@@ -203,6 +203,7 @@ function getQuestionNum(event) {
 const quizQuestionCopy = quizQuestion.cloneNode(true);
 const addButton = document.querySelector("#add-unit-button");
 questionCount = 1;
+questionAdded = 1;
 
 addButton.addEventListener('click', addQuestion)
 
@@ -211,24 +212,29 @@ function addQuestion(event) { // добавляет новые вопросы
     let questions = document.querySelectorAll(".quiz-question");
 
     let imageInput = newQuestion.querySelector(`#imageInput1`);
-    imageInput.id = `imageInput${questionCount + 1}`;
+    imageInput.id = `imageInput${questionAdded + 1}`;
     let imagePreview = newQuestion.querySelector(`#imagePreview1`);
-    imagePreview.id = `imagePreview${questionCount + 1}`;
+    imagePreview.id = `imagePreview${questionAdded + 1}`;
     let imageDeleteBtn = newQuestion.querySelector(`#deleteImage1`);
-    imageDeleteBtn.id = `deleteImage${questionCount + 1}`;
+    imageDeleteBtn.id = `deleteImage${questionAdded + 1}`;
 
     let codeEditor = newQuestion.querySelector(`#codeEditor1`);
-    codeEditor.id = `codeEditor${questionCount + 1}`;
+    codeEditor.id = `codeEditor${questionAdded + 1}`;
     codeEditor.CodeMirror = CodeMirror.fromTextArea(codeEditor, codeMirrorOptions);
     codeEditor.CodeMirror.setSize("100%", "100%");
     let codeEditorLabel = newQuestion.querySelector(`#labelForCodeEditor1`);
-    codeEditorLabel.id = `codeEditorLabel${questionCount + 1}`;
+    codeEditorLabel.id = `codeEditorLabel${questionAdded + 1}`;
 
-    newQuestion.name = newQuestion.name[0] + (questions.length + 1).toString();
-    question2PrevType[questions.length + 1] = 'shortText';
+    let questionNumberLabel = newQuestion.querySelector('#questionNumber1');
+    questionNumberLabel.id = `questionNumber${questionAdded + 1}`;
+    questionNumberLabel.textContent = `Вопрос №${questionCount + 1}`;
+
+    newQuestion.name = newQuestion.name[0] + (questionAdded + 1).toString();
+    question2PrevType[questionAdded + 1] = 'shortText';
     let lastQuestion = questions[questions.length - 1];
     lastQuestion.after(newQuestion);
     questionCount++;
+    questionAdded++;
 }
 
 function removeQuestion(event) { // удаляет вопрос
@@ -237,6 +243,14 @@ function removeQuestion(event) { // удаляет вопрос
     const currentQuestion= event.target.closest(".quiz-question");
     currentQuestion.remove();
     questionCount--;
+
+    let counter = 1;
+    let questions = document.querySelectorAll('.quiz-question');
+    for (let question of questions) {
+        let questionNumberLabel = question.querySelector('.quiz-question-header-label');
+        questionNumberLabel.textContent = `Вопрос №${counter}`;
+        ++counter;
+    }
 }
 
 
