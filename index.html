@@ -5,30 +5,115 @@
     <title>Quiz</title>
     <link rel="stylesheet" href="public/css/reset.css">
     <link rel="stylesheet" href="public/css/style.css">
+    <link rel="stylesheet" href="public/css/index.css">
+
 </head>
 <body>
-    <header class="header">
-        <div class="wrapper">
-            <div class="header-wrapper">
-                <div class="header-logo">
-                    <a href="/" class="header-logo-link">
-                        <img class="header-logo-img" src="public/img/svg/quiz-logo.svg">
-                    </a>
-                </div>
 
-                <nav class="header-auth">
-                    <ul class="auth-list">
-                        <li class="auth-list-item">
-                            <button type="button" class="auth-login-button">Войти</button>
-                        </li>
-                        <li class="auth-list-item">
-                            <button type="button" class="auth-signup-button">Регистрация</button>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
+<header class="header">
+    <div class="header-wrapper">
+        <div class="header-logo">
+            <a href="/" class="header-logo-link">
+                <img class="header-logo-img" src="public/img/svg/quiz-logo.svg">
+            </a>
         </div>
-    </header>
+
+        <div class="header-search">
+            <input type="search" placeholder="Поиск..." class="search-field" />
+        </div>
+
+        <div class="header-auth">
+            <ul class="auth-list">
+                <li class="auth-list-item">
+                    <button type="button" class="auth-login-button">Войти</button>
+                </li>
+                <li class="auth-list-item">
+                    <button type="button" class="auth-signup-button">Регистрация</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+
+<div class="index-nav-wrapper">
+    <button class="nav-button active" data-content="Активные">Активные</button>
+    <button class="nav-button inactive" data-content="Завершённые">Завершённые</button>
+    <button class="nav-button inactive" data-content="Группы">Группы</button>
+</div>
+
+<div class="blocks-wrapper">
+    <div class="block">
+        <div class="group-name">
+            <h2>ВЕБ ФТ-204</h2>
+            <hr>
+        </div>
+
+        <div class="group-active-quizzes">
+            <button class="active-quiz">
+                <label class="quiz-name">
+                    Опрос по асинхронному программированию
+                </label>
+                <label class="quiz-end-time">
+                    Завершится: 18.05.2023 19:00
+                </label>
+            </button>
+        </div>
+
+        <div class="group-active-quizzes">
+            <button class="active-quiz">
+                <label class="quiz-name">
+                    Опрос по всй программе курса, начиная с такой то даты, и заканчивая такой то датой
+                </label>
+                <label class="quiz-end-time">
+                    Завершится: 13.05.2023 12:22
+                </label>
+            </button>
+        </div>
+    </div>
+
+    <div class="block">
+        <div class="group-name">
+            <h2>СКБ Контур</h2>
+            <hr>
+        </div>
+
+        <div class="group-active-quizzes">
+            <button class="active-quiz">
+                <label class="quiz-name">
+                    Когда собираемся тусить
+                </label>
+                <label class="quiz-end-time">
+                    Завершится: 05.05.2023 10:00
+                </label>
+            </button>
+        </div>
+
+        <div class="group-active-quizzes">
+            <button class="active-quiz">
+                <label class="quiz-name">
+                     Идёшь на стажировку?
+                </label>
+                <label class="quiz-end-time">
+                    Завершится: 10.05.2023 12:01
+                </label>
+            </button>
+        </div>
+
+        <div class="group-active-quizzes">
+            <button class="active-quiz">
+                <label class="quiz-name">
+                    Очень важный опрос №3!!
+                </label>
+                <label class="quiz-end-time">
+                    Завершится: 09.05.2023 17:59
+                </label>
+            </button>
+        </div>
+    </div>
+</div>
+
+<script src="index.js"></script>
 
 </body>
 </html>

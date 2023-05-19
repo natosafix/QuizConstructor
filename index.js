@@ -1,12 +1,27 @@
-const express = require('express');
-const userRouter = require('./routes/user.routes');
-const app = express();
-const PORT = 8080;
-const HOST = 'localhost';
+class NavButtonsHandler {
+    constructor(buttons) {
+        this.buttons = buttons;
+        for (let button of buttons) {
+            button.addEventListener('click', (evt) => this.onButtonClick(evt), false);
+        }
+    }
 
-app.use(express.json());
-app.use('/api', userRouter);
+    onButtonClick(event) {
+        for (let button of this.buttons) {
+            this.setInactive(button);
+        }
+        this.setActive(event.target);
+    }
 
-app.listen(PORT, () => {
-    console.log(`Server started: http://${HOST}:${PORT}`);
-});
+    setInactive(button) {
+        button.classList.remove('active');
+        button.classList.add('inactive');
+    }
+
+    setActive(button) {
+        button.classList.remove('inactive');
+        button.classList.add('active');
+    }
+}
+
+const navButtonsHandler = new NavButtonsHandler(document.querySelectorAll('.nav-button'));
