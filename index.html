@@ -6,11 +6,14 @@
     <link rel="stylesheet" href="public/css/reset.css">
     <link rel="stylesheet" href="public/css/style.css">
     <link rel="stylesheet" href="public/css/index.css">
+    <link rel="stylesheet" href="public/css/modal.css">
 
 </head>
 <body>
 
 <header class="header">
+    <div class="overlay js-overlay-modal"></div>
+
     <div class="header-wrapper">
         <div class="header-logo">
             <a href="/" class="header-logo-link">
@@ -113,6 +116,29 @@
     </div>
 </div>
 
+
+<a href="#" class="js-open-modal" data-modal="1">Создать группу</a>
+
+<div class="modal" data-modal="1">
+    <div class="modal__top">
+        <svg class="modal__cross js-modal-close" viewBox="0 0 24 24">
+            <path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/>
+        </svg>
+        <p class="modal__title">Создайте новую группу</p>
+    </div>
+
+    <div>
+        <label>
+            Название
+            <input class="modal__input" type="text">
+        </label>
+
+        <button class="auth-signup-button" onclick="createGroup()" type="button">Создать</button>
+    </div>
+</div>
+
+
+<script src="modal.js"></script>
 <script src="index.js"></script>
 
 </body>
