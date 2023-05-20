@@ -1,0 +1,125 @@
+html {
+    box-sizing: border-box;
+}
+*, *::before, *::after{
+    box-sizing: border-box;
+}
+
+:root {
+    --header-color: #FFA768;
+    --accent-color: #FFA768;
+    --accent2-color: #fbf6ef;
+    --block-bg-color: #dbd7d2;
+    --page-bg-color: #fbf6ef;
+    /*--accent-color: #691344;
+    --accent2-color: #eb8fc3;
+    --page-bg-color: #F2DAEE;
+    --block-bg-color: #eeeeee;*/
+    --custom-border: solid 2px var(--accent-color);
+    --box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.75);
+    --input-font-size: 16px;
+    --font-h3-size: 18px;
+    --border-radius: 10px;
+}
+
+body {
+    margin-top: 90px; /* Отступ, равный высоте шапки */
+}
+
+html {
+    overflow-y: scroll;  /* Без этого на маленьких страницах без скролла шапка сдвигается на несколько пикселей */
+    background-color: var(--page-bg-color);
+    font-family: Trebuchet MS, serif;
+    font-size: 18px;
+}
+
+.header {
+    position: fixed;
+    width: 100%;
+    height: 85px;
+    z-index: 1000;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--header-color);
+    box-shadow: var(--box-shadow);
+}
+
+.header-wrapper {
+    min-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-logo {
+    width: 60px;
+    height: 100%;
+    margin-top: 15px;
+    margin-left: calc(10%);
+}
+
+.header-logo-img {
+    width: 100%;
+}
+
+.header-search {
+    width: 40%;
+}
+
+.search-field {
+    padding: 4px 20px;
+    width: auto;
+    height: 35px;
+    border: none;
+    border-radius: 100px;
+    outline: none;
+}
+
+.header-auth {
+    margin-right: 10%;
+}
+
+.header-auth {
+    grid-column: 3 / 4;
+    justify-self: end;
+    margin-left: 10px;
+}
+
+.auth-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+}
+
+.auth-list-item {
+}
+
+button {
+    padding: 10px 20px;
+    margin: 10px 10px;
+    justify-content: center;
+    display: block;
+    outline: none;
+    border: none;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    color:  black;
+}
+
+.auth-signup-button {
+    background-color: var(--accent-color);
+    text-decoration: none;
+    color: white;
+}
+
+h2 {
+    color: black;
+    font-size: 20px;
+}
+
+hr {
+    border: none;
+    border-top: 2px solid var(--accent-color);
+}
