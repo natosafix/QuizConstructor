@@ -1,6 +1,8 @@
 let json = {
     "title": "Анкета",
     "description": "Это анкета которую нужно заполнить",
+    "startTime": new Date("Jan 5, 2024 15:00:00"),
+    "endTime": new Date("Jan 5, 2024 15:01:10"),
     "questions": [
         {
             "type": "one-line",
@@ -41,11 +43,12 @@ let json = {
 
 json = JSON.stringify(json);
 
+const data = JSON.parse(json);
+
+
 function parse() {
     const form = document.querySelector("form");
     form.addEventListener("submit", (event) => event.preventDefault());
-
-    const data = JSON.parse(json);
 
     const header = document.createElement("h2");
     header.innerHTML = data.title;
@@ -155,4 +158,54 @@ function createOption(question, option, questionName) {
     choiceDiv.append(label);
 
     return choiceDiv;
+}
+
+class Timer {
+    constructor(durationInSeconds, display) {
+        this.seconds = durationInSeconds;
+        this.display = display;
+
+        this.redColorAt = 60;
+    }
+
+    startTimer() {
+        let minutes, seconds;
+
+        const countdown = () => {
+            minutes = parseInt(this.seconds / 60, 10);
+            seconds = parseInt(this.seconds % 60, 10);
+
+            const minutesStr = minutes < 10 ? "0" + minutes : minutes;
+            const secondsStr = seconds < 10 ? "0" + seconds : seconds;
+
+            this.display.textContent = minutesStr + ":" + secondsStr;
+
+            if (--this.seconds < 0) {
+                clearInterval(this.intervalId);
+                this.onFinish();
+            }
+
+            if (seconds <= this.redColorAt && minutes === 0) {
+                this.display.style.color = "red";
+            }
+        };
+
+        countdown();
+        this.intervalId = setInterval(countdown,1000);
+    }
+
+    onFinish() {
+
+    }
+}
+
+
+function setTimer() {
+    const startTime = new Date(data.startTime);
+    const endTime = new Date(data.endTime);
+
+    const seconds = (endTime - startTime) / 1000;
+
+    const timer = new Timer(seconds, document.querySelector("#time"));
+    timer.startTimer();
 }
