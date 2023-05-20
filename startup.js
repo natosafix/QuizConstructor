@@ -22,7 +22,7 @@ app.use(authRouter)
 app.use(authMiddleware);
 
 app.get('/', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'static', 'startPage.html'));
+    res.sendFile(path.resolve(__dirname, 'static', 'main.html'));
 });
 /*app.get('/reg', (req, res) => {
     res.cookie('auth', 'some_token', { maxAge: 60000, httpOnly: true, secure: true });

@@ -1,5 +1,3 @@
-
-
 class ApiController {
     users = {};
     async getUser(username) {
