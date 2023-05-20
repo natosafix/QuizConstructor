@@ -29,6 +29,10 @@ app.get('/', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'static', 'login.html'));
 });*/
 
+app.get('/form', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'static', 'quizConstructor.html'));
+})
+
 app.listen(PORT, () => {
     console.log(`Server started: http://${HOST}:${PORT}`);
 });
