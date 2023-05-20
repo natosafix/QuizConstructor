@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/authorization.css">
+    <link rel="stylesheet" href="css/login.css">
+    <script src="scripts/login.js"></script>
+</head>
+<body>
+    <div class="login">
+        <h1>Вход</h1>
+        <section class="login-and-registration-form">
+            <form method="post" action="http://localhost:8080/login/check">
+                <div class="form-group">
+                    <label>
+                        <input id="username" name="username" placeholder="Имя пользователя" type="text" required/>
+                    </label>
+                    <span id="username-error" style="color: red">Несуществующее имя пользователя</span>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <input id="password" name="password" placeholder="Пароль" type="password" required/>
+                    </label>
+                    <span id="password-error" style="color: red">Неверный пароль</span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Войти" class="button">
+                </div>
+            </form>
+        </section>
+        <a href="http://localhost:8080/registration">Регистрация</a>
+    </div>
+</body>
+</html>
+
