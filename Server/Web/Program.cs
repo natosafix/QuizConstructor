@@ -1,32 +1,34 @@
-using Application.Users.Commands.CreateUser;
-using Domain;
-using Microsoft.EntityFrameworkCore;
 using Persistence;
 
-class Program
+namespace Web;
+
+public class Program
 {
-    public static async Task Main()
+    public static void Main(string[] args)
     {
-        var optionsBuilder = new DbContextOptionsBuilder<QuizDbContext>();
-        var options = optionsBuilder
-            .UseNpgsql("User ID=postgres;Password=mypassword;Host=localhost;Database=quiz")
-            .Options;
+        var host = CreateHostBuilder(args).Build();
 
-
-        await using (var db = new QuizDbContext(options))
+        using (var scope = host.Services.CreateScope())
         {
-            var commandHandler = new CreateUserCommandHandler(db);
-            await commandHandler.Handle(new CreateUserCommand
+            var serviceProvider = scope.ServiceProvider;
+            try
             {
-                FirstName = "Artem",
-                LastName = "Burdin",
-                Login = "Artemable",
-                Password = "HASHING PASSWORD 2.0"
-            }, new CancellationToken());
-            var users = db.Users.ToList();
-            foreach (var u in users)
-                Console.WriteLine($"{u.Id}.{u.FirstName} - {u.Login}");
+                var context = serviceProvider.GetRequiredService<QuizDbContext>();
+                DbInitializer.Initialize(context);
+            }
+            catch (Exception exception)
+            {
+                
+            }
         }
-        Console.Read();
+        
+        host.Run();
     }
+
+    public static IHostBuilder CreateHostBuilder(string[] args) =>
+        Host.CreateDefaultBuilder(args)
+            .ConfigureWebHostDefaults(webBuilder =>
+            {
+                webBuilder.UseStartup<Startup>();
+            });
 }
