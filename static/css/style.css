@@ -6,9 +6,10 @@ html {
 }
 
 :root {
-    --accent-color: #8d99ae;
+    --header-color: #FFA768;
+    --accent-color: #FFA768;
     --accent2-color: #fbf6ef;
-    --block-bg-color: #dce0d9;
+    --block-bg-color: #dbd7d2;
     --page-bg-color: #fbf6ef;
     /*--accent-color: #691344;
     --accent2-color: #eb8fc3;
@@ -40,9 +41,8 @@ html {
     top: 0;
     display: flex;
     justify-content: space-between;
-    background-color: var(--block-bg-color);
+    background-color: var(--header-color);
     box-shadow: var(--box-shadow);
-    border-bottom: 3px solid var(--accent-color);
 }
 
 .header-wrapper {
@@ -53,8 +53,9 @@ html {
 }
 
 .header-logo {
-    width: 100px;
-    height: 50px;
+    width: 60px;
+    height: 100%;
+    margin-top: 15px;
     margin-left: calc(10%);
 }
 
@@ -68,7 +69,7 @@ html {
 
 .search-field {
     padding: 4px 20px;
-    width: 100%;
+    width: auto;
     height: 35px;
     border: none;
     border-radius: 100px;
@@ -104,18 +105,17 @@ button {
     border: none;
     border-radius: var(--border-radius);
     text-decoration: none;
-    color:  var(--accent-color);
+    color:  black;
 }
 
 .auth-signup-button {
     background-color: var(--accent-color);
     text-decoration: none;
     color: white;
-    box-shadow: var(--box-shadow);
 }
 
 h2 {
-    color: var(--accent-color);
+    color: black;
     font-size: 20px;
 }
 
