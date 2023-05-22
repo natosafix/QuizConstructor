@@ -3,6 +3,7 @@ using Application.Common.Exceptions;
 using Application.Interfaces;
 using Application.Quizzes.Queries.GetQuiz;
 using Application.Users.Queries.GetUserByPassword;
+using Application.Vms;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Domain;

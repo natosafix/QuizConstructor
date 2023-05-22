@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Application.Vms;
+using MediatR;
 
 namespace Application.Quizzes.Queries.GetQuiz;
 

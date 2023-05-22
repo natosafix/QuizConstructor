@@ -2,7 +2,7 @@
 using AutoMapper;
 using Domain;
 
-namespace Application.Quizzes.Queries.GetQuiz;
+namespace Application.Vms;
 
 public class QuizVm : IMapWith<Quiz>
 {

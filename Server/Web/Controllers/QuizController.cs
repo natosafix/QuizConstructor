@@ -1,10 +1,6 @@
 ﻿using Application.Quizzes.Commands.CreateQuiz;
 using Application.Quizzes.Queries.GetQuiz;
 using Application.Quizzes.Queries.GetQuizzesByUserLogin;
-using Application.Users.Commands.ChangeUserPassword;
-using Application.Users.Commands.CreateUser;
-using Application.Users.Queries.GetUserByLogin;
-using Application.Users.Queries.GetUserByPassword;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 namespace Web.Controllers;

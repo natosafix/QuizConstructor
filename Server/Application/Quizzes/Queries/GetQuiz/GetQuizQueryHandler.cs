@@ -1,6 +1,7 @@
 ﻿using Application.Common.Abstracts;
 using Application.Common.Exceptions;
 using Application.Interfaces;
+using Application.Vms;
 using AutoMapper;
 using Domain;
 using MediatR;

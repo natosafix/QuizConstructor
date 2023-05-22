@@ -1,9 +1,10 @@
 ﻿using Application.Users.Queries.GetUserByPassword;
+using Application.Vms;
 using MediatR;
 
 namespace Application.Users.Queries.GetUserByLogin;
 
-public class GetUserByLogin : IRequest<UserVm>
+public class GetUserByLoginQuery : IRequest<UserVm>
 {
     public string Login { get; set; }
 }

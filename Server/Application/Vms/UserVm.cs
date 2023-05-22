@@ -1,10 +1,9 @@
 ﻿using Application.Common.Mappings;
-using Application.Quizzes.Commands.CreateQuiz;
 using Application.Quizzes.Queries.GetQuiz;
 using AutoMapper;
 using Domain;
 
-namespace Application.Users.Queries.GetUserByPassword;
+namespace Application.Vms;
 
 public class UserVm : IMapWith<User>
 {

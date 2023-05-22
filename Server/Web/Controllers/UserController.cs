@@ -2,6 +2,7 @@
 using Application.Users.Commands.CreateUser;
 using Application.Users.Queries.GetUserByLogin;
 using Application.Users.Queries.GetUserByPassword;
+using Application.Vms;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,7 +23,7 @@ public class UserController : BaseController
     }
     
     [HttpGet("getUser")]
-    public async Task<ActionResult<UserVm>> GetUserByLogin([FromBody] GetUserByLogin query)
+    public async Task<ActionResult<UserVm>> GetUserByLogin([FromBody] GetUserByLoginQuery query)
     {
         var userVm = await Mediator.Send(query);
         return Ok(userVm);
