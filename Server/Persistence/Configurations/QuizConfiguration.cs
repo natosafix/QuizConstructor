@@ -22,5 +22,10 @@ public class QuizConfiguration : IEntityTypeConfiguration<Quiz>
             .HasMaxLength(1024);
         builder.Property(quiz => quiz.Score)
             .IsRequired();
+        
+        builder.HasOne(quiz => quiz.Creator)
+            .WithMany(user => user.Quizzes)
+            .HasForeignKey(userQuiz => userQuiz.CreatorId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

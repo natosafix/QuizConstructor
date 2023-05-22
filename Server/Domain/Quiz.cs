@@ -6,6 +6,9 @@ public class Quiz
     public string Name { get; set; }
     public string Description { get; set; }
 
+    public User Creator { get; set; }
+    public int CreatorId { get; set; }
+
     public List<UserQuiz> UserQuizzes { get; set; } = new();
     public List<Question> Questions { get; set; } = new();
     public List<QuizGroup> QuizGroups { get; set; } = new();

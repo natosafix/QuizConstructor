@@ -12,4 +12,5 @@ public class User
     public List<Group> AdminGroups { get; set; } = new();
 
     public List<UserQuiz> UserQuizzes { get; set; } = new();
+    public List<Quiz> Quizzes { get; set; } = new();
 }

@@ -16,10 +16,7 @@ public class QuizDbContext : DbContext, IDbContext
     public DbSet<UserQuiz> UserQuizzes { get; set; }
     public DbSet<Quiz> Quizzes { get; set; }
 
-    public QuizDbContext(DbContextOptions<QuizDbContext> options) : base(options)
-    {
-        Database.EnsureCreated();
-    }
+    public QuizDbContext(DbContextOptions<QuizDbContext> options) : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
