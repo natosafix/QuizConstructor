@@ -9,7 +9,7 @@ html {
     --header-color: #FFA768;
     --accent-color: #FFA768;
     --accent2-color: #fbf6ef;
-    --block-bg-color: #dbd7d2;
+    --block-bg-color: #FFECDD;
     --page-bg-color: #fbf6ef;
     /*--accent-color: #691344;
     --accent2-color: #eb8fc3;
@@ -122,4 +122,29 @@ h2 {
 hr {
     border: none;
     border-top: 2px solid var(--accent-color);
+}
+
+
+/* Крестик для закрытия/удаления */
+
+.delete-option {
+    background-color: transparent;
+    border: none;
+    color: var(--accent-color); /* цвет крестика */
+    cursor: pointer;
+    font-size: 30px;
+    outline: none;
+    box-shadow: none;
+    margin: 0;
+    padding: 0;
+}
+
+.delete-option::after {
+    content: "×"; /* символ крестика */
+}
+
+/* Стиль для кнопки при наведении курсора */
+.delete-option:hover {
+    color: #f00; /* цвет крестика при наведении курсора */
+    background-color: unset;
 }

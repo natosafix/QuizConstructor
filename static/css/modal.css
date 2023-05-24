@@ -47,7 +47,10 @@
 }
 
 .modal__top {
-    padding-bottom: 35px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
 .modal__title {
