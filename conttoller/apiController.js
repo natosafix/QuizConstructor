@@ -1,4 +1,5 @@
 class ApiController {
+    //TODO
     users = {};
     async getUser(username) {
         //TODO
@@ -12,6 +13,10 @@ class ApiController {
         this.users[userData.username] = userData.password;
         console.log(this.users);
         return userData;
+    }
+
+    async getForm(formId) {
+        return undefined;
     }
 }
 

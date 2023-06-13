@@ -1,5 +1,6 @@
 const express = require('express');
 const authRouter = require('./routes/authRouter');
+const formRouter = require('./routes/formRouter');
 const path = require('path');
 const authMiddleware = require('./middleware/authMiddleware');
 const cookieParser = require('cookie-parser');
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
+app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')))
 app.use(express.static(path.resolve(__dirname, 'static')))
 
 app.use(authRouter)
@@ -29,9 +31,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'static', 'login.html'));
 });*/
 
-app.get('/form', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'static', 'quizConstructor.html'));
-})
+app.use('/form', formRouter);
 
 app.listen(PORT, () => {
     console.log(`Server started: http://${HOST}:${PORT}`);
