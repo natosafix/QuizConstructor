@@ -1,4 +1,4 @@
-let json = {
+let formJson = {
     "title": "Анкета",
     "description": "Это анкета которую нужно заполнить",
     "startTime": new Date("Jan 5, 2024 15:00:00"),
@@ -41,21 +41,25 @@ let json = {
     ]
 };
 
-json = JSON.stringify(json);
+formJson = JSON.stringify(formJson);
 
-const data = JSON.parse(json);
+const formData = JSON.parse(formJson);
 
 
 function parse() {
-    const form = document.querySelector("form");
+    const form = document.createElement("form");
+    form.className = "block";
+    form.id = "myForm";
     form.addEventListener("submit", (event) => event.preventDefault());
 
+    document.querySelector(".main").prepend(form);
+
     const header = document.createElement("h2");
-    header.innerHTML = data.title;
+    header.innerHTML = formData.title;
     form.append(header);
 
     let i = 1;
-    for (const question of data.questions) {
+    for (const question of formData.questions) {
         const name = "q" + i;
         let element;
 
@@ -109,7 +113,7 @@ function createLineElement(question, questionName) {
     }
     else { console.log("unknown line type: " + question.type); }
 
-    inputElement.className = "element-input";
+    inputElement.classList.add("element-input", "any-element")
     inputElement.name = questionName;
     inputElement.required = isRequired(question);
 
@@ -148,6 +152,7 @@ function createOption(question, option, questionName) {
     }
     else { console.log("unknown question type when input.type: " + question.type); }
 
+    input.className = "any-element"
     input.name = questionName;
     input.value = option;
     input.required = isRequired(question);
@@ -191,7 +196,7 @@ class Timer {
         };
 
         countdown();
-        this.intervalId = setInterval(countdown,1000);
+        this.intervalId = setInterval(countdown, 1000);
     }
 
     onFinish() {
@@ -201,8 +206,8 @@ class Timer {
 
 
 function setTimer() {
-    const startTime = new Date(data.startTime);
-    const endTime = new Date(data.endTime);
+    const startTime = new Date(formData.startTime);
+    const endTime = new Date(formData.endTime);
 
     const seconds = (endTime - startTime) / 1000;
 
