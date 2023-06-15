@@ -1,11 +1,13 @@
+@import 'constants.css';
+
 :root {
-    --main-color: seagreen;
-    --block-bg-color: whitesmoke;
+    --main-color: var(--accent-color);
+    --white-color: whitesmoke;
     --custom-border: solid 2px var(--main-color)
 }
 
 html {
-    background-color: darkseagreen;
+    background-color: var(--block-bg-color);
     font-family: Trebuchet MS, serif;
     font-size: 16px;
 }
@@ -16,7 +18,7 @@ html {
 }
 
 .block {
-    background-color: var(--block-bg-color);
+    background-color: var(--white-color);
     border-radius: 10px;
     padding: 5px 20px 1px;
     margin-bottom: 20px;
@@ -27,7 +29,7 @@ html {
 }
 
 .element-input {
-    background-color: var(--block-bg-color);
+    background-color: var(--white-color);
     font-size: 15px;
     width: 99%;
 }
@@ -88,7 +90,7 @@ img {
     border-radius: 13px;
     cursor: pointer;
 
-    color: var(--block-bg-color);
+    color: var(--white-color);
     font-size: 17px;
 }
 
@@ -127,5 +129,5 @@ input[type='radio']:checked, input[type='checkbox']:checked {
     padding: 15px;
     margin: 15px;
     border-radius: 20px;
-    background-color: var(--block-bg-color);
+    background-color: var(--white-color);
 }
