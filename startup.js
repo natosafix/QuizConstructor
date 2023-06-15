@@ -6,6 +6,7 @@ const authMiddleware = require('./middleware/authMiddleware');
 const cookieParser = require('cookie-parser');
 const multer = require('multer');
 const upload = multer();
+const htmlChanger = require('./htmlChanger');
 
 const app = express();
 const PORT = 8080;
@@ -24,7 +25,9 @@ app.use(authRouter)
 app.use(authMiddleware);
 
 app.get('/', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'static', 'main.html'));
+    let user = req.user.userId;
+    let htmlPath = path.resolve(__dirname, 'static', 'main.html');
+    htmlChanger.changeKeys(htmlPath, {'userId': user}, (changedHtml) => res.send(changedHtml));
 });
 /*app.get('/reg', (req, res) => {
     res.cookie('auth', 'some_token', { maxAge: 60000, httpOnly: true, secure: true });

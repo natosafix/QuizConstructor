@@ -28,3 +28,8 @@ div .form-group input{
     height: 30px;
 }
 
+#username-error, #password-error {
+    display: none;
+    color: red;
+}
+

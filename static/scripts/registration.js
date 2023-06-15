@@ -1,8 +1,13 @@
 let form = document.querySelector('form');
+let usernameError = document.getElementById('username-error');
+let passwordError = document.getElementById('password-error');
+
 form.addEventListener('submit', async function (event) {
     event.preventDefault();
 
-    var formData = new FormData(form);
+    let formData = new FormData(form);
+    usernameError.style.display = "none";
+    passwordError.style.display = "none";
 
     try {
         // Использовать fetch для отправки данных формы
@@ -17,9 +22,17 @@ form.addEventListener('submit', async function (event) {
             return;
         }
         const data = await response.json();
+        if (data.type === "username") {
+            usernameError.innerText = data.message;
+            usernameError.style.display = "block";
+        }
+        if (data.type === "password") {
+            passwordError.innerText = data.message;
+            passwordError.style.display = "block";
+        }
         console.log(data);
         console.log(data.message);
     } catch (error) {
-        console.error(error); // вывод ошибок в консоль
+        console.error(error);
     }
 });

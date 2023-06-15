@@ -148,3 +148,7 @@ hr {
     color: #f00; /* цвет крестика при наведении курсора */
     background-color: unset;
 }
+
+.backend-data {
+    /*display: none;*/
+}

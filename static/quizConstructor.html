@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Конструктор опроса</title>
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/quizConstructorStyle.css"/>
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/quizConstructorStyle.css"/>
 
     <script src="/node_modules/codemirror/lib/codemirror.js"></script>
     <link href="/node_modules/codemirror/lib/codemirror.css" rel="stylesheet"/>
@@ -19,11 +19,12 @@
 </head>
 <body>
 
+
 <header class="header">
     <div class="header-wrapper">
         <div class="header-logo">
             <a href="/static" class="header-logo-link">
-                <img class="header-logo-img" src="img/svg/quiz-logo.svg">
+                <img class="header-logo-img" src="/img/svg/quiz-logo.svg">
             </a>
         </div>
 
@@ -39,6 +40,9 @@
         </div>
     </div>
 </header>
+
+<span class="backend-data" id="quiz-id">{ quizId }</span>
+<span class="backend-data" id="user-id">{ userId }</span>
 
 <div>
     <button type="button" style="position: fixed" id="add-unit-button" name="add-unit">Добавить вопрос</button>
@@ -179,7 +183,7 @@
     <button type="button" class="build-button" onclick="buildConstructor(event)">Отправить форму</button>
 </div>
 
-<script src="scripts/quizConstructor.js"></script>
+<script src="/scripts/quizConstructor.js"></script>
 
 </body>
 </html>
