@@ -1,9 +1,8 @@
 .is-correct-container {
-    float: right;
-}
-
-.element {
-    padding-bottom: 20px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 8px;
 }
 
 .under-blocks {

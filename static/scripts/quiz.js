@@ -1,6 +1,6 @@
 let formJson = {
     "title": "Анкета",
-    "description": "Это анкета которую нужно заполнить",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in ",
     "startTime": new Date("Jan 5, 2024 15:00:00"),
     "endTime": new Date("Jan 5, 2024 15:01:10"),
     "questions": [
@@ -48,15 +48,12 @@ const formData = JSON.parse(formJson);
 
 function parse() {
     const form = document.createElement("form");
-    form.className = "block";
     form.id = "myForm";
     form.addEventListener("submit", (event) => event.preventDefault());
 
     document.querySelector(".main").prepend(form);
 
-    const header = document.createElement("h2");
-    header.innerHTML = formData.title;
-    form.append(header);
+    form.append(createHeader());
 
     let i = 1;
     for (const question of formData.questions) {
@@ -71,17 +68,40 @@ function parse() {
         }
         else { console.log("unknown question type: " + question.type) }
 
-        if (element !== undefined) {
-            form.append(element);
-        }
+        element.prepend(createQuestionNumber(i));
+
+        form.append(element);
 
         i++;
     }
 }
 
+function createQuestionNumber(i) {
+    const div = document.createElement("div");
+    div.className = "question-number";
+    div.innerHTML = "Вопрос №" + i;
+    return div;
+}
+
+function createHeader() {
+    const div = document.createElement("div");
+    div.className = "block";
+
+    const h2 = document.createElement("h2");
+    h2.innerHTML = formData.title;
+
+    const description = document.createElement("span");
+    description.innerHTML = formData.description;
+
+    div.append(h2);
+    div.append(description);
+
+    return div;
+}
+
 function createElementMainDiv(question) {
     const div = document.createElement("div");
-    div.classList.add("element", question.type);
+    div.classList.add("element", "block", question.type);
     return div;
 }
 

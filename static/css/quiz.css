@@ -20,12 +20,8 @@ html {
 .block {
     background-color: var(--white-color);
     border-radius: 10px;
-    padding: 5px 20px 1px;
-    margin-bottom: 20px;
-}
-
-.element {
     margin-bottom: 25px;
+    padding: 15px;
 }
 
 .element-input {
@@ -36,7 +32,6 @@ html {
 
 h2 {
     font-size: 20px;
-    padding-bottom: 10px;
 }
 
 .element-choice {
@@ -92,6 +87,11 @@ img {
 
     color: var(--white-color);
     font-size: 17px;
+}
+
+.question-number {
+    color: darkgrey;
+    margin-bottom: 10px;
 }
 
 
