@@ -76,7 +76,7 @@ class AuthController {
                 return res.json({message: `Введен неверный пароль`, type: "password"});
             }
             const token = generateAccessToken(user.username);
-            res.cookie('auth', `${token}`, { maxAge: 2592000000, httpOnly: true, secure: true });
+            res.cookie('auth', `${token}`, { maxAge: 2592000000/*, httpOnly: true*/, secure: true });
             return res.redirect('/');
         } catch (e) {
             console.error(e);
