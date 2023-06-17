@@ -214,9 +214,9 @@
                             Опрос по асинхронному программированию
                         </label>
 
-                        <label class="quiz-mark">
+                        <button class="quiz-mark js-open-modal" data-modal="2">
                             Запланировать
-                        </label>
+                        </button>
 
                         <a>
                             <img src="img/svg/edit.svg" class="quiz-edit-btn"
@@ -282,8 +282,40 @@
             <input class="modal__input" type="text">
         </label>
 
-        <button class="auth-signup-button" onclick="createGroup()" type="button">Создать</button>
+        <button class="auth-signup-button modal_btn" onclick="createGroup()" type="button">Создать</button>
     </div>
+</div>
+
+<div class="modal" data-modal="2">
+    <div class="modal__top">
+        <p class="modal__title">Запланируйте опрос</p>
+        <button type="button" class="delete-option js-modal-close"></button>
+    </div>
+
+    <div>
+        <h2>Группа</h2>
+        <div class="select elem">
+            <select id="standard-select">
+                <option value="Option 1">Option 1</option>
+                <option value="Option 2">Option 2</option>
+                <option value="Option 3">Option 3</option>
+                <option value="Option 4">Option 4</option>
+                <option value="Option 5">Option 5</option>
+                <option value="Option length">Option that has too long of a value to fit</option>
+            </select>
+            <span class="focus"></span>
+        </div>
+    </div>
+
+    <div>
+        <h2>Время</h2>
+        <div class="elem">
+            <input class="datepicker" type="datetime-local">
+        </div>
+    </div>
+
+<!--        TODO: change button, add action-->
+    <button class="auth-signup-button modal_btn" onclick="createGroup()" type="button">Создать</button>
 </div>
 
 
