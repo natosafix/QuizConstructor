@@ -1,6 +1,7 @@
 let form = document.querySelector('form');
 let usernameError = document.getElementById('username-error');
 let passwordError = document.getElementById('password-error');
+let repeatPasswordError = document.getElementById('repeat-password-error');
 
 form.addEventListener('submit', async function (event) {
     event.preventDefault();
@@ -8,6 +9,14 @@ form.addEventListener('submit', async function (event) {
     let formData = new FormData(form);
     usernameError.style.display = "none";
     passwordError.style.display = "none";
+    repeatPasswordError.style.display = "none";
+
+    // жоска навалил
+    if (document.querySelector("#password").value !== document.querySelector("#confirm-password").value) {
+        repeatPasswordError.innerText = "Пароли не совпадают";
+        repeatPasswordError.style.display = "block";
+        return;
+    }
 
     try {
         // Использовать fetch для отправки данных формы

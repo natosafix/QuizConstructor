@@ -1,35 +1,54 @@
+@import "constants.css";
+
 html {
     box-sizing: border-box;
-    background: #014E3D;
+    background: var(--block-bg-color);
 }
 *, *::before, *::after{
     box-sizing: border-box;
 }
 
-div{
-    display: flex;
-}
-
-.login{
-    flex-direction: column;
-    width: 15em;
+.login {
+    width: 25%;
     margin-left: auto;
     margin-right: auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
 }
 
-div .form-group{
-    flex-direction: column;
-    margin-top: 0.5em;
+input {
+    border: none;
+    border-bottom: var(--custom-border);
+    width: 100%;
 }
 
-div .form-group input{
-    border: 2px solid purple;
-    border-radius: 5px;
-    height: 30px;
+.form-group {
+    margin-bottom: 25px;
 }
 
-#username-error, #password-error {
+h1 {
+    font-size: 1.2em;
+    padding-bottom: 30px;
+}
+
+.auth-signup-button {
+    margin: 0;
+}
+
+.myButton {
+    display: inline;
+}
+
+.buttons {
+    margin-bottom: 0;
+}
+
+a {
+    text-decoration: none;
+}
+#username-error, #password-error, #repeat-password-error {
+    padding-top: 10px;
     display: none;
     color: red;
 }
-
