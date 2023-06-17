@@ -1,3 +1,20 @@
+
+document.addEventListener('DOMContentLoaded', async function(event) {
+    try {
+
+        const response = await fetch('http://localhost:8080/form/mainPage', {
+            method: 'POST'
+        });
+
+        console.log("Finished");
+        console.log(await response.json());
+        console.log("Finished");
+
+    } catch (e) {
+        console.log(e);
+    }
+});
+
 class ButtonsGroupHandler {
     constructor(buttonsHandlers) {
         this.buttonsHandlers = buttonsHandlers;
@@ -7,6 +24,7 @@ class ButtonsGroupHandler {
     }
 
     onClick(buttonHandler) {
+        console.log(1);
         for (let buttonHandler of this.buttonsHandlers) {
             buttonHandler.setInactive();
         }

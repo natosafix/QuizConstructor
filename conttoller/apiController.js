@@ -15,6 +15,35 @@ class ApiController {
         return userData;
     }
 
+    async getQuizzes(userData) {
+        const data = {
+            "groupVm1": {
+                "id": '1',
+                "name": "Контора",
+                "isAdmin": "1",
+                "quizVms": [
+                    {
+                        "id": "1",
+                        "name": "Пятиминутка №15",
+                        "description": "Пятиминутка о вёрстке и стилях",
+                        "score": 0,
+                        "start-time" : "2019-07-26T12:43:23",
+                        "end-time" : "2022-07-26T12:43:23",
+                    },
+                    {
+                        "id": "2",
+                        "name": "Пятиминутка №228",
+                        "description": "Пятиминутка о вёрстке и стилях",
+                        "score": 0,
+                        "start-time" : "2019-07-26T12:43:23",
+                        "end-time" : "2022-07-26T12:43:23",
+                    }
+                ]
+            }
+        }
+        return data;
+    }
+
     async getForm(formId) {
         return undefined;
     }
