@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
     try {
 
         let response = await fetch('http://localhost:8080/form/mainPage', {
-            method: 'POST'
+            method: 'GET'
         });
 
         data = await response.json();

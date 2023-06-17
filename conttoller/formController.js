@@ -1,4 +1,4 @@
-const apiController = require('./apiController');
+const apiController = require('./DBController');
 const path = require('path');
 const htmlChanger = require('../htmlChanger')
 

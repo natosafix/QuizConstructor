@@ -1,4 +1,4 @@
-class ApiController {
+class DBController {
     //TODO
     users = {};
     async getUser(username) {
@@ -101,4 +101,4 @@ class ApiController {
     }
 }
 
-module.exports = new ApiController();
+module.exports = new DBController();
