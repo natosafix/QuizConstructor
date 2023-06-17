@@ -1,6 +1,7 @@
 const express = require('express');
 const authRouter = require('./routes/authRouter');
-const formRouter = require('./routes/formRouter');
+const formRouter = require('./routes/formRouter')
+const baseRouter = require('./routes/baseRouter');
 const path = require('path');
 const authMiddleware = require('./middleware/authMiddleware');
 const cookieParser = require('cookie-parser');
@@ -24,16 +25,7 @@ app.use(authRouter)
 
 app.use(authMiddleware);
 
-app.get('/', (req, res) => {
-    let user = req.user.userId;
-    let htmlPath = path.resolve(__dirname, 'static', 'main.html');
-    htmlChanger.changeKeys(htmlPath, {'userId': user}, (changedHtml) => res.send(changedHtml));
-});
-/*app.get('/reg', (req, res) => {
-    res.cookie('auth', 'some_token', { maxAge: 60000, httpOnly: true, secure: true });
-    res.sendFile(path.resolve(__dirname, 'static', 'login.html'));
-});*/
-
+app.use(baseRouter)
 app.use('/form', formRouter);
 
 app.listen(PORT, () => {

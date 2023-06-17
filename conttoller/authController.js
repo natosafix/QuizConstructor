@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator')
 const {secret} = require("../config")
-const apiController = require('./apiController');
+const apiController = require('./DBController');
 const path = require('path');
 
 const generateAccessToken = (username) => {
