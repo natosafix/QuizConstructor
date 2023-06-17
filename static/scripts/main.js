@@ -15,7 +15,7 @@ let data;
 document.addEventListener('DOMContentLoaded', async function(event) {
     try {
 
-        let response = await fetch('http://localhost:8080/form/mainPage', {
+        let response = await fetch('http://localhost:8080/mainPage', {
             method: 'GET'
         });
 
@@ -48,7 +48,8 @@ function buildPage() {
             if (startTime > Date.now() || endTime < Date.now())
                 continue;
 
-            group.addActiveQuiz(activeQuiz.name, endTime.toLocaleString('ru-RU', dateTimeOptions));
+            group.addActiveQuiz(activeQuiz.name, endTime.toLocaleString('ru-RU', dateTimeOptions),
+                currentGroup.id, activeQuiz.id);
         }
         if (group.activeCount > 0) {
             activePaste.appendChild(group.element);
@@ -106,6 +107,10 @@ class CustomDOMElement {
             this.element.removeChild(child);
         }
     }
+
+    addEvent(type, handler) {
+        this.element.addEventListener(type, handler);
+    }
 }
 
 class ActiveGroupBlockDiv extends CustomDOMElement {
@@ -115,8 +120,8 @@ class ActiveGroupBlockDiv extends CustomDOMElement {
         this.activeCount = 0;
     }
 
-    addActiveQuiz(header, endTime) {
-        this.appendChild(new ActiveQuizBtn(header, endTime));
+    addActiveQuiz(header, endTime, groupId, quizId) {
+        this.appendChild(new ActiveQuizBtn(header, endTime, groupId, quizId));
         this.activeCount++;
     }
 
@@ -133,12 +138,13 @@ class GroupHeaderDiv extends CustomDOMElement {
 }
 
 class ActiveQuizBtn extends CustomDOMElement {
-    constructor(header, endTime) {
+    constructor(header, endTime, groupId, quizId) {
         super('button').withClass('quiz-info').withClass('active-quiz');
         let name = new CustomDOMElement('label').withClass('quiz-name').withContent(header);
         let end = new CustomDOMElement('label')
             .withClass('quiz-end-time')
             .withContent(`Завершится: ${endTime}`);
+        this.addEvent('click', () => window.location.href = `http://localhost:8080/quiz/solve/${groupId}_${quizId}`);
         this.appendChild(name);
         this.appendChild(end);
     }
@@ -204,8 +210,6 @@ document.querySelector('.auth-login-button').addEventListener('click', logOut);
 
 function logOut() {
     CookieChanger.deleteCookie('auth');
-    let a = CookieChanger.get_cookie('authorization');
-    var p = document.cookie.split(';');
     window.location.href = "http://localhost:8080/login";
 }
 
@@ -238,11 +242,5 @@ class CookieChanger {
         CookieChanger.setCookie(name, "", {
             'max-age': -1
         })
-    }
-
-    static get_cookie(name){
-        return document.cookie.split(';').some(c => {
-            return c.trim().startsWith(name + '=');
-        });
     }
 }

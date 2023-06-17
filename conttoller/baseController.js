@@ -1,4 +1,4 @@
-const apiController = require('./DBController');
+const DBController = require('./DBController');
 const path = require('path');
 const htmlChanger = require('../htmlChanger')
 
@@ -11,7 +11,7 @@ class BaseController {
 
     async getMainQuizzes(req, res) {
         try {
-            const data = await apiController.getQuizzes(req.user.userId);
+            const data = await DBController.getQuizzes(req.user.userId);
             console.log(data);
             res.json(data);
         } catch (e) {
