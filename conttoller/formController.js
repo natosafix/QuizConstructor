@@ -1,4 +1,4 @@
-const apiController = require('./apiController');
+const apiController = require('./DBController');
 const path = require('path');
 const htmlChanger = require('../htmlChanger')
 
@@ -17,6 +17,17 @@ class FormController {
         let htmlPath = path.resolve(__dirname, '../static', 'quizConstructor.html');
         htmlChanger.changeKeys(htmlPath, {'quizId': quizId, 'userId': user},
             (changedHtml) => res.send(changedHtml));
+    }
+
+    async getMainQuizzes(req, res) {
+        try {
+            const data = await apiController.getQuizzes(req.user.userId);
+            console.log(data);
+            res.json(data);
+        } catch (e) {
+            console.log(e);
+            res.status(500).json({ error: 'Internal Server Error' });
+        }
     }
 }
 

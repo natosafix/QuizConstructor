@@ -8,7 +8,7 @@ class HtmlChanger {
                 throw error;
             }
             for (let key in keys2Values) {
-                html = html.replace(`{ ${key} }`, keys2Values[key]);
+                html = html.replaceAll(`{ ${key} }`, keys2Values[key]);
             }
             changedHtml = html;
             handleChangedHtml(changedHtml);
