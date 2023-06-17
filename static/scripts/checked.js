@@ -29,25 +29,43 @@ function addIsCorrectSwitch(answers) {
                 input.value = answers[i];
         }
 
-        element.append(createIsCorrectSwitch());
+        element.append(createCounter());
 
         i++;
     }
 }
 
-function createIsCorrectSwitch() {
+function createCounter() {
     const div = document.createElement("div");
-    div.classList.add("is-correct-container", "element-choice");
+    div.classList.add("score-container");
 
-    const label = document.createElement("label");
+    const display = document.createElement("div");
+    display.classList.add("quantity");
+    display.innerHTML = "0";
 
-    const input = document.createElement("input");
-    input.type = "checkbox";
+    const buttonUp = document.createElement("button");
+    buttonUp.classList.add("counter");
+    buttonUp.type = "button";
 
-    label.append(input);
-    label.append("Засчитать");
+    const buttonDown = buttonUp.cloneNode()
 
-    div.append(label);
+    buttonUp.classList.add("bt_plus");
+    buttonUp.innerHTML = "<svg viewBox=\"0 0 24 24\"><line x1=\"12\" y1=\"5\" x2=\"12\" y2=\"19\"></line><line x1=\"5\" y1=\"12\" x2=\"19\" y2=\"12\"></line></svg>";
+
+    buttonDown.classList.add("bt_minus");
+    buttonDown.innerHTML = "<svg viewBox=\"0 0 24 24\"><line x1=\"5\" y1=\"12\" x2=\"19\" y2=\"12\"></line></svg>";
+
+    buttonUp.addEventListener("click", () => {
+        const d = div.querySelector(".quantity");
+        d.innerHTML = (+d.innerHTML + 1).toString();
+    });
+
+    buttonDown.addEventListener("click", () => {
+        const d = div.querySelector(".quantity");
+        d.innerHTML = (+d.innerHTML - 1).toString();
+    });
+
+    div.append(buttonDown, display, buttonUp);
 
     return div;
 }
@@ -69,5 +87,9 @@ function nextPressed() {
 }
 
 function getScore() {
-    return document.querySelectorAll(".is-correct-container input:checked").length;
+    let score = [];
+    for (const elem of document.querySelectorAll(".quantity")) {
+        score.push(+elem.innerHTML);
+    }
+    return score;
 }
