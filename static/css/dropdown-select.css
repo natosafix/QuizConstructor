@@ -62,3 +62,12 @@
 .select + label {
     margin-top: 2rem;
 }
+
+select[multiple] {
+    padding-right: 0;
+    height: 6rem;
+}
+select[multiple] option {
+    white-space: normal;
+    outline-color: var(--select-focus);
+}

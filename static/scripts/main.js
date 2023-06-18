@@ -490,3 +490,8 @@ class CookieChanger {
         })
     }
 }
+
+function planQuizPressed() {
+    const values =  Array.from(document.querySelectorAll("#chosenGroups option:checked")).map(e => e.value);
+    console.log(values);
+}
