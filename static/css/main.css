@@ -67,6 +67,9 @@
 .active-quiz {
 }
 
+.scheduled-quiz {
+}
+
 .active-quiz .quiz-name {
     color: black;
     pointer-events: none;
