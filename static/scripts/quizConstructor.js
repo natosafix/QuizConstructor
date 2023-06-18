@@ -26,8 +26,9 @@ const choiceTypes = ['oneList', 'severalList', 'dropList'];
 
 // меняет тип вариантов ответа на вопрос
 function changeQuestionType(event) {
+    console.log(event)
     let questionNum = getQuestionNum(event);
-    let configuration = event.target.parentNode.parentNode.parentNode.querySelector('.answer-configuration');
+    let configuration = event.target.parentNode.parentNode.parentNode.parentNode.querySelector('.answer-configuration');
 
     let allGroups = configuration.querySelectorAll(".quiz-group");
     for (let group of allGroups) {

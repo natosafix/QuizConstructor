@@ -7,7 +7,7 @@
 }
 
 .main {
-    width: 50%;
+    width: 35%;
     margin: 0 auto;
 }
 
@@ -29,14 +29,16 @@
 .block {
     background-color: var(--block-bg-color);
     border-radius: 10px;
-    padding: 5px 20px 1px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+    padding: 15px;
 }
 
 .quiz-group {
-    box-sizing: border-box;
-    margin-bottom: 25px;
-    margin-top: 25px;
+    margin-bottom: 20px;
+}
+
+.quiz-group:nth-last-child(1) {
+    margin-bottom: 5px;
 }
 
 .quiz-element-input {
@@ -105,6 +107,8 @@ select {
 input {
     border: none;
     border-bottom: var(--custom-border);
+    padding: 10px;
+    border-radius: 5px 5px 0 0;
 }
 
 textarea {
@@ -159,4 +163,21 @@ input[type='checkbox'] {
 input[type='radio']:checked, input[type='checkbox']:checked {
     border: 6px solid var(--accent-color);
     outline: unset !important /* Edge (chromium) support */
+}
+
+input, textarea {
+    background-color: var(--page-bg-color) !important;
+}
+
+.select {
+    width: 99%;
+    margin-top: 5px;
+}
+
+.myButton {
+    background-color: var(--accent-color);
+}
+
+.remove-unit {
+    margin: 0;
 }

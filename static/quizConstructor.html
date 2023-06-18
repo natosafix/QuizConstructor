@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/css/reset.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/quizConstructorStyle.css"/>
+    <link rel="stylesheet" href="/css/dropdown-select.css"/>
 
     <script src="/node_modules/codemirror/lib/codemirror.js"></script>
     <link href="/node_modules/codemirror/lib/codemirror.css" rel="stylesheet"/>
@@ -45,7 +46,7 @@
 <span class="backend-data" id="user-id">{ userId }</span>
 
 <div>
-    <button type="button" style="position: fixed" id="add-unit-button" name="add-unit">Добавить вопрос</button>
+    <button class="myButton" type="button" style="position: fixed" id="add-unit-button" name="add-unit">Добавить вопрос</button>
 </div>
 
 <div class="main">
@@ -87,14 +88,17 @@
         <div class="quiz-group">
             <label class="vertical quiz-group-header">
                 Тип ответа
-                <select class="answer-type-selector vertical quiz-element-input" onchange="changeQuestionType(event)">
-                    <option value="shortText">Текст(строка)</option>
-                    <option value="longText">Текст(абзац)</option>
-                    <option value="codeEditor">Код</option>
-                    <option value="oneList">Один из списка</option>
-                    <option value="severalList">Несколько из списка</option>
-                    <!--<option value="dropList">Раскрывающийся список</option>-->
-                </select>
+                <div class="select">
+                    <select class="standard-select answer-type-selector vertical quiz-element-input" onchange="changeQuestionType(event)">
+                        <option value="shortText">Текст(строка)</option>
+                        <option value="longText">Текст(абзац)</option>
+                        <option value="codeEditor">Код</option>
+                        <option value="oneList">Один из списка</option>
+                        <option value="severalList">Несколько из списка</option>
+                        <!--<option value="dropList">Раскрывающийся список</option>-->
+                    </select>
+                    <span class="focus"></span>
+                </div>
             </label>
         </div>
 
@@ -118,13 +122,16 @@
 
                 <label class="quiz-group-header vertical" for="codeEditor1" id="labelForCodeEditor1">Код</label>
 
-                <select id="language-selector1" class="quiz-element-input" onchange="onModeChange(event)">
-                    <option value="javascript">JavaScript</option>
-                    <option value="xml">HTML/XML</option>
-                    <option value="css">CSS</option>
-                </select>
+                <div class="select">
+                    <select class="quiz-element-input standard-select" onchange="onModeChange(event)">
+                        <option value="javascript">JavaScript</option>
+                        <option value="xml">HTML/XML</option>
+                        <option value="css">CSS</option>
+                    </select>
+                    <span class="focus"></span>
+                </div>
 
-                <textarea placeholder="Введите для автопроверки..." class="quiz-element-input tmp"
+                <textarea placeholder="Введите для автопроверки..." class="quiz-element-input"
                           id="codeEditor1"></textarea>
 
             </div>
@@ -143,7 +150,7 @@
                 </label>
 
                 <div>
-                    <button type="button" class="add-option-btn" onclick="addOption(event)">Добавить вариант ответа</button>
+                    <button type="button" class="add-option-btn myButton" onclick="addOption(event)">Добавить вариант ответа</button>
                 </div>
 
             </div>
@@ -161,7 +168,7 @@
                 </label>
 
                 <div>
-                    <button type="button" class="add-option-btn" onclick="addOption(event)">Добавить вариант ответа</button>
+                    <button type="button" class="add-option-btn myButton" onclick="addOption(event)">Добавить вариант ответа</button>
                 </div>
 
             </div>
@@ -176,11 +183,11 @@
         </div>
 
         <div>
-            <button type="button" class="remove-unit" onclick="removeQuestion(event)">Удалить вопрос</button>
+            <button type="button" class="remove-unit myButton" onclick="removeQuestion(event)">Удалить вопрос</button>
         </div>
 
     </form>
-    <button type="button" class="build-button" onclick="buildConstructor(event)">Отправить форму</button>
+    <button type="button" class="build-button myButton" onclick="buildConstructor(event)">Отправить форму</button>
 </div>
 
 <script src="/scripts/quizConstructor.js"></script>
