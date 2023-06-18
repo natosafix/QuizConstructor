@@ -25,7 +25,7 @@ class DBController {
                 "quizVms": [
                     {
                         "id": 1,
-                        "finished": false,
+                        "finished": null,
                         "name": "Пятиминутка №15",
                         "description": "Пятиминутка о вёрстке и стилях",
                         "score": 0,
@@ -34,7 +34,7 @@ class DBController {
                     },
                     {
                         "id": 2,
-                        "finished": false,
+                        "finished": null,
                         "name": "Пятиминутка №228",
                         "description": "Пятиминутка о вёрстке и стилях",
                         "score": 0,
@@ -50,7 +50,7 @@ class DBController {
                 "quizVms": [
                     {
                         "id": 1,
-                        "finished": false,
+                        "finished": null,
                         "name": "Пятиминутка №15",
                         "description": "Пятиминутка о вёрстке и стилях",
                         "score": 0,
@@ -66,10 +66,10 @@ class DBController {
                 "quizVms": [
                     {
                         "id": 1,
-                        "finished": true,
+                        "finished": "2021-07-26T12:43:23+05:00",
                         "name": "Пятиминутка №15",
                         "description": "Пятиминутка о вёрстке и стилях",
-                        "score": 0,
+                        "score": 2,
                         "startTime" : "2019-07-26T12:43:23+05:00",
                         "endTime" : "2025-07-26T12:43:23+05:00",
                     },
@@ -82,7 +82,7 @@ class DBController {
                 "quizVms": [
                     {
                         "id": 1,
-                        "finished": false,
+                        "finished": null,
                         "name": "Моя первая пятиминутка",
                         "description": "Пятиминутка ни о чём",
                         "score": 0,
