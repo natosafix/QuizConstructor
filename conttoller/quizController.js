@@ -16,7 +16,7 @@ class QuizController {
         let groupId = parseInt(spl[0]);
         let quizId = parseInt(spl[1]);
         let user = req.user.userId;
-        let htmlPath = path.resolve(__dirname, '../static', 'checked.html');
+        let htmlPath = path.resolve(__dirname, '../static', 'quiz.html');
         htmlChanger.changeKeys(htmlPath, {'groupId': groupId, 'quizId': quizId, 'userId': user},
             (changedHtml) => res.send(changedHtml));
     }

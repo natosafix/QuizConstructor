@@ -2,6 +2,7 @@ const express = require('express');
 const authRouter = require('./routes/authRouter');
 const quizRouter = require('./routes/quizRouter')
 const baseRouter = require('./routes/baseRouter');
+const databaseRouter = require('./routes/databaseRouter');
 const path = require('path');
 const authMiddleware = require('./middleware/authMiddleware');
 const cookieParser = require('cookie-parser');
@@ -27,6 +28,7 @@ app.use(authMiddleware);
 
 app.use(baseRouter)
 app.use('/quiz', quizRouter);
+app.use('/db', databaseRouter);
 
 app.listen(PORT, () => {
     console.log(`Server started: http://${HOST}:${PORT}`);
