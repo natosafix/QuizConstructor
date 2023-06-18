@@ -131,3 +131,7 @@ input[type='radio']:checked, input[type='checkbox']:checked {
     border-radius: 20px;
     background-color: var(--white-color);
 }
+
+.thanks {
+    display: none;
+}

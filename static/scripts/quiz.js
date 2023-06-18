@@ -1,7 +1,7 @@
 let formJson = {
     "title": "Анкета",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in ",
-    "startTime": new Date("Jan 5, 2024 15:00:00"),
+    "startTime": new Date("Jan 5, 2024 15:00:40"),
     "endTime": new Date("Jan 5, 2024 15:01:10"),
     "questions": [
         {
@@ -186,9 +186,10 @@ function createOption(question, option, questionName) {
 }
 
 class Timer {
-    constructor(durationInSeconds, display) {
+    constructor(durationInSeconds, display, onFinish) {
         this.seconds = durationInSeconds;
         this.display = display;
+        this.onFinishAction = onFinish;
 
         this.redColorAt = 60;
     }
@@ -206,7 +207,7 @@ class Timer {
             this.display.textContent = minutesStr + ":" + secondsStr;
 
             if (--this.seconds < 0) {
-                clearInterval(this.intervalId);
+                this.stopTimer();
                 this.onFinish();
             }
 
@@ -220,10 +221,13 @@ class Timer {
     }
 
     onFinish() {
+        this.onFinishAction();
+    }
 
+    stopTimer() {
+        clearInterval(this.intervalId);
     }
 }
-
 
 function setTimer() {
     const startTime = new Date(formData.startTime);
@@ -231,6 +235,49 @@ function setTimer() {
 
     const seconds = (endTime - startTime) / 1000;
 
-    const timer = new Timer(seconds, document.querySelector("#time"));
+    timer = new Timer(seconds, document.querySelector("#time"), showThanksPage);
     timer.startTimer();
+}
+
+let timer;
+
+function showThanksPage() {
+    timer.stopTimer();
+    document.querySelectorAll(".thanks").forEach(x => x.style.display = "block");
+    document.querySelector("form").style.display = "none";
+    document.querySelector(".under-blocks button[form='myForm']").style.display = "none";
+}
+
+function submitClicked() {
+    if (document.querySelector("form").checkValidity()) {
+        document.querySelector("#time").style.display = "none";
+        showThanksPage();
+        parseAnswers();
+    }
+}
+
+function parseAnswers() {
+    const answers = []
+    const questionCount = document.querySelectorAll(".element").length;
+
+    for (let i = 1; i <= questionCount; i++) {
+        const nodes = document.getElementsByName("q" + i);
+
+        if (nodes.length === 1) {
+            answers.push(nodes[0].value);
+            continue;
+        }
+
+        const t = [];
+
+        for (const q of nodes) {
+            if (q.checked) {
+                t.push(q.value);
+            }
+        }
+
+        answers.push(t);
+    }
+
+    alert(JSON.stringify(answers))
 }
