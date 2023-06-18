@@ -106,6 +106,12 @@ document.addEventListener('DOMContentLoaded', async function(event) {
 });
 
 function buildPage() {
+    fillActiveQuizzes();
+    fillEndedQuizzes();
+    fillGroupsPage();
+}
+
+function fillActiveQuizzes() {
     let activePaste = document.querySelector('#active-paste-place');
 
     for (let groupKey in data) {
@@ -116,7 +122,7 @@ function buildPage() {
         group.hide();
         for (let quizKey in currentGroup.quizVms) {
             let activeQuiz = currentGroup.quizVms[quizKey];
-            if (activeQuiz.finished)
+            if (activeQuiz.finished !== null)
                 continue;
             let startTime = new Date(activeQuiz.startTime);
             let endTime = new Date(activeQuiz.endTime);
@@ -124,8 +130,9 @@ function buildPage() {
             if (startTime > Date.now() || endTime < Date.now())
                 continue;
 
-            group.addActiveQuiz(activeQuiz.name, endTime.toLocaleString('ru-RU', dateTimeOptions),
-                currentGroup.id, activeQuiz.id);
+            group.addActiveQuiz(activeQuiz.name,
+                endTime,
+                activeQuiz.id);
         }
         if (group.activeCount > 0) {
             activePaste.appendChild(group.element);
@@ -136,7 +143,83 @@ function buildPage() {
     }
 }
 
+function fillEndedQuizzes() {
+    let endedPaste = document.querySelector('#ended-paste-place');
+    let quizzes = [];
 
+    for (let groupKey in data) {
+        let currentGroup = data[groupKey];
+        if (currentGroup['isAdmin'])
+            continue;
+
+        for (let quizKey in currentGroup.quizVms) {
+            let finished = currentGroup.quizVms[quizKey];
+            if (finished.finished === null)
+                continue;
+
+            let finishedTime = new Date(finished.finished);
+            let finishedDiv = new FinishedQuizDiv(finished.name,
+                finished.score, finishedTime, currentGroup.name);
+            finishedDiv.hide();
+            quizzes.push(finishedDiv);
+        }
+    }
+
+    quizzes.sort((a, b) => {
+        if (a.finishTime < b.finishTime) {
+            return -1;
+        }
+        if (a.finishTime > b.finishTime) {
+            return 1;
+        }
+        return 0;
+    });
+
+    for (let i of quizzes) {
+        endedPaste.appendChild(i.element);
+        i.show();
+    }
+}
+
+
+function fillGroupsPage() {
+    let pastePlace = document.querySelector('#groups-paste-place');
+
+    for (let groupKey in data) {
+        let currentGroup = data[groupKey];
+        if (currentGroup['isAdmin']) {
+
+        } else {
+            let group = new GroupBlockDiv(currentGroup.name);
+            for (let quizKey in currentGroup.quizVms) {
+                let currentQuiz = currentGroup.quizVms[quizKey];
+                let finishedTime = new Date(currentQuiz.finished);
+                if (currentQuiz.finished !== null) {
+                    group.addFinishedQuiz(currentQuiz.name, currentQuiz.score, finishedTime);
+                    continue;
+                }
+                let startTime = new Date(currentQuiz.startTime);
+                if (startTime > Date.now()) {
+                    group.addScheduledQuiz(currentQuiz.name, startTime);
+                    continue;
+                }
+                let endTime = new Date(currentQuiz.endTime);
+                if (endTime < Date.now()) {
+                    group.addEndedQuiz(currentQuiz.name, endTime);
+                    continue;
+                }
+                group.addActiveQuiz(currentQuiz.name, endTime, currentQuiz.id);
+            }
+
+            pastePlace.appendChild(group.element);
+        }
+    }
+}
+
+
+function formatedDate(date) {
+    return date.toLocaleString('ru-RU', dateTimeOptions);
+}
 
 class CustomDOMElement {
     constructor(tag) {
@@ -189,18 +272,37 @@ class CustomDOMElement {
     }
 }
 
+
 class ActiveGroupBlockDiv extends CustomDOMElement {
-    constructor(headerText) {
+    constructor(groupName) {
         super('div').withClass('block');
-        this.appendChild(new GroupHeaderDiv(headerText));
+        this.appendChild(new GroupHeaderDiv(groupName));
         this.activeCount = 0;
     }
 
-    addActiveQuiz(header, endTime, groupId, quizId) {
-        this.appendChild(new ActiveQuizBtn(header, endTime, groupId, quizId));
+    addActiveQuiz(header, endTime, quizId) {
+        this.appendChild(new ActiveQuizBtn(header, endTime, quizId));
         this.activeCount++;
     }
+}
 
+
+class GroupBlockDiv extends ActiveGroupBlockDiv {
+    constructor(groupName) {
+        super(groupName);
+    }
+
+    addScheduledQuiz(header, startTime) {
+        this.appendChild(new ScheduledQuizDiv(header, startTime));
+    }
+
+    addEndedQuiz(header, endTime) {
+        this.appendChild(new EndedQuizDiv(header, endTime));
+    }
+
+    addFinishedQuiz(header, score, finishTime) {
+        this.appendChild(new FinishedQuizDiv(header, score, finishTime));
+    }
 }
 
 class GroupHeaderDiv extends CustomDOMElement {
@@ -213,18 +315,86 @@ class GroupHeaderDiv extends CustomDOMElement {
     }
 }
 
+
+class FinishedQuizDiv extends CustomDOMElement {
+    constructor(header, score, finishTime, groupName=null) {
+        super().withClass('quiz-info').withClass('ended-quiz');
+        this.finishTime = finishTime;
+        this.score = score;
+        let name = new CustomDOMElement('label')
+            .withClass('quiz-name');
+        if (groupName !== null) {
+            name.withContent(`${groupName}: ${header}`);
+        } else {
+            name.withContent(`${header}`);
+        }
+
+        let mark = new CustomDOMElement('label')
+            .withClass('quiz-mark')
+            .withContent((score === null) ? 'Нет оценки' : `Балл: ${score}`);
+
+        let finish = new CustomDOMElement('label')
+            .withClass('quiz-end-time')
+            .withContent(`Выполнен: ${formatedDate(finishTime)}`);
+
+
+        this.appendChild(name);
+        this.appendChild(mark);
+        this.appendChild(finish);
+    }
+}
+
+
 class ActiveQuizBtn extends CustomDOMElement {
-    constructor(header, endTime, groupId, quizId) {
+    constructor(header, endTime, quizId) {
         super('button').withClass('quiz-info').withClass('active-quiz');
-        let name = new CustomDOMElement('label').withClass('quiz-name').withContent(header);
+        let name = new CustomDOMElement('label')
+            .withClass('quiz-name')
+            .withContent(header);
         let end = new CustomDOMElement('label')
             .withClass('quiz-end-time')
-            .withContent(`Завершится: ${endTime}`);
-        this.addEvent('click', () => window.location.href = `http://localhost:8080/quiz/solve/${groupId}_${quizId}`);
+            .withContent(`Завершится: ${formatedDate(endTime)}`);
+        this.addEvent('click',
+            () => window.location.href = `http://localhost:8080/quiz/solve/${quizId}`);
         this.appendChild(name);
         this.appendChild(end);
     }
 }
+
+
+class ScheduledQuizDiv extends CustomDOMElement {
+    constructor(header, startTime) {
+        super('div').withClass('quiz-info').withClass('scheduled-quiz');
+        this.startTime = startTime;
+        let name = new CustomDOMElement('label')
+            .withClass('quiz-name')
+            .withContent(header);
+        let scheduled = new CustomDOMElement('label')
+            .withClass('quiz-end-time')
+            .withContent(`Запланирован: ${formatedDate(startTime)}`);
+
+        this.appendChild(name);
+        this.appendChild(scheduled);
+    }
+
+}
+
+
+class EndedQuizDiv extends CustomDOMElement {
+    constructor(header, endTime) {
+        super('div').withClass('quiz-info');
+        let name = new CustomDOMElement('label')
+            .withClass('quiz-name')
+            .withContent(header);
+        let end = new CustomDOMElement('label')
+            .withClass('quiz-end-time')
+            .withContent(`Завершён: ${formatedDate(endTime)}`);
+
+        this.appendChild(name);
+        this.appendChild(end);
+    }
+}
+
 
 
 
