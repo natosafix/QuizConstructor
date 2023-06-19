@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/pageRedirector.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="overlay js-overlay-modal"></div>
+
+  <div class="header-wrapper">
+    <div class="header-logo">
+      <a href="/" class="header-logo-link">
+        <img class="header-logo-img" src="/img/svg/quiz-logo.svg" alt="logo">
+      </a>
+    </div>
+
+    <div class="header-auth">
+      <ul class="auth-list">
+        <li class="auth-list-item">
+          <button type="button" class="auth-signup-button">{ userId }</button>
+        </li>
+        <li class="auth-list-item">
+          <button type="button" class="auth-login-button">Выйти</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<div class="main">
+
+    <div>
+        <div class="block">
+            <h2>{ text }</h2>
+        </div>
+    </div>
+
+    <div>
+        <button class="submit-button" id="main-page-button">На главную</button>
+    </div>
+</div>
+<script src="/scripts/pageRedirector.js"></script>
+</body>
+</html>
