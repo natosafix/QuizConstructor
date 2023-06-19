@@ -235,28 +235,36 @@ function setTimer() {
 
     const seconds = (endTime - startTime) / 1000;
 
-    timer = new Timer(seconds, document.querySelector("#time"), showThanksPage);
+    timer = new Timer(seconds, document.querySelector("#time"), quizFinished);
     timer.startTimer();
 }
 
 let timer;
 
-function showThanksPage() {
-    timer.stopTimer();
+function hideTimer() {
+    document.querySelector("#time").style.display = "none";
+}
+
+function showThanks() {
     document.querySelectorAll(".thanks").forEach(x => x.style.display = "block");
     document.querySelector("form").style.display = "none";
     document.querySelector(".under-blocks button[form='myForm']").style.display = "none";
 }
 
+async function quizFinished() {
+    hideTimer();
+    showThanks();
+    await sendAnswers();
+}
+
 async function submitClicked() {
     if (document.querySelector("form").checkValidity()) {
-        document.querySelector("#time").style.display = "none";
-        showThanksPage();
-        await parseAnswers();
+        timer.stopTimer();
+        await quizFinished();
     }
 }
 
-async function parseAnswers() {
+async function sendAnswers() {
     const answers = []
     const questionCount = document.querySelectorAll(".element").length;
 
@@ -278,6 +286,7 @@ async function parseAnswers() {
 
         answers.push(t);
     }
+    console.log(JSON.stringify(answers));
 
     const response = await fetch('http://localhost:8080/db/apiRequest', {
         method: 'POST',
@@ -286,7 +295,6 @@ async function parseAnswers() {
         },
         body: JSON.stringify({method: "saveAnswers", data: answers})
     });
-    alert(JSON.stringify(answers))
 }
 
 let mainPageButton = document.querySelector('#main-page-button');
