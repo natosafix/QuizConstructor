@@ -40,6 +40,14 @@
     background-color: var(--block-bg-color);
 }
 
+.clamped-info {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    max-height: 255px;
+    overflow-y: auto;
+}
+
 
 /* Quizzes */
 

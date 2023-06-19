@@ -18,119 +18,125 @@ document.addEventListener('DOMContentLoaded', async function(event) {
             method: 'GET',
         });
         data = await response.json();*/
-        data =
-            {
-                "groupVm1": {
-                    "id": 1,
-                    "name": "Контора",
-                    "isAdmin": false,
-                    "quizVms": [
-                        {
-                            "id": 1,
-                            "finished": null,
-                            "name": "Пятиминутка №15",
-                            "description": "Пятиминутка о вёрстке и стилях",
-                            "score": 0,
-                            "startTime" : "2019-07-26T12:43:23+05:00",
-                            "endTime" : "2025-07-26T12:43:23+05:00",
-                        },
-                        {
-                            "id": 2,
-                            "finished": null,
-                            "name": "Пятиминутка №228",
-                            "description": "Пятиминутка",
-                            "score": 0,
-                            "startTime" : "2019-07-26T12:43:23+05:00",
-                            "endTime" : "2025-07-26T12:43:23+00:00",
-                        },
-                        {
-                            "id": 3,
-                            "finished": null,
-                            "name": "Вы гей? №322",
-                            "description": "",
-                            "score": 0,
-                            "startTime" : "2019-07-26T12:43:23+05:00",
-                            "endTime" : "2020-07-26T12:43:23+00:00",
-                        },
-                        {
-                            "id": 4,
-                            "finished": '2020-07-26T12:43:23+05:00',
-                            "name": "Двухминутка №1337",
-                            "description": "очевидно да",
-                            "score": 3.81,
-                            "startTime" : "2019-07-26T12:43:23+05:00",
-                            "endTime" : "2021-07-26T12:43:23+00:00",
-                        },
-                        {
-                            "id": 5,
-                            "finished": '2020-07-26T12:43:23+05:00',
-                            "name": "Лох с нулём",
-                            "description": "Лох с нулём",
-                            "score": 0,
-                            "startTime" : "2019-07-26T12:43:23+05:00",
-                            "endTime" : "2025-07-26T12:43:23+00:00",
-                        }
-                    ]
-                },
-                "groupVm2": {
-                    "id": 1,
-                    "name": "Контора2",
-                    "isAdmin": true,
-                    "quizVms": [
-                        {
-                            "id": 1,
-                            "finished": null,
-                            "name": "Пятиминутка №15",
-                            "description": "Пятиминутка о вёрстке и стилях",
-                            "score": 0,
-                            "startTime" : "2019-07-26T12:43:23+05:00",
-                            "endTime" : "2025-07-26T12:43:23+05:00",
-                        },
-                    ]
-                },
-                "groupVm3": {
-                    "id": 1,
-                    "name": "Контора3",
-                    "isAdmin": false,
-                    "quizVms": [
-                        {
-                            "id": 1,
-                            "finished": "2021-07-26T12:43:23+05:00",
-                            "name": "Пятиминутка №15",
-                            "description": "Пятиминутка о вёрстке и стилях",
-                            "score": 2,
-                            "startTime" : "2019-07-26T12:43:23+05:00",
-                            "endTime" : "2025-07-26T12:43:23+05:00",
-                        },
-                    ]
-                },
-                "groupVm4": {
-                    "id": 1,
-                    "name": "Контора4",
-                    "isAdmin": false,
-                    "quizVms": [
-                        {
-                            "id": 1,
-                            "finished": null,
-                            "name": "Моя первая пятиминутка",
-                            "description": "Пятиминутка ни о чём",
-                            "score": 0,
-                            "startTime" : "2019-07-26T12:43:23+05:00",
-                            "endTime" : "2025-07-26T12:43:23+05:00",
-                        },
-                        {
-                            "id": 9,
-                            "finished": null,
-                            "name": "Никогда не настанет",
-                            "description": "Пятиминутка ни о чём",
-                            "score": 0,
-                            "startTime" : "2024-07-26T12:43:23+05:00",
-                            "endTime" : "2025-07-26T12:43:23+05:00",
-                        },
-                    ]
-                }
-
+        data = {
+            "groupVm1": {
+                "id": 1,
+                "name": "Контора",
+                "isAdmin": false,
+                "quizVms": [
+                    {
+                        "id": 1,
+                        "finished": null,
+                        "name": "Пятиминутка №15",
+                        "description": "Пятиминутка о вёрстке и стилях",
+                        "score": 0,
+                        "startTime" : "2019-07-26T12:43:23+05:00",
+                        "endTime" : "2025-07-26T12:43:23+05:00",
+                    },
+                    {
+                        "id": 2,
+                        "finished": null,
+                        "name": "Пятиминутка №228",
+                        "description": "Пятиминутка",
+                        "score": 0,
+                        "startTime" : "2019-07-26T12:43:23+05:00",
+                        "endTime" : "2025-07-26T12:43:23+00:00",
+                    },
+                    {
+                        "id": 3,
+                        "finished": null,
+                        "name": "Вы гей? №322",
+                        "description": "",
+                        "score": 0,
+                        "startTime" : "2019-07-26T12:43:23+05:00",
+                        "endTime" : "2020-07-26T12:43:23+00:00",
+                    },
+                    {
+                        "id": 4,
+                        "finished": '2020-07-26T12:43:23+05:00',
+                        "name": "Двухминутка №1337",
+                        "description": "очевидно да",
+                        "score": 3.81,
+                        "startTime" : "2019-07-26T12:43:23+05:00",
+                        "endTime" : "2021-07-26T12:43:23+00:00",
+                    },
+                    {
+                        "id": 5,
+                        "finished": '2020-07-26T12:43:23+05:00',
+                        "name": "Лох с нулём",
+                        "description": "Лох с нулём",
+                        "score": 0,
+                        "startTime" : "2019-07-26T12:43:23+05:00",
+                        "endTime" : "2025-07-26T12:43:23+00:00",
+                    }]
+            },
+            "groupVm2": {
+                "id": 1,
+                "name": "Контора2",
+                "isAdmin": true,
+                "quizVms": [
+                    {
+                        "id": 1,
+                        "finished": null,
+                        "name": "Пятиминутка №15",
+                        "description": "Пятиминутка о вёрстке и стилях",
+                        "score": 0,
+                        "startTime" : "2019-07-26T12:43:23+05:00",
+                        "endTime" : "2025-07-26T12:43:23+05:00",
+                    },
+                ]
+            },
+            "groupVm3": {
+                "id": 1,
+                "name": "Контора3",
+                "isAdmin": false,
+                "quizVms": [
+                    {
+                        "id": 1,
+                        "finished": "2021-07-26T12:43:23+05:00",
+                        "name": "Пятиминутка №15",
+                        "description": "Пятиминутка о вёрстке и стилях",
+                        "score": 2,
+                        "startTime" : "2019-07-26T12:43:23+05:00",
+                        "endTime" : "2025-07-26T12:43:23+05:00",
+                    },
+                    {
+                        "id": 7,
+                        "finished": "2022-07-26T12:43:23+05:00",
+                        "name": "Помидор без оценки",
+                        "description": "Пятиминутка о вёрстке и стилях",
+                        "score": null,
+                        "startTime" : "2019-07-26T12:43:23+05:00",
+                        "endTime" : "2025-07-26T12:43:23+05:00",
+                    },
+                ]
+            },
+            "groupVm4": {
+                "id": 1,
+                "name": "Контора4",
+                "isAdmin": false,
+                "quizVms": [
+                    {
+                        "id": 8,
+                        "finished": null,
+                        "name": "Моя первая пятиминутка",
+                        "description": "Пятиминутка ни о чём",
+                        "score": 0,
+                        "startTime" : "2019-07-26T12:43:23+05:00",
+                        "endTime" : "2025-07-26T12:43:23+05:00",
+                    },
+                    {
+                        "id": 9,
+                        "finished": null,
+                        "name": "Никогда не настанет",
+                        "description": "Пятиминутка ни о чём",
+                        "score": 0,
+                        "startTime" : "2024-07-26T12:43:23+05:00",
+                        "endTime" : "2025-07-26T12:43:23+05:00",
+                    },
+                ]
             }
+        }
         console.log(data);
 
         buildPage();
@@ -153,7 +159,7 @@ function fillActiveQuizzes() {
         let currentGroup = data[groupKey];
         if (currentGroup['isAdmin'])
             continue;
-        let group = new ActiveGroupBlockDiv(currentGroup.name);
+        let group = new GroupBlockDiv(currentGroup.name);
         group.hide();
         for (let quizKey in currentGroup.quizVms) {
             let activeQuiz = currentGroup.quizVms[quizKey];
@@ -165,9 +171,7 @@ function fillActiveQuizzes() {
             if (startTime > Date.now() || endTime < Date.now())
                 continue;
 
-            group.addActiveQuiz(activeQuiz.name,
-                endTime,
-                activeQuiz.id);
+            group.addActiveQuiz(activeQuiz.name, endTime, activeQuiz.id);
         }
         if (group.activeCount > 0) {
             activePaste.appendChild(group.element);
@@ -216,16 +220,15 @@ function fillEndedQuizzes() {
     }
 }
 
-
 function fillGroupsPage() {
     let pastePlace = document.querySelector('#groups-paste-place');
 
     for (let groupKey in data) {
         let currentGroup = data[groupKey];
+        let group = new GroupBlockDiv(currentGroup.name);
         if (currentGroup['isAdmin']) {
 
         } else {
-            let group = new GroupBlockDiv(currentGroup.name);
             for (let quizKey in currentGroup.quizVms) {
                 let currentQuiz = currentGroup.quizVms[quizKey];
                 let finishedTime = new Date(currentQuiz.finished);
@@ -252,9 +255,10 @@ function fillGroupsPage() {
 }
 
 
-function formatedDate(date) {
+function getFormatDateStr(date) {
     return date.toLocaleString('ru-RU', dateTimeOptions);
 }
+
 
 class CustomDOMElement {
     constructor(tag) {
@@ -308,127 +312,136 @@ class CustomDOMElement {
 }
 
 
-class ActiveGroupBlockDiv extends CustomDOMElement {
-    constructor(groupName) {
-        super('div').withClass('block');
-        this.appendChild(new GroupHeaderDiv(groupName));
+class GroupBlockDiv extends CustomDOMElement {
+    constructor(groupName, isAdmin=false) {
+        super('div').withClass('block')
+        this.isAdmin = isAdmin;
+        this.appendChild(new GroupHeaderDiv(groupName, this.isAdmin));
+
+        this.clampedDiv = new CustomDOMElement('div').withClass('clamped-info');
+        this.appendChild(this.clampedDiv);
         this.activeCount = 0;
     }
 
-    addActiveQuiz(header, endTime, quizId) {
-        this.appendChild(new ActiveQuizBtn(header, endTime, quizId));
-        this.activeCount++;
+    _addQuiz(quiz) {
+        this.clampedDiv.appendChild(quiz);
     }
-}
 
-
-class GroupBlockDiv extends ActiveGroupBlockDiv {
-    constructor(groupName) {
-        super(groupName);
+    addActiveQuiz(header, endTime, quizId) {
+        this._addQuiz(new ActiveQuizBtn(header, endTime, quizId));
+        this.activeCount++;
     }
 
     addScheduledQuiz(header, startTime) {
-        this.appendChild(new ScheduledQuizDiv(header, startTime));
+        this._addQuiz(new ScheduledQuizDiv(header, startTime));
     }
 
     addEndedQuiz(header, endTime) {
-        this.appendChild(new EndedQuizDiv(header, endTime));
+        this._addQuiz(new EndedQuizDiv(header, endTime, this.isAdmin));
     }
 
     addFinishedQuiz(header, score, finishTime) {
-        this.appendChild(new FinishedQuizDiv(header, score, finishTime));
+        this._addQuiz(new FinishedQuizDiv(header, score, finishTime));
     }
 }
 
+
 class GroupHeaderDiv extends CustomDOMElement {
-    constructor(headerText) {
+    constructor(headerText, isAdmin=false) {
         super('div').withClass('group-name');
         let h2 = new CustomDOMElement('h2').withContent(headerText);
         let hr = new CustomDOMElement('hr');
         this.appendChild(h2);
         this.appendChild(hr);
+
+        if (isAdmin) {
+            this.appendChild(new CustomDOMElement('button').withContent('settings'));
+        }
     }
 }
 
 
-class FinishedQuizDiv extends CustomDOMElement {
-    constructor(header, score, finishTime, groupName=null) {
-        super().withClass('quiz-info').withClass('ended-quiz');
-        this.finishTime = finishTime;
-        this.score = score;
-        let name = new CustomDOMElement('label')
-            .withClass('quiz-name');
-        if (groupName !== null) {
-            name.withContent(`${groupName}: ${header}`);
-        } else {
-            name.withContent(`${header}`);
-        }
+class BaseQuiz extends CustomDOMElement {
+    constructor(tag) {
+        super(tag).withClass('quiz-info');
+    }
 
+    withHeader(header) {
+        let name = new CustomDOMElement('label')
+            .withClass('quiz-name')
+            .withContent(header);
+        this.appendChild(name);
+        return this;
+    }
+
+    withCheckBtn() {
+        let check = new CustomDOMElement('a').withClass().withContent('Посмотреть ответы');
+        check.href = ''; // TODO
+        this.appendChild(check);
+        return this;
+    }
+
+    withMark(score) {
         let mark = new CustomDOMElement('label')
             .withClass('quiz-mark')
             .withContent((score === null) ? 'Нет оценки' : `Балл: ${score}`);
-
-        let finish = new CustomDOMElement('label')
-            .withClass('quiz-end-time')
-            .withContent(`Выполнен: ${formatedDate(finishTime)}`);
-
-
-        this.appendChild(name);
         this.appendChild(mark);
-        this.appendChild(finish);
+        return this;
     }
-}
 
-
-class ActiveQuizBtn extends CustomDOMElement {
-    constructor(header, endTime, quizId) {
-        super('button').withClass('quiz-info').withClass('active-quiz');
-        let name = new CustomDOMElement('label')
-            .withClass('quiz-name')
-            .withContent(header);
+    withTime(time, text) {
         let end = new CustomDOMElement('label')
             .withClass('quiz-end-time')
-            .withContent(`Завершится: ${formatedDate(endTime)}`);
-        this.addEvent('click',
-            () => window.location.href = `http://localhost:8080/quiz/solve/${quizId}`);
-        this.appendChild(name);
+            .withContent(`${text}: ${getFormatDateStr(time)}`);
         this.appendChild(end);
+        return this;
     }
 }
 
 
-class ScheduledQuizDiv extends CustomDOMElement {
+class FinishedQuizDiv extends BaseQuiz {
+    constructor(header, score, finishTime, groupName=null) {
+        super('div').withClass('ended-quiz');
+        if (groupName !== null) {
+            this.withHeader(`${groupName}: ${header}`);
+        } else {
+            this.withHeader(`${header}`);
+        }
+        this.withMark(score).withTime(finishTime, 'Выполнен');
+    }
+}
+
+
+class ActiveQuizBtn extends BaseQuiz {
+    constructor(header, endTime, quizId, isAdmin=false) {
+        super(isAdmin ? 'div' : 'button').withHeader(header).withTime(endTime, 'Завершится');
+        if (!isAdmin) {
+            this.addEvent('click',
+                () => window.location.href = `http://localhost:8080/quiz/solve/${quizId}`);
+        }
+    }
+}
+
+
+class ScheduledQuizDiv extends BaseQuiz {
     constructor(header, startTime) {
-        super('div').withClass('quiz-info').withClass('scheduled-quiz');
+        super('div').withHeader(header).withTime(startTime, 'Запланирован');
         this.startTime = startTime;
-        let name = new CustomDOMElement('label')
-            .withClass('quiz-name')
-            .withContent(header);
-        let scheduled = new CustomDOMElement('label')
-            .withClass('quiz-end-time')
-            .withContent(`Запланирован: ${formatedDate(startTime)}`);
-
-        this.appendChild(name);
-        this.appendChild(scheduled);
-    }
-
-}
-
-
-class EndedQuizDiv extends CustomDOMElement {
-    constructor(header, endTime) {
-        super('div').withClass('quiz-info');
-        let name = new CustomDOMElement('label')
-            .withClass('quiz-name')
-            .withContent(header);
-        let end = new CustomDOMElement('label')
-            .withClass('quiz-end-time')
-            .withContent(`Завершён: ${formatedDate(endTime)}`);
-
-        this.appendChild(name);
-        this.appendChild(end);
     }
 }
+
+
+class EndedQuizDiv extends BaseQuiz {
+    constructor(header, endTime, isAdmin=false) {
+        super('div').withHeader(header);
+        if (isAdmin) {
+            this.withCheckBtn();
+        }
+        this.withTime(endTime, 'Завершён');
+    }
+}
+
+
 
 
 
