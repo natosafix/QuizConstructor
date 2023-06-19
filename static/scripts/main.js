@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', async function(event) {
         /*let response = await fetch('http://localhost:8080/db/apiRequest?' + new URLSearchParams({method: "mainPage"}), {
             method: 'GET',
         });
-
         data = await response.json();*/
         data =
             {
@@ -28,7 +27,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
                     "quizVms": [
                         {
                             "id": 1,
-                            "finished": false,
+                            "finished": null,
                             "name": "Пятиминутка №15",
                             "description": "Пятиминутка о вёрстке и стилях",
                             "score": 0,
@@ -37,9 +36,36 @@ document.addEventListener('DOMContentLoaded', async function(event) {
                         },
                         {
                             "id": 2,
-                            "finished": false,
+                            "finished": null,
                             "name": "Пятиминутка №228",
-                            "description": "Пятиминутка о вёрстке и стилях",
+                            "description": "Пятиминутка",
+                            "score": 0,
+                            "startTime" : "2019-07-26T12:43:23+05:00",
+                            "endTime" : "2025-07-26T12:43:23+00:00",
+                        },
+                        {
+                            "id": 3,
+                            "finished": null,
+                            "name": "Вы гей? №322",
+                            "description": "",
+                            "score": 0,
+                            "startTime" : "2019-07-26T12:43:23+05:00",
+                            "endTime" : "2020-07-26T12:43:23+00:00",
+                        },
+                        {
+                            "id": 4,
+                            "finished": '2020-07-26T12:43:23+05:00',
+                            "name": "Двухминутка №1337",
+                            "description": "очевидно да",
+                            "score": 3.81,
+                            "startTime" : "2019-07-26T12:43:23+05:00",
+                            "endTime" : "2021-07-26T12:43:23+00:00",
+                        },
+                        {
+                            "id": 5,
+                            "finished": '2020-07-26T12:43:23+05:00',
+                            "name": "Лох с нулём",
+                            "description": "Лох с нулём",
                             "score": 0,
                             "startTime" : "2019-07-26T12:43:23+05:00",
                             "endTime" : "2025-07-26T12:43:23+00:00",
@@ -53,7 +79,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
                     "quizVms": [
                         {
                             "id": 1,
-                            "finished": false,
+                            "finished": null,
                             "name": "Пятиминутка №15",
                             "description": "Пятиминутка о вёрстке и стилях",
                             "score": 0,
@@ -69,10 +95,10 @@ document.addEventListener('DOMContentLoaded', async function(event) {
                     "quizVms": [
                         {
                             "id": 1,
-                            "finished": true,
+                            "finished": "2021-07-26T12:43:23+05:00",
                             "name": "Пятиминутка №15",
                             "description": "Пятиминутка о вёрстке и стилях",
-                            "score": 0,
+                            "score": 2,
                             "startTime" : "2019-07-26T12:43:23+05:00",
                             "endTime" : "2025-07-26T12:43:23+05:00",
                         },
@@ -85,11 +111,20 @@ document.addEventListener('DOMContentLoaded', async function(event) {
                     "quizVms": [
                         {
                             "id": 1,
-                            "finished": false,
+                            "finished": null,
                             "name": "Моя первая пятиминутка",
                             "description": "Пятиминутка ни о чём",
                             "score": 0,
                             "startTime" : "2019-07-26T12:43:23+05:00",
+                            "endTime" : "2025-07-26T12:43:23+05:00",
+                        },
+                        {
+                            "id": 9,
+                            "finished": null,
+                            "name": "Никогда не настанет",
+                            "description": "Пятиминутка ни о чём",
+                            "score": 0,
+                            "startTime" : "2024-07-26T12:43:23+05:00",
                             "endTime" : "2025-07-26T12:43:23+05:00",
                         },
                     ]

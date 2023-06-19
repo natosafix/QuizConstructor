@@ -248,15 +248,15 @@ function showThanksPage() {
     document.querySelector(".under-blocks button[form='myForm']").style.display = "none";
 }
 
-function submitClicked() {
+async function submitClicked() {
     if (document.querySelector("form").checkValidity()) {
         document.querySelector("#time").style.display = "none";
         showThanksPage();
-        parseAnswers();
+        await parseAnswers();
     }
 }
 
-function parseAnswers() {
+async function parseAnswers() {
     const answers = []
     const questionCount = document.querySelectorAll(".element").length;
 
@@ -279,5 +279,18 @@ function parseAnswers() {
         answers.push(t);
     }
 
+    const response = await fetch('http://localhost:8080/db/apiRequest', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify({method: "saveAnswers", data: answers})
+    });
     alert(JSON.stringify(answers))
 }
+
+let mainPageButton = document.querySelector('#main-page-button');
+mainPageButton.addEventListener('click', () => window.location.href = 'http://localhost:8080/');
+
+let sendAnswersButton = document.querySelector('#send-answers-button');
+sendAnswersButton.addEventListener('click', submitClicked);

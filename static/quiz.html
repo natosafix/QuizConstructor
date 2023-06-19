@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="/css/quiz.css">
 </head>
 <body>
-<span class="backend-data">{ groupId }</span>
 <span class="backend-data">{ quizId }</span>
 <span class="backend-data">{ userId }</span>
 <span id="time"></span>
@@ -20,10 +19,10 @@
     </div>
 
     <div class="under-blocks">
-        <button form="myForm" class="submit-button" onclick="submitClicked()">Отправить</button>
+        <button form="myForm" class="submit-button" id="send-answers-button">Отправить</button>
 
         <div class="thanks">
-            <button class="submit-button">На главную</button>
+            <button class="submit-button" id="main-page-button">На главную</button>
         </div>
     </div>
 </div>
