@@ -674,7 +674,6 @@ class PlanTimePicker extends CustomDOMElement {
         endWrapper.appendChild(this._endPicker);
     }
 
-    // TODO add timezone to value
     getStartTime() {
         return new Date(this._startPicker.element.value);
     }
