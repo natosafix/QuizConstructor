@@ -18,10 +18,11 @@ public class UserQuizConfiguration : IEntityTypeConfiguration<UserQuiz>
         builder.Property(userQuiz => userQuiz.Score);
         builder.Property(userQuiz => userQuiz.EndTime);
 
-        builder.HasOne(userQuiz => userQuiz.Quiz)
+        builder.HasOne(userQuiz => userQuiz.QuizGroup)
             .WithMany(quiz => quiz.UserQuizzes)
-            .HasForeignKey(userQuiz => userQuiz.QuizId)
+            .HasForeignKey(quiz => quiz.QuizGroupId)
             .OnDelete(DeleteBehavior.Cascade);
+        
         builder.HasOne(userQuiz => userQuiz.User)
             .WithMany(user => user.UserQuizzes)
             .HasForeignKey(userQuiz => userQuiz.UserId)

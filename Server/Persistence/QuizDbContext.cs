@@ -28,29 +28,8 @@ public class QuizDbContext : DbContext, IDbContext
         modelBuilder.ApplyConfiguration(new UserQuizConfiguration());
         modelBuilder.ApplyConfiguration(new QuestionTypeConfiguration());
         modelBuilder.ApplyConfiguration(new GroupConfiguration());
-        modelBuilder
-            .Entity<Group>()
-            .HasMany(g => g.Quizzes)
-            .WithMany(q => q.Groups)
-            .UsingEntity<QuizGroup>(
-                j => j
-                    .HasOne(pt => pt.Quiz)
-                    .WithMany(t => t.QuizGroups)
-                    .HasForeignKey(pt => pt.QuizId),
-                j => j
-                    .HasOne(pt => pt.Group)
-                    .WithMany(p => p.QuizGroups)
-                    .HasForeignKey(pt => pt.GroupId),
-                j =>
-                {
-                    j.Property(pt => pt.Duration);
-                    j.Property(pt => pt.EndTime);
-                    j.Property(pt => pt.StartTime);
-                    j.HasKey(t => new { t.QuizId, t.GroupId });
-                    j.ToTable("QuizGroup");
-                });
-        
-        
+        modelBuilder.ApplyConfiguration(new QuizGroupConfiguration());
+
         base.OnModelCreating(modelBuilder);
      }
 }
