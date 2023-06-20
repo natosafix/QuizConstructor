@@ -459,7 +459,7 @@ class BaseQuiz extends CustomDOMElement {
             .withClass('quiz-mark')
             .withClass('quiz-check-href')
             .withContent('Посмотреть ответы');
-        check.element.href = `http://localhost:8080/quiz/solve/${this.quizId}`; // TODO
+        check.element.href = `http://localhost:8080/quiz/check/${this.quizId}`;
         this.appendChild(check);
         return this;
     }
