@@ -287,13 +287,11 @@ function buildConstructor(event) {
         quizQuestion.question = question.querySelector('.question').value;
         quizQuestion.answerType = question.querySelector('.answer-type-selector').value;
         quizQuestion.maxScore = parseInt(question.querySelector("[name='maxScore']").value);
+        quizQuestion.isAutocheckEnabled = false;
         if (choiceTypes.includes(quizQuestion.answerType)) {
             let answerHolder = question.querySelector(`.${quizQuestion.answerType}`);
             let answers = answerHolder.querySelectorAll(`.${quizQuestion.answerType}-option`)
 
-            // TODO исправить автопроверку для всех типов вопроса
-            // Если хотя бы один вариант отмечен - автопроверка включена
-            quizQuestion.isAutocheckEnabled = false;
             for (const answer of answers) {
                 if (answer.querySelector('.autocheck-choice').checked)
                     quizQuestion.isAutocheckEnabled = true;
@@ -304,6 +302,21 @@ function buildConstructor(event) {
                 quizAnswer.answer = answer.querySelector('.answer').value;
                 if (quizQuestion.isAutocheckEnabled)
                     quizAnswer.isCorrect = answer.querySelector('.autocheck-choice').checked;
+                quizQuestion.answers.push(quizAnswer);
+            }
+        } else  {
+            let autocheckInput;
+            if (quizQuestion.answerType === 'codeEditor') {
+                autocheckInput = question.querySelector(".correct-answer");
+                autocheckInput = autocheckInput.CodeMirror;
+            } else {
+                autocheckInput = question.querySelector('.correct-answer').value;
+            }
+            if (autocheckInput.length > 0) {
+                let quizAnswer = new QuizAnswer();
+                quizQuestion.isAutocheckEnabled = true;
+                quizAnswer.answer = autocheckInput.value;
+                quizAnswer.isCorrect = true;
                 quizQuestion.answers.push(quizAnswer);
             }
         }

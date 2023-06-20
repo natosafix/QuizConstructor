@@ -70,13 +70,10 @@
     </form>
 
     <form class="quiz-question block" name="q1">
-        <div class="quiz-group multi-line">
-            <label for="question" class="vertical quiz-question-header-label" id="questionNumber1">
-                Вопрос №1
-            </label>
-            <textarea class="question quiz-element-input vertical" name="question" placeholder="Введите вопрос..."
-                      id="question">
-            </textarea>
+        <div class="quiz-group">
+            <label for="question" class="vertical quiz-question-header-label" id="questionNumber1">Вопрос №1</label>
+            <textarea class="question quiz-element-input vertical" name="question"
+                      placeholder="Введите вопрос..." id="question"></textarea>
         </div>
 
         <div class="quiz-group">
@@ -111,14 +108,14 @@
             <div class="quiz-group shortText">
                 <label class="vertical quiz-group-header">
                     Короткий ответ
-                    <input type="text" placeholder="Введите для автопроверки..." class="quiz-element-input">
+                    <input type="text" placeholder="Введите для автопроверки..." class="quiz-element-input correct-answer">
                 </label>
             </div>
 
             <div class="quiz-group longText">
                 <label class="vertical quiz-group-header">
                     Длинный ответ
-                    <textarea placeholder="Введите для автопроверки..." class="quiz-element-input"></textarea>
+                    <textarea placeholder="Введите для автопроверки..." class="quiz-element-input correct-answer"></textarea>
                 </label>
             </div>
 
@@ -135,7 +132,7 @@
                     <span class="focus"></span>
                 </div>
 
-                <textarea placeholder="Введите для автопроверки..." class="quiz-element-input"
+                <textarea placeholder="Введите для автопроверки..." class="quiz-element-input correct-answer"
                           id="codeEditor1"></textarea>
 
             </div>
