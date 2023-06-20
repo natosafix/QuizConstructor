@@ -211,6 +211,7 @@ addButton.addEventListener('click', addQuestion)
 function addQuestion(event) { // добавляет новые вопросы
     let newQuestion = quizQuestionCopy.cloneNode(true);
     let questions = document.querySelectorAll(".quiz-question");
+    newQuestion.name = newQuestion.name[0] + (questionAdded + 1).toString();
 
     let imageInput = newQuestion.querySelector(`#imageInput1`);
     imageInput.id = `imageInput${questionAdded + 1}`;
@@ -230,7 +231,6 @@ function addQuestion(event) { // добавляет новые вопросы
     questionNumberLabel.id = `questionNumber${questionAdded + 1}`;
     questionNumberLabel.textContent = `Вопрос №${questionCount + 1}`;
 
-    newQuestion.name = newQuestion.name[0] + (questionAdded + 1).toString();
     question2PrevType[questionAdded + 1] = 'shortText';
     let lastQuestion = questions[questions.length - 1];
     lastQuestion.after(newQuestion);
@@ -267,6 +267,7 @@ class QuizQuestion {
     image = undefined;
     isAutocheckEnabled = undefined;
     answers = [];
+    maxScore;
 }
 
 class QuizAnswer {
@@ -282,8 +283,10 @@ function buildConstructor(event) {
     let questions = questionsHolder.querySelectorAll('.quiz-question');
     for (const question of questions) {
         let quizQuestion = new QuizQuestion();
+        console.log(question.querySelector('.question'))
         quizQuestion.question = question.querySelector('.question').value;
         quizQuestion.answerType = question.querySelector('.answer-type-selector').value;
+        quizQuestion.maxScore = parseInt(question.querySelector("[name='maxScore']").value);
         if (choiceTypes.includes(quizQuestion.answerType)) {
             let answerHolder = question.querySelector(`.${quizQuestion.answerType}`);
             let answers = answerHolder.querySelectorAll(`.${quizQuestion.answerType}-option`)
@@ -308,3 +311,9 @@ function buildConstructor(event) {
     }
 }
 
+document.querySelector('.auth-login-button').addEventListener('click', logOut);
+
+function logOut() {
+    CookieChanger.deleteCookie('auth');
+    window.location.href = "http://localhost:8080/login";
+}

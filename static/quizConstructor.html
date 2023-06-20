@@ -22,20 +22,22 @@
 
 
 <header class="header">
+    <div class="overlay js-overlay-modal"></div>
+
     <div class="header-wrapper">
         <div class="header-logo">
-            <a href="/static" class="header-logo-link">
-                <img class="header-logo-img" src="/img/svg/quiz-logo.svg">
+            <a href="/" class="header-logo-link">
+                <img class="header-logo-img" src="/img/svg/quiz-logo.svg" alt="logo">
             </a>
         </div>
 
         <div class="header-auth">
             <ul class="auth-list">
                 <li class="auth-list-item">
-                    <button type="button" class="auth-login-button">Войти</button>
+                    <button type="button" class="auth-signup-button">{ userId }</button>
                 </li>
                 <li class="auth-list-item">
-                    <button type="button" class="auth-signup-button">Регистрация</button>
+                    <button type="button" class="auth-login-button">Выйти</button>
                 </li>
             </ul>
         </div>
@@ -69,10 +71,12 @@
 
     <form class="quiz-question block" name="q1">
         <div class="quiz-group multi-line">
-            <label class="vertical quiz-question-header-label" id="questionNumber1">
+            <label for="question" class="vertical quiz-question-header-label" id="questionNumber1">
                 Вопрос №1
-                <textarea class="question quiz-element-input vertical" name="question" placeholder="Введите вопрос..."></textarea>
             </label>
+            <textarea class="question quiz-element-input vertical" name="question" placeholder="Введите вопрос..."
+                      id="question">
+            </textarea>
         </div>
 
         <div class="quiz-group">
@@ -180,6 +184,13 @@
                 </label>
             </div>
 
+        </div>
+
+        <div class="quiz-group">
+            <label class="quiz-group-header">
+                Максимальный балл
+                <input type="number" name="maxScore" value="1" class="quiz-element-input">
+            </label>
         </div>
 
         <div>
