@@ -36,3 +36,6 @@ form.addEventListener('submit', async function (event) {
         console.error(error);
     }
 });
+
+document.querySelector('#registration-redirect-button')
+    .addEventListener('click', () => window.location.href = 'http://localhost:8080/registration');

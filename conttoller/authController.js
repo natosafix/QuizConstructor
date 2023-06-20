@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { validationResult } = require('express-validator')
+const {validationResult} = require('express-validator')
 const {secret} = require("../config")
 const apiController = require('./DBController');
 const path = require('path');
@@ -9,7 +9,7 @@ const generateAccessToken = (username) => {
     const payload = {
         userId: username
     };
-    return jwt.sign(payload, secret, {expiresIn: "30d"} );
+    return jwt.sign(payload, secret, {expiresIn: "30d"});
 }
 
 class AuthController {
@@ -22,8 +22,7 @@ class AuthController {
                         "Допустимые символы: цифры, латинские буквы, !@#$%^&*(\\)",
                     type: "username"
                 };
-            }
-            else {
+            } else {
                 return {
                     message: "Недопустимый пароль. Длина от 5 символов. " +
                         "Допустимые символы: цифры, латинские буквы, !@#$%^&*(\\)",
@@ -43,13 +42,18 @@ class AuthController {
             let validationInfo = AuthController.validateBody(req);
             if (validationInfo)
                 return res.json(validationInfo);
-            const {username, password} = req.body;
+            const {username, password, firstName, lastName} = req.body;
             const candidate = await apiController.getUser(username);
             if (candidate) {
                 return res.json({message: "Пользователь с таким именем уже существует", type: "username"});
             }
             const hashPassword = bcrypt.hashSync(password, 7);
-            const user = await apiController.createUser({username: username, password: hashPassword});
+            const user = await apiController.createUser({
+                username: username,
+                password: hashPassword,
+                firstName: firstName,
+                lastName: lastName
+            });
             return res.redirect('/login');
         } catch (e) {
             console.error(e);
@@ -76,7 +80,7 @@ class AuthController {
                 return res.json({message: `Введен неверный пароль`, type: "password"});
             }
             const token = generateAccessToken(user.username);
-            res.cookie('auth', `${token}`, { maxAge: 2592000000/*, httpOnly: true*/, secure: true });
+            res.cookie('auth', `${token}`, {maxAge: 2592000000/*, httpOnly: true*/, secure: true});
             return res.redirect('/');
         } catch (e) {
             console.error(e);
