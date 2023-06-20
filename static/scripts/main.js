@@ -13,8 +13,25 @@ const dateTimeOptions = {
 let data;
 let adminQuizzes;
 let planModalWindow;
+let createGroupModalWindow;
 let adminGroupId2Name = {};
 const overlay = document.querySelector('.js-overlay-modal');
+
+// Закрытие модального окна на бэкгрануд
+overlay.addEventListener('click', function () {
+    planModalWindow.hide();
+    createGroupModalWindow.hide();
+});
+
+// Закрытие модального окна на ESC
+document.body.addEventListener('keyup', function (e) {
+    const key = e.keyCode;
+    if (key === 27) {
+        planModalWindow.hide();
+        createGroupModalWindow.hide();
+    }
+}, false);
+
 
 document.addEventListener('DOMContentLoaded', async function(event) {
     try {
@@ -75,12 +92,12 @@ document.addEventListener('DOMContentLoaded', async function(event) {
                     }]
             },
             "groupVm2": {
-                "id": 1,
+                "id": 2,
                 "name": "Контора2",
                 "isAdmin": true,
                 "quizVms": [
                     {
-                        "id": 1,
+                        "id": 6,
                         "finished": null,
                         "name": "Активная",
                         "description": "Пятиминутка о вёрстке и стилях",
@@ -89,7 +106,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
                         "endTime" : "2025-07-26T12:43:23+05:00",
                     },
                     {
-                        "id": 1,
+                        "id": 7,
                         "finished": null,
                         "name": "Актиwadsadwaвная",
                         "description": "Пятиминутка о вёрстке и стилях",
@@ -98,7 +115,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
                         "endTime" : "2025-07-26T12:43:23+05:00",
                     },
                     {
-                        "id": 1,
+                        "id": 8,
                         "finished": null,
                         "name": "Запланированная",
                         "description": "Пятиминутка о вёрстке и стилях",
@@ -107,7 +124,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
                         "endTime" : "2025-07-26T12:43:23+05:00",
                     },
                     {
-                        "id": 1,
+                        "id": 9,
                         "finished": null,
                         "name": "Закончилась",
                         "description": "Пятиминутка о вёрстке и стилях",
@@ -118,12 +135,12 @@ document.addEventListener('DOMContentLoaded', async function(event) {
                 ]
             },
             "groupVm3": {
-                "id": 1,
+                "id": 3,
                 "name": "Контора3",
                 "isAdmin": false,
                 "quizVms": [
                     {
-                        "id": 1,
+                        "id": 10,
                         "finished": "2021-07-26T12:43:23+05:00",
                         "name": "Пятиминутка №15",
                         "description": "Пятиминутка о вёрстке и стилях",
@@ -132,7 +149,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
                         "endTime" : "2025-07-26T12:43:23+05:00",
                     },
                     {
-                        "id": 7,
+                        "id": 11,
                         "finished": "2022-07-26T12:43:23+05:00",
                         "name": "Помидор без оценки",
                         "description": "Пятиминутка о вёрстке и стилях",
@@ -143,12 +160,12 @@ document.addEventListener('DOMContentLoaded', async function(event) {
                 ]
             },
             "groupVm4": {
-                "id": 1,
+                "id": 4,
                 "name": "Контора4",
                 "isAdmin": false,
                 "quizVms": [
                     {
-                        "id": 8,
+                        "id": 12,
                         "finished": null,
                         "name": "Моя первая пятиминутка",
                         "description": "Пятиминутка ни о чём",
@@ -157,7 +174,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
                         "endTime" : "2025-07-26T12:43:23+05:00",
                     },
                     {
-                        "id": 9,
+                        "id": 13,
                         "finished": null,
                         "name": "Никогда не настанет",
                         "description": "Пятиминутка ни о чём",
@@ -168,20 +185,19 @@ document.addEventListener('DOMContentLoaded', async function(event) {
                 ]
             },
             "groupVm5": {
-                "id": 14,
+                "id": 5,
                 "name": "Я здесь главный",
                 "isAdmin": true,
                 "quizVms": [
                 ]
             }
         }
-        console.log(data);
 
         adminQuizzes = {
             "quizVms": [
                 {
                     "id": 1,
-                    "name": "Я админ",
+                    "name": "Я админЯ админЯ админЯ админЯ админЯ админЯ админЯ админЯ админЯ админЯ админЯ админ",
                     "description": "Я нахуй не нужен"
                 },
                 {
@@ -199,7 +215,11 @@ document.addEventListener('DOMContentLoaded', async function(event) {
             }
         }
         planModalWindow = new PlanModalWindow(adminGroupId2Name);
+        createGroupModalWindow = new GroupCreateModalWindow();
         document.querySelector("#plan-modal-window-paste-place").appendChild(planModalWindow.element);
+        document.querySelector("#group-create-modal-window-paste-place").appendChild(createGroupModalWindow.element);
+        document.querySelector("#group-create-modal-window-open-btn").addEventListener('click', () => createGroupModalWindow.show());
+
         buildPage();
 
     } catch (e) {
@@ -440,6 +460,7 @@ class GroupHeaderDiv extends CustomDOMElement {
 }
 
 
+
 class BaseQuiz extends CustomDOMElement {
     constructor(tag, quizId) {
         super(tag).withClass('base-quiz');
@@ -533,7 +554,7 @@ class EndedQuizDiv extends BaseQuiz {
 
 class AdminQuizDiv extends CustomDOMElement {
     constructor(quizId, header) {
-        super('div').withClass('base-quiz');
+        super('div').withClass('admin-quiz').withClass('clamped-info');
         this.quizId = quizId;
         this.header = header;
         let name = new CustomDOMElement('label')
@@ -542,7 +563,7 @@ class AdminQuizDiv extends CustomDOMElement {
         this.appendChild(name);
 
         let planBtn = new CustomDOMElement('button')
-            .withClass('quiz-mark')
+            .withClass('quiz-plan-btn')
             .withContent("Запланировать");
         planBtn.addEvent('click', () => this.startPlaning());
         this.appendChild(planBtn);
@@ -564,17 +585,67 @@ class AdminQuizDiv extends CustomDOMElement {
 }
 
 
+
+class GroupCreateModalWindow extends CustomDOMElement {
+    constructor() {
+        super('div').withClass('modal');
+
+        let topWrapper = new CustomDOMElement('div').withClass('modal__top');
+        this.title = new CustomDOMElement('h2')
+            .withClass('modal__title')
+            .withContent("Создайте новую группу");
+        let modalCloseBtn = new CustomDOMElement('button')
+            .withClass('delete-option')
+            .withClass('js-modal-close');
+        modalCloseBtn.addEvent('click', () => this.hide());
+        topWrapper.appendChild(this.title);
+        topWrapper.appendChild(modalCloseBtn);
+        this.appendChild(topWrapper);
+
+        let label = new CustomDOMElement('label').withContent('Название');
+        this.input = new CustomDOMElement('input').withClass('modal__input');
+        this.input.element.setAttribute('type', 'text');
+        label.appendChild(this.input);
+        this.appendChild(label);
+
+        let createBtn = new CustomDOMElement('button')
+            .withClass('auth-signup-button')
+            .withClass('modal_btn')
+            .withContent("Создать");
+        createBtn.addEvent('click', () => this.createGroup());
+        this.appendChild(createBtn);
+    }
+
+    show() {
+        this.withClass('active');
+        overlay.classList.add('active');
+    }
+
+    hide() {
+        this.removeClass('active');
+        overlay.classList.remove('active');
+        this.input.element.value = '';
+    }
+
+    createGroup() {
+        alert(this.input.element.value); // TODO Перенаправить на страницу с настройками текущей группы
+        this.hide();
+    }
+}
+
+
 class PlanModalWindow extends CustomDOMElement {
     constructor(groupsId2Name) {
         super('div').withClass('modal');
         this._activeQuizId = null;
         this._groupsId2Name = groupsId2Name;
 
-        this.title = new CustomDOMElement('h2').withClass('modal__title');
         let topWrapper = new CustomDOMElement('div').withClass('modal__top');
+        this.title = new CustomDOMElement('h2').withClass('modal__title');
         let modalCloseBtn = new CustomDOMElement('button')
             .withClass('delete-option')
             .withClass('js-modal-close');
+        modalCloseBtn.addEvent('click', () => this.hide());
         topWrapper.appendChild(this.title);
         topWrapper.appendChild(modalCloseBtn);
         this.appendChild(topWrapper);
@@ -584,7 +655,6 @@ class PlanModalWindow extends CustomDOMElement {
         this.appendChild(this._groupsSelector);
         this.appendChild(this._timeSelector);
 
-        // <button class="auth-signup-button modal_btn" onclick="planQuizPressed()" type="button">Создать</button>
         let planBtn = new CustomDOMElement('button')
             .withClass('auth-signup-button')
             .withClass('modal_btn')
@@ -606,13 +676,16 @@ class PlanModalWindow extends CustomDOMElement {
     hide() {
         this.removeClass('active');
         overlay.classList.remove('active');
+        this._groupsSelector.clearSelection();
+        this._timeSelector.clearSelection();
     }
 
     quizSchedule() {
         // TODO routing, skip if empty
         alert(`Groups: ${this._groupsSelector.getSelectedGroupsId()}\n
         Start: ${this._timeSelector.getStartTime()}\n
-        End: ${this._timeSelector.getEndTime()}`)
+        End: ${this._timeSelector.getEndTime()}`);
+        this.hide();
     }
 
 }
@@ -640,6 +713,10 @@ class PlanGroupsPicker extends CustomDOMElement {
         selectWrapper.appendChild(this._selector);
         selectWrapper.appendChild(new CustomDOMElement('span').withClass('focus'));
         this.appendChild(selectWrapper);
+    }
+
+    clearSelection() {
+        this._selector.element.selectedIndex = -1;
     }
 
     getSelectedGroupsId() {
@@ -674,6 +751,11 @@ class PlanTimePicker extends CustomDOMElement {
         endWrapper.appendChild(this._endPicker);
     }
 
+    clearSelection() {
+        this._startPicker.element.value = "";
+        this._endPicker.element.value = "";
+    }
+
     getStartTime() {
         return new Date(this._startPicker.element.value);
     }
@@ -681,8 +763,10 @@ class PlanTimePicker extends CustomDOMElement {
     getEndTime() {
         return new Date(this._endPicker.element.value);
     }
-
 }
+
+
+
 
 
 
