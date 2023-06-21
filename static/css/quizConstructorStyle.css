@@ -2,7 +2,7 @@
     display: block;
 }
 
-.longText, .oneList, .severalList, .dropList, .codeEditor {
+.longText, .oneList, .severalList, .dropList, .codeEditor, .databaseId {
     display: none;
 }
 

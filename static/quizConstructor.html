@@ -54,6 +54,8 @@
 <div class="main">
 
     <form class="quiz-form-header block">
+        <span class="databaseId">0</span>
+
         <div class="quiz-group shortText">
             <label class="vertical quiz-header-label">
                 Название опроса
@@ -61,7 +63,7 @@
             </label>
         </div>
 
-        <div class="quiz-group longText">
+        <div class="quiz-group">
             <label class="vertical quiz-group-header">
                 Описание
                 <textarea class="quiz-element-input vertical" name="description" placeholder="Введите описание..."></textarea>
@@ -70,6 +72,7 @@
     </form>
 
     <form class="quiz-question block" name="q1">
+        <span class="databaseId">0</span>
         <div class="quiz-group">
             <label for="question" class="vertical quiz-question-header-label" id="questionNumber1">Вопрос №1</label>
             <textarea class="question quiz-element-input vertical" name="question"
@@ -104,8 +107,8 @@
         </div>
 
         <div class="answer-configuration">
-
             <div class="quiz-group shortText">
+                <span class="databaseId">0</span>
                 <label class="vertical quiz-group-header">
                     Короткий ответ
                     <input type="text" placeholder="Введите для автопроверки..." class="quiz-element-input correct-answer">
@@ -113,6 +116,7 @@
             </div>
 
             <div class="quiz-group longText">
+                <span class="databaseId">0</span>
                 <label class="vertical quiz-group-header">
                     Длинный ответ
                     <textarea placeholder="Введите для автопроверки..." class="quiz-element-input correct-answer"></textarea>
@@ -120,7 +124,7 @@
             </div>
 
             <div class="quiz-group codeEditor">
-
+                <span class="databaseId">0</span>
                 <label class="quiz-group-header vertical" for="codeEditor1" id="labelForCodeEditor1">Код</label>
 
                 <div class="select">
@@ -138,10 +142,10 @@
             </div>
 
             <div class="quiz-group oneList">
-
                 <label class="vertical quiz-group-header">
                     Варианты ответа
                     <div class="oneList-option" id="oneList-1">
+                        <span class="databaseId">0</span>
                         <input name="autocheck-answer" class="autocheck-choice quiz-element-input"
                                type="radio" onclick="uncheckRadioOnCtrl(event)">
                         <input type="text" name="choice1text" value="Вариант 1" class="answer quiz-element-input"
@@ -157,12 +161,12 @@
             </div>
 
             <div class="quiz-group severalList">
-
                 <label class="vertical quiz-group-header">
                     Варианты ответа
                     <div class="severalList-option" id="severalList-1">
+                        <span class="databaseId">0</span>
                         <input name="autocheck-answer" class="autocheck-choice" type="checkbox">
-                        <input type="text" name="checkbox1text" value="Вариант 1" class="answer"
+                        <input type="text" name="checkbox1text" value="Вариант 1" class="answer quiz-element-input"
                                onchange="onSeveralListAnswerChange(event)">
                         <button type="button" class="delete-option" onclick="deleteOption(event)"></button>
                     </div>

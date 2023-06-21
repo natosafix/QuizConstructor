@@ -21,12 +21,13 @@ const questionType = quizQuestion.querySelector(".answer-type-selector");
 let question2PrevType = {1: 'shortText'};
 
 const choiceTypes = ['oneList', 'severalList', 'dropList'];
+const questionType2Id = {'shortText': 1, 'longText': 2, 'codeEditor': 3, 'oneList': 4, 'severalList': 5};
+const id2QuestionType = {1: 'shortText', 2: 'longText', 3: 'codeEditor', 4: 'oneList', 5: 'severalList'};
 
 //questionType.addEventListener('change', changeQuestionType)
 
 // меняет тип вариантов ответа на вопрос
 function changeQuestionType(event) {
-    console.log(event)
     let questionNum = getQuestionNum(event);
     let configuration = event.target.parentNode.parentNode.parentNode.parentNode.querySelector('.answer-configuration');
 
@@ -256,12 +257,14 @@ function removeQuestion(event) { // удаляет вопрос
 
 
 class QuizForm {
+    id = undefined;
     title = undefined;
     description = undefined;
     questions = [];
 }
 
 class QuizQuestion {
+    id = undefined;
     question = undefined;
     answerType = undefined;
     image = undefined;
@@ -271,26 +274,29 @@ class QuizQuestion {
 }
 
 class QuizAnswer {
+    id = undefined;
     answer = undefined;
-    isCorrect = undefined;
+    isCorrect = false;
 }
 
 function buildConstructor(event) {
     let quizForm = new QuizForm();
-    quizForm.title = document.getElementsByName('title');
-    quizForm.description = document.getElementsByName('description');
+    quizForm.id = getDatabaseId(document);
+    quizForm.title = document.getElementsByName('title')[0].value;
+    quizForm.description = document.getElementsByName('description')[0].value;
     let questionsHolder = event.target.parentNode;
     let questions = questionsHolder.querySelectorAll('.quiz-question');
     for (const question of questions) {
         let quizQuestion = new QuizQuestion();
-        console.log(question.querySelector('.question'))
+        quizQuestion.id = getDatabaseId(question);
         quizQuestion.question = question.querySelector('.question').value;
-        quizQuestion.answerType = question.querySelector('.answer-type-selector').value;
+        let answerType = question.querySelector('.answer-type-selector').value;
+        quizQuestion.answerType = questionType2Id[answerType];
         quizQuestion.maxScore = parseInt(question.querySelector("[name='maxScore']").value);
         quizQuestion.isAutocheckEnabled = false;
-        if (choiceTypes.includes(quizQuestion.answerType)) {
-            let answerHolder = question.querySelector(`.${quizQuestion.answerType}`);
-            let answers = answerHolder.querySelectorAll(`.${quizQuestion.answerType}-option`)
+        let answerHolder = question.querySelector(`.${answerType}`);
+        if (choiceTypes.includes(answerType)) {
+            let answers = answerHolder.querySelectorAll(`.${answerType}-option`)
 
             for (const answer of answers) {
                 if (answer.querySelector('.autocheck-choice').checked)
@@ -299,6 +305,7 @@ function buildConstructor(event) {
 
             for (const answer of answers) {
                 let quizAnswer = new QuizAnswer();
+                quizAnswer.id = getDatabaseId(answer)
                 quizAnswer.answer = answer.querySelector('.answer').value;
                 if (quizQuestion.isAutocheckEnabled)
                     quizAnswer.isCorrect = answer.querySelector('.autocheck-choice').checked;
@@ -306,22 +313,29 @@ function buildConstructor(event) {
             }
         } else  {
             let autocheckInput;
-            if (quizQuestion.answerType === 'codeEditor') {
-                autocheckInput = question.querySelector(".correct-answer");
-                autocheckInput = autocheckInput.CodeMirror;
+            if (answerType === 'codeEditor') {
+                autocheckInput = answerHolder.querySelector(".correct-answer");
+                autocheckInput = autocheckInput.CodeMirror.getValue();
             } else {
-                autocheckInput = question.querySelector('.correct-answer').value;
+                autocheckInput = answerHolder.querySelector('.correct-answer').value;
             }
             if (autocheckInput.length > 0) {
                 let quizAnswer = new QuizAnswer();
+                quizAnswer.id = getDatabaseId(answerHolder);
                 quizQuestion.isAutocheckEnabled = true;
-                quizAnswer.answer = autocheckInput.value;
+                quizAnswer.answer = autocheckInput;
                 quizAnswer.isCorrect = true;
                 quizQuestion.answers.push(quizAnswer);
             }
         }
         quizForm.questions.push(quizQuestion);
     }
+    console.log(JSON.stringify(quizForm));
+}
+
+function getDatabaseId(element) {
+    let id = element.querySelector('.databaseId').textContent;
+    return id === 0 ? undefined : id;
 }
 
 document.querySelector('.auth-login-button').addEventListener('click', logOut);
@@ -329,4 +343,107 @@ document.querySelector('.auth-login-button').addEventListener('click', logOut);
 function logOut() {
     CookieChanger.deleteCookie('auth');
     window.location.href = "http://localhost:8080/login";
+}
+
+let data =
+{
+    "id": 2,
+    "title": "Леха",
+    "description": "Кулаков",
+    "questions": [
+        {
+            "id": 1,
+            "question": "первый",
+            "answerType": "2",
+            "isAutocheckEnabled": false,
+            "answers": [],
+            "maxScore": 1
+        }, {
+            "id": 2,
+            "question": "второй",
+            "answerType": "4",
+            "isAutocheckEnabled": true,
+            "answers": [
+                {"id": 1, "answer": "Вариант 1", "isCorrect": false},
+                {"id": 2, "answer": "Вариант 2", "isCorrect": true},
+                {"id": 4, "answer": "Вариант 3", "isCorrect": false}
+            ],
+            "maxScore": 1
+        }, {
+            "id": 3,
+            "question": "третий",
+            "answerType": "5",
+            "isAutocheckEnabled": false,
+            "answers": [
+                {"id": 1, "answer": "Вариант 1", "isCorrect": false},
+                {"id": 2, "answer": "Вариант 2", "isCorrect": false},
+                {"id": 3, "answer": "Вариант 3", "isCorrect": false}
+            ],
+            "maxScore": 3
+        }, {
+            "id": "0",
+            "question": "тест",
+            "answerType": 3,
+            "isAutocheckEnabled": true,
+            "answers": [{"id": "0", "answer": "<input>", "isCorrect": true}],
+            "maxScore": 1
+        }
+    ]
+}
+
+createConstructorFromJson();
+function createConstructorFromJson() {
+    document.querySelector('.databaseId').textContent = data.id;
+    document.getElementsByName('title')[0].value = data.title;
+    document.getElementsByName('description')[0].value = data.description;
+    let addButton = document.getElementById('add-unit-button');
+    let questionCount = 1;
+    let clickEvent = new Event('click');
+    for (const questionData of data.questions) {
+        if (questionCount !== 1) {
+            addButton.dispatchEvent(clickEvent);
+        }
+        questionCount++;
+        let questions = document.querySelectorAll('.quiz-question');
+        let question = questions[questions.length - 1];
+        question.querySelector('.databaseId').textContent = questionData.id;
+        question.querySelector('.question').value = questionData.question;
+        let answerType = id2QuestionType[questionData.answerType];
+        let answerTypeSelect = question.querySelector('.answer-type-selector');
+        answerTypeSelect.value = answerType;
+        let changeEvent = new Event('change');
+        answerTypeSelect.dispatchEvent(changeEvent);
+        question.querySelector("[name='maxScore']").value = questionData.maxScore;
+        let answerHolder = question.querySelector(`.${answerType}`);
+
+        if (questionData.answers.length === 0)
+            continue;
+        if (choiceTypes.includes(answerType)) {
+            let addOptionButton = question.querySelector('.add-option-btn');
+            for (let i = 1; i <= questionData.answers.length - 1; i++) {
+                addOptionButton.dispatchEvent(clickEvent);
+            }
+            let answers = answerHolder.querySelectorAll(`.${answerType}-option`);
+            let answerCount = 0;
+            for (const answerData of questionData.answers) {
+                let answer = answers[answerCount];
+                answer.querySelector('.databaseId').textContent = answerData.id;
+                answer.querySelector('.answer').value = answerData.answer;
+                if (answerData.isCorrect) {
+                    answer.querySelector('.autocheck-choice').checked = true;
+                }
+                answerCount++;
+            }
+        } else if (questionData.isAutocheckEnabled) {
+            let autocheckInput;
+            if (answerType === 'codeEditor') {
+                autocheckInput = answerHolder.querySelector(".correct-answer");
+                autocheckInput.CodeMirror.setValue(questionData.answers[0].answer);
+            } else {
+                answerHolder.querySelector('.correct-answer').value = questionData.answers[0].answer;
+            }
+
+            answerHolder.querySelector('.databaseId').textContent = questionData.answers[0].answer;
+        }
+    }
 }
