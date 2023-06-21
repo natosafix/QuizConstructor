@@ -107,6 +107,7 @@ h2 {
 hr {
     border: none;
     border-top: 2px solid var(--accent-color);
+    margin: 4px 0;
 }
 
 

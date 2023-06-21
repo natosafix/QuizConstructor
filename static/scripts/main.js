@@ -241,7 +241,7 @@ function fillActiveQuizzes() {
         let currentGroup = data[groupKey];
         if (currentGroup['isAdmin'])
             continue;
-        let group = new GroupBlockDiv(currentGroup.name);
+        let group = new GroupBlockDiv(currentGroup.id, currentGroup.name);
         group.hide();
         for (let quizKey in currentGroup.quizVms) {
             let activeQuiz = currentGroup.quizVms[quizKey];
@@ -307,7 +307,7 @@ function fillGroupsPage() {
 
     for (let groupKey in data) {
         let currentGroup = data[groupKey];
-        let group = new GroupBlockDiv(currentGroup.name, currentGroup['isAdmin']);
+        let group = new GroupBlockDiv(currentGroup.id, currentGroup.name, currentGroup['isAdmin']);
         for (let quizKey in currentGroup.quizVms) {
             let currentQuiz = currentGroup.quizVms[quizKey];
             let finishedTime = new Date(currentQuiz.finished);
@@ -403,10 +403,10 @@ class CustomDOMElement {
 
 
 class GroupBlockDiv extends CustomDOMElement {
-    constructor(groupName, isAdmin=false) {
+    constructor(groupId, groupName, isAdmin=false) {
         super('div').withClass('block')
         this.isAdmin = isAdmin;
-        this.appendChild(new GroupHeaderDiv(groupName, this.isAdmin));
+        this.appendChild(new GroupHeaderDiv(groupId, groupName, this.isAdmin));
 
         this.clampedDiv = new CustomDOMElement('div').withClass('clamped-info');
         this.appendChild(this.clampedDiv);
@@ -437,7 +437,7 @@ class GroupBlockDiv extends CustomDOMElement {
 
 
 class GroupHeaderDiv extends CustomDOMElement {
-    constructor(headerText, isAdmin=false) {
+    constructor(groupId, headerText, isAdmin=false) {
         super('div').withClass('group-name');
         let container = new CustomDOMElement('div').withClass('admin-group-header-wrapper');
         let h2 = new CustomDOMElement('h2').withContent(headerText);
@@ -445,7 +445,7 @@ class GroupHeaderDiv extends CustomDOMElement {
 
         if (isAdmin)  {
             let groupSettingsHref = new CustomDOMElement('a');
-            groupSettingsHref.element.href = ""; // TODO Страница с настройкой группы, где будет инвайт сслыка, участники
+            groupSettingsHref.element.href = `http://localhost:8080/quiz/groupSettings/${groupId}`; // TODO Страница с настройкой группы, где будет инвайт сслыка, участники
             let img = new CustomDOMElement('img').withClass('admin-group-settings-btn');
             img.element.src = "img/svg/settings.svg";
             img.element.alt = "Настройки группы";
@@ -628,7 +628,8 @@ class GroupCreateModalWindow extends CustomDOMElement {
     }
 
     createGroup() {
-        alert(this.input.element.value); // TODO Перенаправить на страницу с настройками текущей группы
+        let newGroupId = 1; // TODO request to db for create new group, get newGroupId
+        window.location.href = `http://localhost:8080/quiz/groupSettings/${newGroupId}`;
         this.hide();
     }
 }
