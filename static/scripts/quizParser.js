@@ -404,27 +404,27 @@ function setMaxScore() {
     document.getElementById("max-score").innerText = "/" + maxScore.toString();
 }
 
-function nextPressed() {
-    document.querySelector("#myForm").remove();
-
-    const newAnswers = [
-        "Ega lopar",
-        "nien",
-        "lexa",
-        "Мужчина",
-        "Нет"
-    ];
-    parse();
-    addIsCorrectSwitch(newAnswers);
-}
-
-function getCheckedAnswers() {
-    for (const )
-
-    const q = {
-        id: answersJson.id,
-        points: [
-
-        ]
-    }
-}
+// function nextPressed() {
+//     document.querySelector("#myForm").remove();
+//
+//     const newAnswers = [
+//         "Ega lopar",
+//         "nien",
+//         "lexa",
+//         "Мужчина",
+//         "Нет"
+//     ];
+//     parse();
+//     addIsCorrectSwitch(newAnswers);
+// }
+//
+// function getCheckedAnswers() {
+//     for (const )
+//
+//     const q = {
+//         id: answersJson.id,
+//         points: [
+//
+//         ]
+//     }
+// }
