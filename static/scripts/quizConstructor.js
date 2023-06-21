@@ -307,8 +307,8 @@ function buildConstructor(event) {
         } else  {
             let autocheckInput;
             if (quizQuestion.answerType === 'codeEditor') {
-                autocheckInput = question.querySelector(".correct-answer");
-                autocheckInput = autocheckInput.CodeMirror;
+                autocheckInput = question.querySelector(".code-input");
+                autocheckInput = autocheckInput.CodeMirror.getValue();
             } else {
                 autocheckInput = question.querySelector('.correct-answer').value;
             }
