@@ -4,23 +4,24 @@ let inviteLinkInput = document.querySelector('#inviteLink');
 let data;
 
 document.addEventListener('DOMContentLoaded', async function(event) {
-    data = { // TODO db request
+    // TODO db request
+    data = {
         name: "Контора",
         members: [
             {
                 id: 1,
                 firstName: "Хёндай",
-                secondName: "Супра"
+                lastName: "Супра"
             },
             {
                 id: 2,
                 firstName: "Тойота",
-                secondName: "Королла"
+                lastName: "Королла"
             },
             {
                 id: 3,
                 firstName: "Эндрю",
-                secondName: "Брррым брррымм.."
+                lastName: "Брррым брррымм.."
             },
         ]
     }
@@ -40,7 +41,7 @@ function fillMembers(members) {
     const pastePlace = document.querySelector("#member-paste-place");
 
     for (let member of members) {
-        pastePlace.appendChild(new GroupMemberDiv(member.id, member.firstName, member.secondName).element);
+        pastePlace.appendChild(new GroupMemberDiv(member.id, member.firstName, member.lastName).element);
     }
 }
 

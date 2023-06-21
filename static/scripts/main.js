@@ -40,157 +40,159 @@ document.addEventListener('DOMContentLoaded', async function(event) {
         });
         data = await response.json();*/
         data = {
-            "groupVm1": {
-                "id": 1,
-                "name": "Контора",
-                "isAdmin": false,
-                "quizVms": [
-                    {
-                        "id": 1,
-                        "finished": null,
-                        "name": "Пятиминутка №15",
-                        "description": "Пятиминутка о вёрстке и стилях",
-                        "score": 0,
-                        "startTime" : "2019-07-26T12:43:23+05:00",
-                        "endTime" : "2025-07-26T12:43:23+05:00",
-                    },
-                    {
-                        "id": 2,
-                        "finished": null,
-                        "name": "Пятиминутка №228",
-                        "description": "Пятиминутка",
-                        "score": 0,
-                        "startTime" : "2019-07-26T12:43:23+05:00",
-                        "endTime" : "2025-07-26T12:43:23+00:00",
-                    },
-                    {
-                        "id": 3,
-                        "finished": null,
-                        "name": "Вы гей? №322",
-                        "description": "",
-                        "score": 0,
-                        "startTime" : "2019-07-26T12:43:23+05:00",
-                        "endTime" : "2020-07-26T12:43:23+00:00",
-                    },
-                    {
-                        "id": 4,
-                        "finished": '2020-07-26T12:43:23+05:00',
-                        "name": "Двухминутка №1337",
-                        "description": "очевидно да",
-                        "score": 3.81,
-                        "startTime" : "2019-07-26T12:43:23+05:00",
-                        "endTime" : "2021-07-26T12:43:23+00:00",
-                    },
-                    {
-                        "id": 5,
-                        "finished": '2020-07-26T12:43:23+05:00',
-                        "name": "Лох с нулём",
-                        "description": "Лох с нулём",
-                        "score": 0,
-                        "startTime" : "2019-07-26T12:43:23+05:00",
-                        "endTime" : "2025-07-26T12:43:23+00:00",
-                    }]
-            },
-            "groupVm2": {
-                "id": 2,
-                "name": "Контора2",
-                "isAdmin": true,
-                "quizVms": [
-                    {
-                        "id": 6,
-                        "finished": null,
-                        "name": "Активная",
-                        "description": "Пятиминутка о вёрстке и стилях",
-                        "score": 0,
-                        "startTime" : "2019-07-26T12:43:23+05:00",
-                        "endTime" : "2025-07-26T12:43:23+05:00",
-                    },
-                    {
-                        "id": 7,
-                        "finished": null,
-                        "name": "Актиwadsadwaвная",
-                        "description": "Пятиминутка о вёрстке и стилях",
-                        "score": 0,
-                        "startTime" : "2019-07-26T12:43:23+05:00",
-                        "endTime" : "2025-07-26T12:43:23+05:00",
-                    },
-                    {
-                        "id": 8,
-                        "finished": null,
-                        "name": "Запланированная",
-                        "description": "Пятиминутка о вёрстке и стилях",
-                        "score": 0,
-                        "startTime" : "2024-07-26T12:43:23+05:00",
-                        "endTime" : "2025-07-26T12:43:23+05:00",
-                    },
-                    {
-                        "id": 9,
-                        "finished": null,
-                        "name": "Закончилась",
-                        "description": "Пятиминутка о вёрстке и стилях",
-                        "score": 0,
-                        "startTime" : "2019-07-26T12:43:23+05:00",
-                        "endTime" : "2022-07-26T12:43:23+05:00",
-                    },
-                ]
-            },
-            "groupVm3": {
-                "id": 3,
-                "name": "Контора3",
-                "isAdmin": false,
-                "quizVms": [
-                    {
-                        "id": 10,
-                        "finished": "2021-07-26T12:43:23+05:00",
-                        "name": "Пятиминутка №15",
-                        "description": "Пятиминутка о вёрстке и стилях",
-                        "score": 2,
-                        "startTime" : "2019-07-26T12:43:23+05:00",
-                        "endTime" : "2025-07-26T12:43:23+05:00",
-                    },
-                    {
-                        "id": 11,
-                        "finished": "2022-07-26T12:43:23+05:00",
-                        "name": "Помидор без оценки",
-                        "description": "Пятиминутка о вёрстке и стилях",
-                        "score": null,
-                        "startTime" : "2019-07-26T12:43:23+05:00",
-                        "endTime" : "2025-07-26T12:43:23+05:00",
-                    },
-                ]
-            },
-            "groupVm4": {
-                "id": 4,
-                "name": "Контора4",
-                "isAdmin": false,
-                "quizVms": [
-                    {
-                        "id": 12,
-                        "finished": null,
-                        "name": "Моя первая пятиминутка",
-                        "description": "Пятиминутка ни о чём",
-                        "score": 0,
-                        "startTime" : "2019-07-26T12:43:23+05:00",
-                        "endTime" : "2025-07-26T12:43:23+05:00",
-                    },
-                    {
-                        "id": 13,
-                        "finished": null,
-                        "name": "Никогда не настанет",
-                        "description": "Пятиминутка ни о чём",
-                        "score": 0,
-                        "startTime" : "2024-07-26T12:43:23+05:00",
-                        "endTime" : "2025-07-26T12:43:23+05:00",
-                    },
-                ]
-            },
-            "groupVm5": {
-                "id": 5,
-                "name": "Я здесь главный",
-                "isAdmin": true,
-                "quizVms": [
-                ]
-            }
+            "groups": [
+                {
+                    "id": 1,
+                    "name": "Контора",
+                    "isAdmin": false,
+                    "quizVms": [
+                        {
+                            "id": 1,
+                            "finished": null,
+                            "name": "Пятиминутка №15",
+                            "description": "Пятиминутка о вёрстке и стилях",
+                            "score": 0,
+                            "startTime" : "2019-07-26T12:43:23+05:00",
+                            "endTime" : "2025-07-26T12:43:23+05:00",
+                        },
+                        {
+                            "id": 2,
+                            "finished": null,
+                            "name": "Пятиминутка №228",
+                            "description": "Пятиминутка",
+                            "score": 0,
+                            "startTime" : "2019-07-26T12:43:23+05:00",
+                            "endTime" : "2025-07-26T12:43:23+00:00",
+                        },
+                        {
+                            "id": 3,
+                            "finished": null,
+                            "name": "Вы гей? №322",
+                            "description": "",
+                            "score": 0,
+                            "startTime" : "2019-07-26T12:43:23+05:00",
+                            "endTime" : "2020-07-26T12:43:23+00:00",
+                        },
+                        {
+                            "id": 4,
+                            "finished": '2020-07-26T12:43:23+05:00',
+                            "name": "Двухминутка №1337",
+                            "description": "очевидно да",
+                            "score": 3.81,
+                            "startTime" : "2019-07-26T12:43:23+05:00",
+                            "endTime" : "2021-07-26T12:43:23+00:00",
+                        },
+                        {
+                            "id": 5,
+                            "finished": '2020-07-26T12:43:23+05:00',
+                            "name": "Лох с нулём",
+                            "description": "Лох с нулём",
+                            "score": 0,
+                            "startTime" : "2019-07-26T12:43:23+05:00",
+                            "endTime" : "2025-07-26T12:43:23+00:00",
+                        }]
+                },
+                {
+                    "id": 2,
+                    "name": "Контора2",
+                    "isAdmin": true,
+                    "quizVms": [
+                        {
+                            "id": 6,
+                            "finished": null,
+                            "name": "Активная",
+                            "description": "Пятиминутка о вёрстке и стилях",
+                            "score": 0,
+                            "startTime" : "2019-07-26T12:43:23+05:00",
+                            "endTime" : "2025-07-26T12:43:23+05:00",
+                        },
+                        {
+                            "id": 7,
+                            "finished": null,
+                            "name": "Актиwadsadwaвная",
+                            "description": "Пятиминутка о вёрстке и стилях",
+                            "score": 0,
+                            "startTime" : "2019-07-26T12:43:23+05:00",
+                            "endTime" : "2025-07-26T12:43:23+05:00",
+                        },
+                        {
+                            "id": 8,
+                            "finished": null,
+                            "name": "Запланированная",
+                            "description": "Пятиминутка о вёрстке и стилях",
+                            "score": 0,
+                            "startTime" : "2024-07-26T12:43:23+05:00",
+                            "endTime" : "2025-07-26T12:43:23+05:00",
+                        },
+                        {
+                            "id": 9,
+                            "finished": null,
+                            "name": "Закончилась",
+                            "description": "Пятиминутка о вёрстке и стилях",
+                            "score": 0,
+                            "startTime" : "2019-07-26T12:43:23+05:00",
+                            "endTime" : "2022-07-26T12:43:23+05:00",
+                        },
+                    ]
+                },
+                {
+                    "id": 3,
+                    "name": "Контора3",
+                    "isAdmin": false,
+                    "quizVms": [
+                        {
+                            "id": 10,
+                            "finished": "2021-07-26T12:43:23+05:00",
+                            "name": "Пятиминутка №15",
+                            "description": "Пятиминутка о вёрстке и стилях",
+                            "score": 2,
+                            "startTime" : "2019-07-26T12:43:23+05:00",
+                            "endTime" : "2025-07-26T12:43:23+05:00",
+                        },
+                        {
+                            "id": 11,
+                            "finished": "2022-07-26T12:43:23+05:00",
+                            "name": "Помидор без оценки",
+                            "description": "Пятиминутка о вёрстке и стилях",
+                            "score": null,
+                            "startTime" : "2019-07-26T12:43:23+05:00",
+                            "endTime" : "2025-07-26T12:43:23+05:00",
+                        },
+                    ]
+                },
+                {
+                    "id": 4,
+                    "name": "Контора4",
+                    "isAdmin": false,
+                    "quizVms": [
+                        {
+                            "id": 12,
+                            "finished": null,
+                            "name": "Моя первая пятиминутка",
+                            "description": "Пятиминутка ни о чём",
+                            "score": 0,
+                            "startTime": "2019-07-26T12:43:23+05:00",
+                            "endTime": "2025-07-26T12:43:23+05:00",
+                        },
+                        {
+                            "id": 13,
+                            "finished": null,
+                            "name": "Никогда не настанет",
+                            "description": "Пятиминутка ни о чём",
+                            "score": 0,
+                            "startTime": "2024-07-26T12:43:23+05:00",
+                            "endTime": "2025-07-26T12:43:23+05:00",
+                        },
+                    ]
+                },
+                {
+                    "id": 5,
+                    "name": "Я здесь главный",
+                    "isAdmin": true,
+                    "quizVms": [
+                    ]
+                }
+            ]
         }
 
         adminQuizzes = {
@@ -208,8 +210,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
             ]
         }
 
-        for (let groupKey in data) {
-            let currentGroup = data[groupKey];
+        for (let currentGroup of data['groups']) {
             if (currentGroup.isAdmin) {
                 adminGroupId2Name[currentGroup.id] = currentGroup.name;
             }
@@ -237,8 +238,7 @@ function buildPage() {
 function fillActiveQuizzes() {
     let activePaste = document.querySelector('#active-paste-place');
 
-    for (let groupKey in data) {
-        let currentGroup = data[groupKey];
+    for (let currentGroup of data['groups']) {
         if (currentGroup['isAdmin'])
             continue;
         let group = new GroupBlockDiv(currentGroup.id, currentGroup.name);
@@ -268,8 +268,7 @@ function fillEndedQuizzes() {
     let endedPaste = document.querySelector('#ended-paste-place');
     let quizzes = [];
 
-    for (let groupKey in data) {
-        let currentGroup = data[groupKey];
+    for (let currentGroup of data['groups']) {
         if (currentGroup['isAdmin'])
             continue;
 
@@ -305,8 +304,7 @@ function fillEndedQuizzes() {
 function fillGroupsPage() {
     let pastePlace = document.querySelector('#groups-paste-place');
 
-    for (let groupKey in data) {
-        let currentGroup = data[groupKey];
+    for (let currentGroup of data['groups']) {
         let group = new GroupBlockDiv(currentGroup.id, currentGroup.name, currentGroup['isAdmin']);
         for (let quizKey in currentGroup.quizVms) {
             let currentQuiz = currentGroup.quizVms[quizKey];
