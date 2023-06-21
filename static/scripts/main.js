@@ -823,45 +823,6 @@ for (let navButton of groupsNavButtons) {
 }
 const groupsNavButtonsGroup = new ButtonsGroupHandler(groupsNavButtonsHandlers);
 
-document.querySelector('.auth-login-button').addEventListener('click', logOut);
-
-function logOut() {
-    CookieChanger.deleteCookie('auth');
-    window.location.href = "http://localhost:8080/login";
-}
-
-class CookieChanger {
-    static setCookie(name, value, options = {}) {
-
-        options = {
-            path: '/',
-            ...options
-        };
-
-        if (options.expires instanceof Date) {
-            options.expires = options.expires.toUTCString();
-        }
-
-        let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
-
-        for (let optionKey in options) {
-            updatedCookie += "; " + optionKey;
-            let optionValue = options[optionKey];
-            if (optionValue !== true) {
-                updatedCookie += "=" + optionValue;
-            }
-        }
-
-        document.cookie = updatedCookie;
-    }
-
-    static deleteCookie(name) {
-        CookieChanger.setCookie(name, "", {
-            'max-age': -1
-        })
-    }
-}
-
 function planQuizPressed() {
     const values =  Array.from(document.querySelectorAll("#chosenGroups option:checked")).map(e => e.value);
     console.log(values);

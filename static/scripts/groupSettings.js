@@ -27,7 +27,8 @@ document.addEventListener('DOMContentLoaded', async function(event) {
     }
 
     document.querySelector('#groupName').textContent = data.name;
-    inviteLinkInput.value = "localHost:8080/groupJoin/trashLongText/1"; // TODO fill
+    const groupId = document.querySelector('.backend-data').textContent;
+    inviteLinkInput.value = `localHost:8080/groupInvite/${groupId}`;
     inviteLinkInput.addEventListener('click', copyLink, false);
 
     fillMembers(data['members']);

@@ -338,13 +338,6 @@ function getDatabaseId(element) {
     return id === 0 ? undefined : id;
 }
 
-document.querySelector('.auth-login-button').addEventListener('click', logOut);
-
-function logOut() {
-    CookieChanger.deleteCookie('auth');
-    window.location.href = "http://localhost:8080/login";
-}
-
 let data =
 {
     "id": 2,
