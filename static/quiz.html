@@ -2,33 +2,198 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="/css/quiz.css">
+    <title>Конструктор опроса</title>
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/quizConstructorStyle.css"/>
+    <link rel="stylesheet" href="/css/dropdown-select.css"/>
+
+    <script src="/node_modules/codemirror/lib/codemirror.js"></script>
+    <link href="/node_modules/codemirror/lib/codemirror.css" rel="stylesheet"/>
+    <script src="/node_modules/codemirror/mode/javascript/javascript.js"></script>
+    <script src="/node_modules/codemirror/mode/xml/xml.js"></script>
+    <script src="/node_modules/codemirror/mode/css/css.js"></script>
+    <script src="/node_modules/codemirror/addon/edit/matchbrackets.js"></script>
+    <script src="/node_modules/codemirror/addon/display/placeholder.js"></script>
+    <link href="/node_modules/codemirror/theme/eclipse.css" rel="stylesheet"/>
+
 </head>
 <body>
-<span class="backend-data">{ quizId }</span>
-<span class="backend-data">{ userId }</span>
-<span id="time"></span>
+
+
+<header class="header">
+    <div class="header-wrapper">
+        <div class="header-logo">
+            <a href="/static" class="header-logo-link">
+                <img class="header-logo-img" src="/img/svg/quiz-logo.svg">
+            </a>
+        </div>
+
+        <div class="header-auth">
+            <ul class="auth-list">
+                <li class="auth-list-item">
+                    <button type="button" class="auth-login-button">Войти</button>
+                </li>
+                <li class="auth-list-item">
+                    <button type="button" class="auth-signup-button">Регистрация</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+<span class="backend-data" id="quiz-id">{ quizId }</span>
+<span class="backend-data" id="user-id">{ userId }</span>
+
+<div>
+    <button class="myButton" type="button" style="position: fixed" id="add-unit-button" name="add-unit">Добавить вопрос</button>
+</div>
 
 <div class="main">
 
-    <div class="thanks">
-        <div class="block">
-            <h2>Спасибо! Ваш ответ записан.</h2>
+    <form class="quiz-form-header block">
+        <div class="quiz-group one-line">
+            <label class="vertical quiz-header-label">
+                Название опроса
+                <input class="quiz-element-input vertical" type="text" name="title" placeholder="Введите название...">
+            </label>
         </div>
-    </div>
 
-    <div class="under-blocks">
-        <button form="myForm" class="submit-button" id="send-answers-button">Отправить</button>
-
-        <div class="thanks">
-            <button class="submit-button" id="main-page-button">На главную</button>
+        <div class="quiz-group multi-line">
+            <label class="vertical quiz-group-header">
+                Описание
+                <textarea class="quiz-element-input vertical" name="description" placeholder="Введите описание..."></textarea>
+            </label>
         </div>
-    </div>
+    </form>
+
+    <form class="quiz-question block" name="q1">
+        <div class="quiz-group multi-line">
+            <label class="vertical quiz-question-header-label" id="questionNumber1">
+                Вопрос №1
+            </label>
+            <textarea class="question quiz-element-input vertical"
+                      name="question"
+                      id="questionHeader1"
+                      placeholder="Введите вопрос..."></textarea>
+        </div>
+
+        <div class="quiz-group">
+            <label class="vertical quiz-group-header">
+                Вставьте картинку
+                <input type="file" id="imageInput1" class="quiz-element-input question-add-image vertical" accept="image/*"
+                       onchange="onChangeImage(event)">
+                <img src="" id="imagePreview1" alt="Выбранная картинка" style="display: none">
+                <button id="deleteImage1" style="display: none" onclick="onDeleteImage(event)">Удалить картинку</button>
+            </label>
+        </div>
+
+        <div class="quiz-group">
+            <label class="vertical quiz-group-header">
+                Тип ответа
+                <div class="select">
+                    <select class="standard-select answer-type-selector vertical quiz-element-input" onchange="changeQuestionType(event)">
+                        <option value="shortText">Текст(строка)</option>
+                        <option value="longText">Текст(абзац)</option>
+                        <option value="codeEditor">Код</option>
+                        <option value="oneList">Один из списка</option>
+                        <option value="severalList">Несколько из списка</option>
+                        <!--<option value="dropList">Раскрывающийся список</option>-->
+                    </select>
+                    <span class="focus"></span>
+                </div>
+            </label>
+        </div>
+
+        <div class="answer-configuration">
+
+            <div class="quiz-group shortText">
+                <label class="vertical quiz-group-header">
+                    Короткий ответ
+                    <input type="text" placeholder="Введите для автопроверки..." class="quiz-element-input">
+                </label>
+            </div>
+
+            <div class="quiz-group longText">
+                <label class="vertical quiz-group-header">
+                    Длинный ответ
+                    <textarea placeholder="Введите для автопроверки..." class="quiz-element-input"></textarea>
+                </label>
+            </div>
+
+            <div class="quiz-group codeEditor">
+
+                <label class="quiz-group-header vertical" for="codeEditor1" id="labelForCodeEditor1">Код</label>
+
+                <div class="select">
+                    <select class="quiz-element-input standard-select" onchange="onModeChange(event)">
+                        <option value="javascript">JavaScript</option>
+                        <option value="xml">HTML/XML</option>
+                        <option value="css">CSS</option>
+                    </select>
+                    <span class="focus"></span>
+                </div>
+
+                <textarea placeholder="Введите для автопроверки..." class="quiz-element-input"
+                          id="codeEditor1"></textarea>
+
+            </div>
+
+            <div class="quiz-group oneList">
+
+                <label class="vertical quiz-group-header">
+                    Варианты ответа
+                    <div class="oneList-option" id="oneList-1">
+                        <input name="autocheck-answer" class="autocheck-choice quiz-element-input"
+                               type="radio" onclick="uncheckRadioOnCtrl(event)">
+                        <input type="text" name="choice1text" value="Вариант 1" class="answer quiz-element-input"
+                               onchange="onSeveralListAnswerChange(event)">
+                        <button type="button" class="delete-option" onclick="deleteOption(event)"></button>
+                    </div>
+                </label>
+
+                <div>
+                    <button type="button" class="add-option-btn myButton" onclick="addOption(event)">Добавить вариант ответа</button>
+                </div>
+
+            </div>
+
+            <div class="quiz-group severalList">
+
+                <label class="vertical quiz-group-header">
+                    Варианты ответа
+                    <div class="severalList-option" id="severalList-1">
+                        <input name="autocheck-answer" class="autocheck-choice" type="checkbox">
+                        <input type="text" name="checkbox1text" value="Вариант 1" class="answer"
+                               onchange="onSeveralListAnswerChange(event)">
+                        <button type="button" class="delete-option" onclick="deleteOption(event)"></button>
+                    </div>
+                </label>
+
+                <div>
+                    <button type="button" class="add-option-btn myButton" onclick="addOption(event)">Добавить вариант ответа</button>
+                </div>
+
+            </div>
+
+            <div class="quiz-group dropList">
+                <label class="dropList-option">
+                    1. <input type="text" name="drop1text" placeholder="Вариант 1" class="answer">
+                    <button type="button" class="delete-option" onclick="deleteOption(event)"></button>
+                </label>
+            </div>
+
+        </div>
+
+        <div>
+            <button type="button" class="remove-unit myButton" onclick="removeQuestion(event)">Удалить вопрос</button>
+        </div>
+
+    </form>
+    <button type="button" class="build-button myButton" onclick="buildConstructor(event)">Отправить форму</button>
 </div>
-<script type="text/javascript" src='/scripts/quiz.js'></script>
-<script type="text/javascript" src='/scripts/quizParser.js'></script>
+
+<script src="/scripts/quizConstructor.js"></script>
+
 </body>
-<script>parse()</script>
-<script>setTimer()</script>
 </html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Настройки группы</title>
+
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/groupSettings.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="overlay js-overlay-modal"></div>
+
+  <div class="header-wrapper">
+    <div class="header-logo">
+      <a href="/" class="header-logo-link">
+        <img class="header-logo-img" src="/img/svg/quiz-logo.svg" alt="logo">
+      </a>
+    </div>
+
+    <div class="header-auth">
+      <ul class="auth-list">
+        <li class="auth-list-item">
+          <button type="button" class="auth-signup-button">{ userId }</button>
+        </li>
+        <li class="auth-list-item">
+          <button type="button" class="auth-login-button">Выйти</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<p id="group-id">{ groupId }</p>
+
+<div class="blocks-wrapper" id="active-paste-place">
+
+    <div class="block" id="member-paste-place">
+
+        <div class="admin-group-header-wrapper">
+
+            <h2 id="groupName"></h2>
+
+            <div class="invite-wrapper">
+
+                <input class="share-link-input" type="text" readonly="readonly" id="inviteLink"/>
+                <img src="/img/svg/invite-link.svg" class="invite-img" onclick="copyLink()">
+
+            </div>
+
+        </div>
+
+        <hr>
+
+    </div>
+
+</div>
+
+
+<script src="/scripts/groupSettings.js"></script>
+
+</body>
+</html>

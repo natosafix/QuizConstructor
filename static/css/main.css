@@ -46,6 +46,9 @@
     margin: 0;
     max-height: 255px;
     overflow-y: auto;
+    overflow-x: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 
@@ -56,9 +59,22 @@
 }
 
 
+.admin-quiz {
+    width: 100%;
+
+    padding: 15px 40px;
+    margin: 10px 0;
+
+    display: grid;
+    grid-template-columns: 60% 30% 10%;
+    grid-template-areas: "A B C";
+
+    border-radius: var(--border-radius);
+    background-color: var(--accent2-color);
+}
+
 .base-quiz {
     width: 100%;
-    overflow-x: auto;
 
     padding: 15px 40px;
     margin: 10px 0;
@@ -71,20 +87,44 @@
     background-color: var(--accent2-color);
 }
 
+.admin-quiz .quiz-header,
 .base-quiz .quiz-header {
     display: grid;
     grid-area: A;
     justify-content: start;
     align-self: center;
+
+    overflow-y: hidden;
+    overflow-x: hidden;
 }
 
+.admin-quiz .quiz-mark,
 .base-quiz .quiz-mark {
     display: grid;
     grid-area: B;
     justify-content: center;
     align-self: center;
+
+    overflow-y: hidden;
+    overflow-x: hidden;
 }
 
+.admin-quiz .quiz-plan-btn,
+.base-quiz .quiz-plan-btn {
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-area: B;
+    justify-content: center;
+    align-self: center;
+    text-decoration: underline black solid;
+    background-color: rgba(0, 0, 0, 0);
+
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.admin-quiz .quiz-time,
 .base-quiz .quiz-time {
     display: grid;
     grid-area: C;
@@ -94,17 +134,25 @@
     color: black;
     opacity: 0.5;
     pointer-events: none;
+
+    overflow-y: hidden;
+    overflow-x: hidden;
 }
 
+.admin-quiz .quiz-edit-href,
 .base-quiz .quiz-edit-href {
     display: grid;
     grid-area: C;
     justify-content: end;
     align-self: center;
+
+    overflow-y: hidden;
+    overflow-x: hidden;
 }
 
+.admin-quiz .quiz-edit-href img,
 .base-quiz .quiz-edit-href img {
-    height: 35px;
+    height: 25px;
 }
 
 .base-quiz:not(:has(.quiz-mark)) {
@@ -203,6 +251,7 @@
 .quiz-check-href {
     color: black;
     text-decoration: underline black solid;
+    text-decoration-thickness: 1px;
 }
 
 .quiz-search-and-create-wrapper {

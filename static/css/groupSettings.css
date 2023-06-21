@@ -1,0 +1,70 @@
+.blocks-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: var(--border-radius);
+    margin: 20px 60px;
+    padding: 20px 40px;
+    width: 75%;
+    background-color: var(--block-bg-color);
+}
+
+.admin-group-header-wrapper {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    height: 30px;
+    margin-top: 20px;
+}
+
+.invite-wrapper {
+    height: 100%;
+}
+
+.invite-wrapper .share-link-input {
+    text-align: center;
+    height: 100%;
+    background: rgba(0, 0, 0, 0);
+    align-self: center;
+    font-weight: bold;
+    border: 0px;
+}
+
+.invite-wrapper .invite-img {
+    height: 100%;
+    align-self: center;
+}
+
+.group-member-wrapper {
+    width: 100%;
+
+    padding: 5px 40px;
+    margin: 10px 0;
+
+    display: grid;
+    grid-template-columns: 70% 30%;
+    grid-template-areas: "A B";
+    align-items: center;
+
+    border-radius: var(--border-radius);
+    background-color: var(--accent2-color);
+}
+
+.group-member-wrapper .member-name {
+    grid-area: A;
+}
+
+.group-member-wrapper .remove-btn {
+    grid-area: B;
+    margin: 0;
+    padding: 10px 0;
+    background-color: rgba(0, 0, 0, 0);
+    text-decoration: underline solid black;
+}

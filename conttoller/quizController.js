@@ -26,6 +26,14 @@ class QuizController {
         htmlChanger.changeKeys(htmlPath, {'quizId': quizId, 'userId': user},
             (changedHtml) => res.send(changedHtml));
     }
+
+    groupSettings(req, res) {
+        let groupId = req.params.id;
+        let user = req.user.userId;
+        let htmlPath = path.resolve(__dirname, '../static', 'groupSettings.html');
+        htmlChanger.changeKeys(htmlPath, {'groupId': groupId, 'userId': user},
+            (changedHtml) => res.send(changedHtml));
+    }
 }
 
 module.exports = new QuizController();

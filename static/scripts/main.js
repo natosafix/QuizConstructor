@@ -13,8 +13,25 @@ const dateTimeOptions = {
 let data;
 let adminQuizzes;
 let planModalWindow;
+let createGroupModalWindow;
 let adminGroupId2Name = {};
 const overlay = document.querySelector('.js-overlay-modal');
+
+// Закрытие модального окна на бэкгрануд
+overlay.addEventListener('click', function () {
+    planModalWindow.hide();
+    createGroupModalWindow.hide();
+});
+
+// Закрытие модального окна на ESC
+document.body.addEventListener('keyup', function (e) {
+    const key = e.keyCode;
+    if (key === 27) {
+        planModalWindow.hide();
+        createGroupModalWindow.hide();
+    }
+}, false);
+
 
 document.addEventListener('DOMContentLoaded', async function(event) {
     try {
@@ -23,165 +40,166 @@ document.addEventListener('DOMContentLoaded', async function(event) {
         });
         data = await response.json();*/
         data = {
-            "groupVm1": {
-                "id": 1,
-                "name": "Контора",
-                "isAdmin": false,
-                "quizVms": [
-                    {
-                        "id": 1,
-                        "finished": null,
-                        "name": "Пятиминутка №15",
-                        "description": "Пятиминутка о вёрстке и стилях",
-                        "score": 0,
-                        "startTime" : "2019-07-26T12:43:23+05:00",
-                        "endTime" : "2025-07-26T12:43:23+05:00",
-                    },
-                    {
-                        "id": 2,
-                        "finished": null,
-                        "name": "Пятиминутка №228",
-                        "description": "Пятиминутка",
-                        "score": 0,
-                        "startTime" : "2019-07-26T12:43:23+05:00",
-                        "endTime" : "2025-07-26T12:43:23+00:00",
-                    },
-                    {
-                        "id": 3,
-                        "finished": null,
-                        "name": "Вы гей? №322",
-                        "description": "",
-                        "score": 0,
-                        "startTime" : "2019-07-26T12:43:23+05:00",
-                        "endTime" : "2020-07-26T12:43:23+00:00",
-                    },
-                    {
-                        "id": 4,
-                        "finished": '2020-07-26T12:43:23+05:00',
-                        "name": "Двухминутка №1337",
-                        "description": "очевидно да",
-                        "score": 3.81,
-                        "startTime" : "2019-07-26T12:43:23+05:00",
-                        "endTime" : "2021-07-26T12:43:23+00:00",
-                    },
-                    {
-                        "id": 5,
-                        "finished": '2020-07-26T12:43:23+05:00',
-                        "name": "Лох с нулём",
-                        "description": "Лох с нулём",
-                        "score": 0,
-                        "startTime" : "2019-07-26T12:43:23+05:00",
-                        "endTime" : "2025-07-26T12:43:23+00:00",
-                    }]
-            },
-            "groupVm2": {
-                "id": 1,
-                "name": "Контора2",
-                "isAdmin": true,
-                "quizVms": [
-                    {
-                        "id": 1,
-                        "finished": null,
-                        "name": "Активная",
-                        "description": "Пятиминутка о вёрстке и стилях",
-                        "score": 0,
-                        "startTime" : "2019-07-26T12:43:23+05:00",
-                        "endTime" : "2025-07-26T12:43:23+05:00",
-                    },
-                    {
-                        "id": 1,
-                        "finished": null,
-                        "name": "Актиwadsadwaвная",
-                        "description": "Пятиминутка о вёрстке и стилях",
-                        "score": 0,
-                        "startTime" : "2019-07-26T12:43:23+05:00",
-                        "endTime" : "2025-07-26T12:43:23+05:00",
-                    },
-                    {
-                        "id": 1,
-                        "finished": null,
-                        "name": "Запланированная",
-                        "description": "Пятиминутка о вёрстке и стилях",
-                        "score": 0,
-                        "startTime" : "2024-07-26T12:43:23+05:00",
-                        "endTime" : "2025-07-26T12:43:23+05:00",
-                    },
-                    {
-                        "id": 1,
-                        "finished": null,
-                        "name": "Закончилась",
-                        "description": "Пятиминутка о вёрстке и стилях",
-                        "score": 0,
-                        "startTime" : "2019-07-26T12:43:23+05:00",
-                        "endTime" : "2022-07-26T12:43:23+05:00",
-                    },
-                ]
-            },
-            "groupVm3": {
-                "id": 1,
-                "name": "Контора3",
-                "isAdmin": false,
-                "quizVms": [
-                    {
-                        "id": 1,
-                        "finished": "2021-07-26T12:43:23+05:00",
-                        "name": "Пятиминутка №15",
-                        "description": "Пятиминутка о вёрстке и стилях",
-                        "score": 2,
-                        "startTime" : "2019-07-26T12:43:23+05:00",
-                        "endTime" : "2025-07-26T12:43:23+05:00",
-                    },
-                    {
-                        "id": 7,
-                        "finished": "2022-07-26T12:43:23+05:00",
-                        "name": "Помидор без оценки",
-                        "description": "Пятиминутка о вёрстке и стилях",
-                        "score": null,
-                        "startTime" : "2019-07-26T12:43:23+05:00",
-                        "endTime" : "2025-07-26T12:43:23+05:00",
-                    },
-                ]
-            },
-            "groupVm4": {
-                "id": 1,
-                "name": "Контора4",
-                "isAdmin": false,
-                "quizVms": [
-                    {
-                        "id": 8,
-                        "finished": null,
-                        "name": "Моя первая пятиминутка",
-                        "description": "Пятиминутка ни о чём",
-                        "score": 0,
-                        "startTime" : "2019-07-26T12:43:23+05:00",
-                        "endTime" : "2025-07-26T12:43:23+05:00",
-                    },
-                    {
-                        "id": 9,
-                        "finished": null,
-                        "name": "Никогда не настанет",
-                        "description": "Пятиминутка ни о чём",
-                        "score": 0,
-                        "startTime" : "2024-07-26T12:43:23+05:00",
-                        "endTime" : "2025-07-26T12:43:23+05:00",
-                    },
-                ]
-            },
-            "groupVm5": {
-                "id": 14,
-                "name": "Я здесь главный",
-                "isAdmin": true,
-                "quizVms": [
-                ]
-            }
+            "groups": [
+                {
+                    "id": 1,
+                    "name": "Контора",
+                    "isAdmin": false,
+                    "quizVms": [
+                        {
+                            "id": 1,
+                            "finished": null,
+                            "name": "Пятиминутка №15",
+                            "description": "Пятиминутка о вёрстке и стилях",
+                            "score": 0,
+                            "startTime" : "2019-07-26T12:43:23+05:00",
+                            "endTime" : "2025-07-26T12:43:23+05:00",
+                        },
+                        {
+                            "id": 2,
+                            "finished": null,
+                            "name": "Пятиминутка №228",
+                            "description": "Пятиминутка",
+                            "score": 0,
+                            "startTime" : "2019-07-26T12:43:23+05:00",
+                            "endTime" : "2025-07-26T12:43:23+00:00",
+                        },
+                        {
+                            "id": 3,
+                            "finished": null,
+                            "name": "Вы гей? №322",
+                            "description": "",
+                            "score": 0,
+                            "startTime" : "2019-07-26T12:43:23+05:00",
+                            "endTime" : "2020-07-26T12:43:23+00:00",
+                        },
+                        {
+                            "id": 4,
+                            "finished": '2020-07-26T12:43:23+05:00',
+                            "name": "Двухминутка №1337",
+                            "description": "очевидно да",
+                            "score": 3.81,
+                            "startTime" : "2019-07-26T12:43:23+05:00",
+                            "endTime" : "2021-07-26T12:43:23+00:00",
+                        },
+                        {
+                            "id": 5,
+                            "finished": '2020-07-26T12:43:23+05:00',
+                            "name": "Лох с нулём",
+                            "description": "Лох с нулём",
+                            "score": 0,
+                            "startTime" : "2019-07-26T12:43:23+05:00",
+                            "endTime" : "2025-07-26T12:43:23+00:00",
+                        }]
+                },
+                {
+                    "id": 2,
+                    "name": "Контора2",
+                    "isAdmin": true,
+                    "quizVms": [
+                        {
+                            "id": 6,
+                            "finished": null,
+                            "name": "Активная",
+                            "description": "Пятиминутка о вёрстке и стилях",
+                            "score": 0,
+                            "startTime" : "2019-07-26T12:43:23+05:00",
+                            "endTime" : "2025-07-26T12:43:23+05:00",
+                        },
+                        {
+                            "id": 7,
+                            "finished": null,
+                            "name": "Актиwadsadwaвная",
+                            "description": "Пятиминутка о вёрстке и стилях",
+                            "score": 0,
+                            "startTime" : "2019-07-26T12:43:23+05:00",
+                            "endTime" : "2025-07-26T12:43:23+05:00",
+                        },
+                        {
+                            "id": 8,
+                            "finished": null,
+                            "name": "Запланированная",
+                            "description": "Пятиминутка о вёрстке и стилях",
+                            "score": 0,
+                            "startTime" : "2024-07-26T12:43:23+05:00",
+                            "endTime" : "2025-07-26T12:43:23+05:00",
+                        },
+                        {
+                            "id": 9,
+                            "finished": null,
+                            "name": "Закончилась",
+                            "description": "Пятиминутка о вёрстке и стилях",
+                            "score": 0,
+                            "startTime" : "2019-07-26T12:43:23+05:00",
+                            "endTime" : "2022-07-26T12:43:23+05:00",
+                        },
+                    ]
+                },
+                {
+                    "id": 3,
+                    "name": "Контора3",
+                    "isAdmin": false,
+                    "quizVms": [
+                        {
+                            "id": 10,
+                            "finished": "2021-07-26T12:43:23+05:00",
+                            "name": "Пятиминутка №15",
+                            "description": "Пятиминутка о вёрстке и стилях",
+                            "score": 2,
+                            "startTime" : "2019-07-26T12:43:23+05:00",
+                            "endTime" : "2025-07-26T12:43:23+05:00",
+                        },
+                        {
+                            "id": 11,
+                            "finished": "2022-07-26T12:43:23+05:00",
+                            "name": "Помидор без оценки",
+                            "description": "Пятиминутка о вёрстке и стилях",
+                            "score": null,
+                            "startTime" : "2019-07-26T12:43:23+05:00",
+                            "endTime" : "2025-07-26T12:43:23+05:00",
+                        },
+                    ]
+                },
+                {
+                    "id": 4,
+                    "name": "Контора4",
+                    "isAdmin": false,
+                    "quizVms": [
+                        {
+                            "id": 12,
+                            "finished": null,
+                            "name": "Моя первая пятиминутка",
+                            "description": "Пятиминутка ни о чём",
+                            "score": 0,
+                            "startTime": "2019-07-26T12:43:23+05:00",
+                            "endTime": "2025-07-26T12:43:23+05:00",
+                        },
+                        {
+                            "id": 13,
+                            "finished": null,
+                            "name": "Никогда не настанет",
+                            "description": "Пятиминутка ни о чём",
+                            "score": 0,
+                            "startTime": "2024-07-26T12:43:23+05:00",
+                            "endTime": "2025-07-26T12:43:23+05:00",
+                        },
+                    ]
+                },
+                {
+                    "id": 5,
+                    "name": "Я здесь главный",
+                    "isAdmin": true,
+                    "quizVms": [
+                    ]
+                }
+            ]
         }
-        console.log(data);
 
         adminQuizzes = {
             "quizVms": [
                 {
                     "id": 1,
-                    "name": "Я админ",
+                    "name": "Я админЯ админЯ админЯ админЯ админЯ админЯ админЯ админЯ админЯ админЯ админЯ админ",
                     "description": "Я нахуй не нужен"
                 },
                 {
@@ -192,14 +210,17 @@ document.addEventListener('DOMContentLoaded', async function(event) {
             ]
         }
 
-        for (let groupKey in data) {
-            let currentGroup = data[groupKey];
+        for (let currentGroup of data['groups']) {
             if (currentGroup.isAdmin) {
                 adminGroupId2Name[currentGroup.id] = currentGroup.name;
             }
         }
         planModalWindow = new PlanModalWindow(adminGroupId2Name);
+        createGroupModalWindow = new GroupCreateModalWindow();
         document.querySelector("#plan-modal-window-paste-place").appendChild(planModalWindow.element);
+        document.querySelector("#group-create-modal-window-paste-place").appendChild(createGroupModalWindow.element);
+        document.querySelector("#group-create-modal-window-open-btn").addEventListener('click', () => createGroupModalWindow.show());
+
         buildPage();
 
     } catch (e) {
@@ -217,11 +238,10 @@ function buildPage() {
 function fillActiveQuizzes() {
     let activePaste = document.querySelector('#active-paste-place');
 
-    for (let groupKey in data) {
-        let currentGroup = data[groupKey];
+    for (let currentGroup of data['groups']) {
         if (currentGroup['isAdmin'])
             continue;
-        let group = new GroupBlockDiv(currentGroup.name);
+        let group = new GroupBlockDiv(currentGroup.id, currentGroup.name);
         group.hide();
         for (let quizKey in currentGroup.quizVms) {
             let activeQuiz = currentGroup.quizVms[quizKey];
@@ -248,8 +268,7 @@ function fillEndedQuizzes() {
     let endedPaste = document.querySelector('#ended-paste-place');
     let quizzes = [];
 
-    for (let groupKey in data) {
-        let currentGroup = data[groupKey];
+    for (let currentGroup of data['groups']) {
         if (currentGroup['isAdmin'])
             continue;
 
@@ -285,9 +304,8 @@ function fillEndedQuizzes() {
 function fillGroupsPage() {
     let pastePlace = document.querySelector('#groups-paste-place');
 
-    for (let groupKey in data) {
-        let currentGroup = data[groupKey];
-        let group = new GroupBlockDiv(currentGroup.name, currentGroup['isAdmin']);
+    for (let currentGroup of data['groups']) {
+        let group = new GroupBlockDiv(currentGroup.id, currentGroup.name, currentGroup['isAdmin']);
         for (let quizKey in currentGroup.quizVms) {
             let currentQuiz = currentGroup.quizVms[quizKey];
             let finishedTime = new Date(currentQuiz.finished);
@@ -383,10 +401,10 @@ class CustomDOMElement {
 
 
 class GroupBlockDiv extends CustomDOMElement {
-    constructor(groupName, isAdmin=false) {
+    constructor(groupId, groupName, isAdmin=false) {
         super('div').withClass('block')
         this.isAdmin = isAdmin;
-        this.appendChild(new GroupHeaderDiv(groupName, this.isAdmin));
+        this.appendChild(new GroupHeaderDiv(groupId, groupName, this.isAdmin));
 
         this.clampedDiv = new CustomDOMElement('div').withClass('clamped-info');
         this.appendChild(this.clampedDiv);
@@ -417,7 +435,7 @@ class GroupBlockDiv extends CustomDOMElement {
 
 
 class GroupHeaderDiv extends CustomDOMElement {
-    constructor(headerText, isAdmin=false) {
+    constructor(groupId, headerText, isAdmin=false) {
         super('div').withClass('group-name');
         let container = new CustomDOMElement('div').withClass('admin-group-header-wrapper');
         let h2 = new CustomDOMElement('h2').withContent(headerText);
@@ -425,7 +443,7 @@ class GroupHeaderDiv extends CustomDOMElement {
 
         if (isAdmin)  {
             let groupSettingsHref = new CustomDOMElement('a');
-            groupSettingsHref.element.href = ""; // TODO Страница с настройкой группы, где будет инвайт сслыка, участники
+            groupSettingsHref.element.href = `http://localhost:8080/quiz/groupSettings/${groupId}`; // TODO Страница с настройкой группы, где будет инвайт сслыка, участники
             let img = new CustomDOMElement('img').withClass('admin-group-settings-btn');
             img.element.src = "img/svg/settings.svg";
             img.element.alt = "Настройки группы";
@@ -438,6 +456,7 @@ class GroupHeaderDiv extends CustomDOMElement {
         this.appendChild(hr);
     }
 }
+
 
 
 class BaseQuiz extends CustomDOMElement {
@@ -533,7 +552,7 @@ class EndedQuizDiv extends BaseQuiz {
 
 class AdminQuizDiv extends CustomDOMElement {
     constructor(quizId, header) {
-        super('div').withClass('base-quiz');
+        super('div').withClass('admin-quiz').withClass('clamped-info');
         this.quizId = quizId;
         this.header = header;
         let name = new CustomDOMElement('label')
@@ -542,7 +561,7 @@ class AdminQuizDiv extends CustomDOMElement {
         this.appendChild(name);
 
         let planBtn = new CustomDOMElement('button')
-            .withClass('quiz-mark')
+            .withClass('quiz-plan-btn')
             .withContent("Запланировать");
         planBtn.addEvent('click', () => this.startPlaning());
         this.appendChild(planBtn);
@@ -564,17 +583,68 @@ class AdminQuizDiv extends CustomDOMElement {
 }
 
 
+
+class GroupCreateModalWindow extends CustomDOMElement {
+    constructor() {
+        super('div').withClass('modal');
+
+        let topWrapper = new CustomDOMElement('div').withClass('modal__top');
+        this.title = new CustomDOMElement('h2')
+            .withClass('modal__title')
+            .withContent("Создайте новую группу");
+        let modalCloseBtn = new CustomDOMElement('button')
+            .withClass('delete-option')
+            .withClass('js-modal-close');
+        modalCloseBtn.addEvent('click', () => this.hide());
+        topWrapper.appendChild(this.title);
+        topWrapper.appendChild(modalCloseBtn);
+        this.appendChild(topWrapper);
+
+        let label = new CustomDOMElement('label').withContent('Название');
+        this.input = new CustomDOMElement('input').withClass('modal__input');
+        this.input.element.setAttribute('type', 'text');
+        label.appendChild(this.input);
+        this.appendChild(label);
+
+        let createBtn = new CustomDOMElement('button')
+            .withClass('auth-signup-button')
+            .withClass('modal_btn')
+            .withContent("Создать");
+        createBtn.addEvent('click', () => this.createGroup());
+        this.appendChild(createBtn);
+    }
+
+    show() {
+        this.withClass('active');
+        overlay.classList.add('active');
+    }
+
+    hide() {
+        this.removeClass('active');
+        overlay.classList.remove('active');
+        this.input.element.value = '';
+    }
+
+    createGroup() {
+        let newGroupId = 1; // TODO request to db for create new group, get newGroupId
+        window.location.href = `http://localhost:8080/quiz/groupSettings/${newGroupId}`;
+        this.hide();
+    }
+}
+
+
 class PlanModalWindow extends CustomDOMElement {
     constructor(groupsId2Name) {
         super('div').withClass('modal');
         this._activeQuizId = null;
         this._groupsId2Name = groupsId2Name;
 
-        this.title = new CustomDOMElement('h2').withClass('modal__title');
         let topWrapper = new CustomDOMElement('div').withClass('modal__top');
+        this.title = new CustomDOMElement('h2').withClass('modal__title');
         let modalCloseBtn = new CustomDOMElement('button')
             .withClass('delete-option')
             .withClass('js-modal-close');
+        modalCloseBtn.addEvent('click', () => this.hide());
         topWrapper.appendChild(this.title);
         topWrapper.appendChild(modalCloseBtn);
         this.appendChild(topWrapper);
@@ -584,7 +654,6 @@ class PlanModalWindow extends CustomDOMElement {
         this.appendChild(this._groupsSelector);
         this.appendChild(this._timeSelector);
 
-        // <button class="auth-signup-button modal_btn" onclick="planQuizPressed()" type="button">Создать</button>
         let planBtn = new CustomDOMElement('button')
             .withClass('auth-signup-button')
             .withClass('modal_btn')
@@ -606,13 +675,16 @@ class PlanModalWindow extends CustomDOMElement {
     hide() {
         this.removeClass('active');
         overlay.classList.remove('active');
+        this._groupsSelector.clearSelection();
+        this._timeSelector.clearSelection();
     }
 
     quizSchedule() {
         // TODO routing, skip if empty
         alert(`Groups: ${this._groupsSelector.getSelectedGroupsId()}\n
         Start: ${this._timeSelector.getStartTime()}\n
-        End: ${this._timeSelector.getEndTime()}`)
+        End: ${this._timeSelector.getEndTime()}`);
+        this.hide();
     }
 
 }
@@ -640,6 +712,10 @@ class PlanGroupsPicker extends CustomDOMElement {
         selectWrapper.appendChild(this._selector);
         selectWrapper.appendChild(new CustomDOMElement('span').withClass('focus'));
         this.appendChild(selectWrapper);
+    }
+
+    clearSelection() {
+        this._selector.element.selectedIndex = -1;
     }
 
     getSelectedGroupsId() {
@@ -674,6 +750,11 @@ class PlanTimePicker extends CustomDOMElement {
         endWrapper.appendChild(this._endPicker);
     }
 
+    clearSelection() {
+        this._startPicker.element.value = "";
+        this._endPicker.element.value = "";
+    }
+
     getStartTime() {
         return new Date(this._startPicker.element.value);
     }
@@ -681,8 +762,10 @@ class PlanTimePicker extends CustomDOMElement {
     getEndTime() {
         return new Date(this._endPicker.element.value);
     }
-
 }
+
+
+
 
 
 
