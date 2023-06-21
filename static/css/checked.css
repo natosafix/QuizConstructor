@@ -1,9 +1,5 @@
 @import "constants.css";
 
-.under-blocks {
-    float: right;
-}
-
 .score-container {
     margin-top: 8px;
     display: flex;
@@ -32,9 +28,39 @@
     height: 20px;
     width: 20px;
 }
-.bt_minus:hover svg, .bt_plus:hover svg {
-    stroke: #000;
+.bt_minus:hover, .bt_plus:hover {
+    transition: 0.5s;
+    background-color: #e6ebeb;
+    border-radius: 50%;
 }
+
+.max-points {
+    font-size: 30px;
+    color: dimgrey;
+}
+
+.question-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.under-blocks {
+    display: flex;
+    justify-content: space-between;
+}
+
+.current-total-score-container {
+    padding: 10px 20px;
+    border-radius: 20px;
+    background-color: whitesmoke;
+}
+
+#total-score, #max-score {
+    display: inline;
+    font-size: 40px;
+    color: dimgrey;
+}
+
 
 @media screen and (max-width: 980px) {
     .bt_minus, .bt_plus, .quantity {

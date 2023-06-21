@@ -11,14 +11,17 @@
     <form class="block">
         <h2>Анкета</h2>
 
-        <div class="element one-line">
+        <div class="element shortText">
             <label>
-                <div class="element-description">Имя</div>
+                <div class="question-header">
+                    <div class="element-description">Имя</div>
+                    <div class="autocheck">Автопроверено</div>
+                </div>
                 <input class="element-input" type="text">
             </label>
         </div>
 
-        <div class="element multi-line">
+        <div class="element longText">
             <label>
                 <div class="element-description">Расскажите о себе</div>
                 <textarea class="element-input"></textarea>
@@ -42,6 +45,10 @@
                 <button class="bt_plus" type="button">
                     <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                 </button>
+
+                <div class="max-points">
+                    /10
+                </div>
             </div>
 
 <!--            <div class="is-correct-container element-choice">-->
@@ -53,14 +60,14 @@
 
         </div>
 
-        <div class="element one-line">
+        <div class="element shortText">
             <label>
                 <div class="element-description">Фамилия</div>
                 <input class="element-input" type="text">
             </label>
         </div>
 
-        <div class="element single-choice">
+        <div class="element oneList">
             <div class="element-description">Пол</div>
             <div class="element-choice">
                 <label>
@@ -82,7 +89,7 @@
             </div>
         </div>
 
-        <div class="element multi-choice">
+        <div class="element severalList">
             <div class="element-description">Multi-option choice</div>
             <div class="element-choice">
                 <label>
@@ -109,7 +116,7 @@
             <img src="img/img.jpg" alt="img">
         </div>
 
-        <div class="element single-choice">
+        <div class="element oneList">
             <div class="element-description">
                 Что выведет этот код?
                 <div class="element-code">def foo(t):

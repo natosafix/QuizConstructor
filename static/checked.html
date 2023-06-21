@@ -5,7 +5,7 @@
     <title>Title</title>
     <link rel="stylesheet" href="/css/quiz.css">
     <link rel="stylesheet" href="/css/checked.css">
-    <script type="text/javascript" src='/scripts/quiz.js'></script>
+    <script type="text/javascript" src='/scripts/quizParser.js'></script>
     <script type="text/javascript" src='/scripts/checked.js'></script>
 </head>
 <body>
@@ -16,6 +16,15 @@
 <div class="main">
 
     <div class="under-blocks">
+        <div class="current-total-score-container">
+            <div id="total-score">
+
+            </div>
+            <div id="max-score">
+
+            </div>
+        </div>
+
         <button form="myForm" class="submit-button" onclick="nextPressed()">Следующий</button>
     </div>
 </div>
@@ -23,6 +32,6 @@
 </body>
 
 <script>parse()</script>
-<script>checkedStart()</script>
+<script>checked()</script>
 
 </html>
