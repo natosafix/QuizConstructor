@@ -301,7 +301,7 @@ function getAnswers() {
 
 let answersJson = getAnswers()
 
-function checked() {
+function checkedStart() {
     addCheckingElements();
     updateCurrentScore();
     setMaxScore();
@@ -404,27 +404,70 @@ function setMaxScore() {
     document.getElementById("max-score").innerText = "/" + maxScore.toString();
 }
 
-// function nextPressed() {
-//     document.querySelector("#myForm").remove();
-//
-//     const newAnswers = [
-//         "Ega lopar",
-//         "nien",
-//         "lexa",
-//         "Мужчина",
-//         "Нет"
-//     ];
-//     parse();
-//     addIsCorrectSwitch(newAnswers);
-// }
-//
-// function getCheckedAnswers() {
-//     for (const )
-//
-//     const q = {
-//         id: answersJson.id,
-//         points: [
-//
-//         ]
-//     }
-// }
+function nextPressed() {
+    answersJson = { // тут должен вызываться getAnswers с новыми ответами
+        id: 2,
+        questions: [
+            {
+                score: 0,
+                answers: [
+                    {
+                        content: "глагол",
+                        id: 123 // id ответа в бд
+                    }
+                ],
+            },
+            {
+                score: 1,
+                answers: [
+                    {
+                        content: "язык",
+                        id: 96 // id ответа в бд
+                    }
+                ],
+            },
+            {
+                score: 0,
+                answers: [
+                    {
+                        content: "Мой любимый язык",
+                        id: 32 // id ответа в бд
+                    }
+                ]
+            },
+            {
+                score: 0,
+                answers: [
+                    {
+                        content: "Это очевидно",
+                        id: 32 // id ответа в бд
+                    }
+                ]
+            }
+        ]
+    };
+
+    document.querySelector("#myForm").remove();
+
+    parse();
+    checkedStart();
+    // TODO: send to egorable
+    const q = getCheckedAnswers();
+}
+
+function getCheckedAnswers() {
+    let i = 0;
+    const points = [];
+    for (const quantity of document.querySelectorAll(".quantity")) {
+        points.push({
+            questionId: quizData.questions[i].id,
+            score: +quantity.innerText
+        });
+        i++;
+    }
+
+    return {
+        id: answersJson.id,
+        points: points
+    };
+}
