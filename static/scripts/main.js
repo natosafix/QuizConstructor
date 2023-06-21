@@ -11,6 +11,10 @@ const dateTimeOptions = {
 };
 
 let data;
+let adminQuizzes;
+let planModalWindow;
+let adminGroupId2Name = {};
+const overlay = document.querySelector('.js-overlay-modal');
 
 document.addEventListener('DOMContentLoaded', async function(event) {
     try {
@@ -162,10 +166,40 @@ document.addEventListener('DOMContentLoaded', async function(event) {
                         "endTime" : "2025-07-26T12:43:23+05:00",
                     },
                 ]
+            },
+            "groupVm5": {
+                "id": 14,
+                "name": "Я здесь главный",
+                "isAdmin": true,
+                "quizVms": [
+                ]
             }
         }
         console.log(data);
 
+        adminQuizzes = {
+            "quizVms": [
+                {
+                    "id": 1,
+                    "name": "Я админ",
+                    "description": "Я нахуй не нужен"
+                },
+                {
+                    "id": 2,
+                    "name": "Опрос, который я создал",
+                    "desctoption": "опять не нужен",
+                },
+            ]
+        }
+
+        for (let groupKey in data) {
+            let currentGroup = data[groupKey];
+            if (currentGroup.isAdmin) {
+                adminGroupId2Name[currentGroup.id] = currentGroup.name;
+            }
+        }
+        planModalWindow = new PlanModalWindow(adminGroupId2Name);
+        document.querySelector("#plan-modal-window-paste-place").appendChild(planModalWindow.element);
         buildPage();
 
     } catch (e) {
@@ -177,6 +211,7 @@ function buildPage() {
     fillActiveQuizzes();
     fillEndedQuizzes();
     fillGroupsPage();
+    fillAdminQuizzes();
 }
 
 function fillActiveQuizzes() {
@@ -277,6 +312,14 @@ function fillGroupsPage() {
     }
 }
 
+function fillAdminQuizzes() {
+    let pastePlace = document.querySelector("#admin-quizzes-paste-place");
+
+    for (let currentQuiz of adminQuizzes['quizVms']) {
+        let quizDiv = new AdminQuizDiv(currentQuiz.id, currentQuiz.name);
+        pastePlace.appendChild(quizDiv.element);
+    }
+}
 
 function getFormatDateStr(date) {
     return date.toLocaleString('ru-RU', dateTimeOptions);
@@ -305,6 +348,10 @@ class CustomDOMElement {
     withClass(className) {
         this.element.classList.add(className);
         return this;
+    }
+
+    removeClass(className) {
+        this.element.classList.remove(className);
     }
 
     withContent(content) {
@@ -378,7 +425,7 @@ class GroupHeaderDiv extends CustomDOMElement {
 
         if (isAdmin)  {
             let groupSettingsHref = new CustomDOMElement('a');
-            groupSettingsHref.element.href = ""; // TODO Настройки группы, где будет инвайт сслыка, участники
+            groupSettingsHref.element.href = ""; // TODO Страница с настройкой группы, где будет инвайт сслыка, участники
             let img = new CustomDOMElement('img').withClass('admin-group-settings-btn');
             img.element.src = "img/svg/settings.svg";
             img.element.alt = "Настройки группы";
@@ -412,7 +459,7 @@ class BaseQuiz extends CustomDOMElement {
             .withClass('quiz-mark')
             .withClass('quiz-check-href')
             .withContent('Посмотреть ответы');
-        check.element.href = `http://localhost:8080/quiz/solve/${this.quizId}`; // TODO
+        check.element.href = `http://localhost:8080/quiz/check/${this.quizId}`;
         this.appendChild(check);
         return this;
     }
@@ -484,7 +531,158 @@ class EndedQuizDiv extends BaseQuiz {
 }
 
 
+class AdminQuizDiv extends CustomDOMElement {
+    constructor(quizId, header) {
+        super('div').withClass('base-quiz');
+        this.quizId = quizId;
+        this.header = header;
+        let name = new CustomDOMElement('label')
+            .withClass('quiz-header')
+            .withContent(header);
+        this.appendChild(name);
 
+        let planBtn = new CustomDOMElement('button')
+            .withClass('quiz-mark')
+            .withContent("Запланировать");
+        planBtn.addEvent('click', () => this.startPlaning());
+        this.appendChild(planBtn);
+
+        let quizEditsHref = new CustomDOMElement('a')
+            .withClass('quiz-edit-href');
+        quizEditsHref.element.href = `http://localhost:8080/quiz/edit/${this.quizId}` // TODO поставить норм адрес;
+        let img = new CustomDOMElement('img').withClass();
+        img.element.src = "img/svg/edit.svg";
+        img.element.alt = "Редактировать опрос";
+        quizEditsHref.appendChild(img);
+        this.appendChild(quizEditsHref);
+    }
+
+    startPlaning() {
+        planModalWindow.acceptQuiz(this.quizId, this.header);
+        planModalWindow.show();
+    }
+}
+
+
+class PlanModalWindow extends CustomDOMElement {
+    constructor(groupsId2Name) {
+        super('div').withClass('modal');
+        this._activeQuizId = null;
+        this._groupsId2Name = groupsId2Name;
+
+        this.title = new CustomDOMElement('h2').withClass('modal__title');
+        let topWrapper = new CustomDOMElement('div').withClass('modal__top');
+        let modalCloseBtn = new CustomDOMElement('button')
+            .withClass('delete-option')
+            .withClass('js-modal-close');
+        topWrapper.appendChild(this.title);
+        topWrapper.appendChild(modalCloseBtn);
+        this.appendChild(topWrapper);
+
+        this._groupsSelector = new PlanGroupsPicker(groupsId2Name);
+        this._timeSelector = new PlanTimePicker();
+        this.appendChild(this._groupsSelector);
+        this.appendChild(this._timeSelector);
+
+        // <button class="auth-signup-button modal_btn" onclick="planQuizPressed()" type="button">Создать</button>
+        let planBtn = new CustomDOMElement('button')
+            .withClass('auth-signup-button')
+            .withClass('modal_btn')
+            .withContent("Запланировать");
+        planBtn.addEvent('click', () => this.quizSchedule());
+        this.appendChild(planBtn);
+    }
+
+    acceptQuiz(quizId, header) {
+        this._activeQuizId = quizId;
+        this.title.withContent(header);
+    }
+
+    show() {
+        this.withClass('active');
+        overlay.classList.add('active');
+    }
+
+    hide() {
+        this.removeClass('active');
+        overlay.classList.remove('active');
+    }
+
+    quizSchedule() {
+        // TODO routing, skip if empty
+        alert(`Groups: ${this._groupsSelector.getSelectedGroupsId()}\n
+        Start: ${this._timeSelector.getStartTime()}\n
+        End: ${this._timeSelector.getEndTime()}`)
+    }
+
+}
+
+
+class PlanGroupsPicker extends CustomDOMElement {
+    constructor(groupsId2Name) {
+        super('div');
+        this.appendChild(new CustomDOMElement('p').withContent('Группы'));
+        let selectWrapper = new CustomDOMElement('div')
+            .withClass('select')
+            .withClass('select--multiple')
+            .withClass('elem');
+
+        this._selector = new CustomDOMElement('select')
+            .withClass('standard-select')
+            .withClass('multi-select');
+        this._selector.element.setAttribute('multiple', '');
+        for (let groupId in groupsId2Name) {
+            let option = new CustomDOMElement('option').withContent(groupsId2Name[groupId]);
+            option.element.value = groupId;
+            this._selector.appendChild(option);
+        }
+
+        selectWrapper.appendChild(this._selector);
+        selectWrapper.appendChild(new CustomDOMElement('span').withClass('focus'));
+        this.appendChild(selectWrapper);
+    }
+
+    getSelectedGroupsId() {
+        let result = [];
+        for (let groupId in this._selector.element.options) {
+            if (this._selector.element.options[groupId].selected) {
+                result.push(this._selector.element.options[groupId].value);
+            }
+        }
+        return result;
+    }
+}
+
+
+class PlanTimePicker extends CustomDOMElement {
+    constructor() {
+        super('div');
+        this.appendChild(new CustomDOMElement('h2').withContent('Время начала'));
+
+        let startWrapper = new CustomDOMElement('div').withClass('elem');
+        this.appendChild(startWrapper);
+
+        this._startPicker = new CustomDOMElement('input').withClass('datepicker');
+        this._startPicker.element.type = 'datetime-local';
+        startWrapper.appendChild(this._startPicker);
+
+        let endWrapper = new CustomDOMElement('div').withClass('elem');
+        this.appendChild(endWrapper);
+
+        this._endPicker = new CustomDOMElement('input').withClass('datepicker');
+        this._endPicker.element.type = 'datetime-local';
+        endWrapper.appendChild(this._endPicker);
+    }
+
+    getStartTime() {
+        return new Date(this._startPicker.element.value);
+    }
+
+    getEndTime() {
+        return new Date(this._endPicker.element.value);
+    }
+
+}
 
 
 

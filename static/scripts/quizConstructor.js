@@ -211,6 +211,7 @@ addButton.addEventListener('click', addQuestion)
 function addQuestion(event) { // добавляет новые вопросы
     let newQuestion = quizQuestionCopy.cloneNode(true);
     let questions = document.querySelectorAll(".quiz-question");
+    newQuestion.name = newQuestion.name[0] + (questionAdded + 1).toString();
 
     let imageInput = newQuestion.querySelector(`#imageInput1`);
     imageInput.id = `imageInput${questionAdded + 1}`;
@@ -230,7 +231,6 @@ function addQuestion(event) { // добавляет новые вопросы
     questionNumberLabel.id = `questionNumber${questionAdded + 1}`;
     questionNumberLabel.textContent = `Вопрос №${questionCount + 1}`;
 
-    newQuestion.name = newQuestion.name[0] + (questionAdded + 1).toString();
     question2PrevType[questionAdded + 1] = 'shortText';
     let lastQuestion = questions[questions.length - 1];
     lastQuestion.after(newQuestion);
@@ -267,6 +267,7 @@ class QuizQuestion {
     image = undefined;
     isAutocheckEnabled = undefined;
     answers = [];
+    maxScore;
 }
 
 class QuizAnswer {
@@ -282,15 +283,15 @@ function buildConstructor(event) {
     let questions = questionsHolder.querySelectorAll('.quiz-question');
     for (const question of questions) {
         let quizQuestion = new QuizQuestion();
+        console.log(question.querySelector('.question'))
         quizQuestion.question = question.querySelector('.question').value;
         quizQuestion.answerType = question.querySelector('.answer-type-selector').value;
+        quizQuestion.maxScore = parseInt(question.querySelector("[name='maxScore']").value);
+        quizQuestion.isAutocheckEnabled = false;
         if (choiceTypes.includes(quizQuestion.answerType)) {
             let answerHolder = question.querySelector(`.${quizQuestion.answerType}`);
             let answers = answerHolder.querySelectorAll(`.${quizQuestion.answerType}-option`)
 
-            // TODO исправить автопроверку для всех типов вопроса
-            // Если хотя бы один вариант отмечен - автопроверка включена
-            quizQuestion.isAutocheckEnabled = false;
             for (const answer of answers) {
                 if (answer.querySelector('.autocheck-choice').checked)
                     quizQuestion.isAutocheckEnabled = true;
@@ -303,8 +304,29 @@ function buildConstructor(event) {
                     quizAnswer.isCorrect = answer.querySelector('.autocheck-choice').checked;
                 quizQuestion.answers.push(quizAnswer);
             }
+        } else  {
+            let autocheckInput;
+            if (quizQuestion.answerType === 'codeEditor') {
+                autocheckInput = question.querySelector(".correct-answer");
+                autocheckInput = autocheckInput.CodeMirror;
+            } else {
+                autocheckInput = question.querySelector('.correct-answer').value;
+            }
+            if (autocheckInput.length > 0) {
+                let quizAnswer = new QuizAnswer();
+                quizQuestion.isAutocheckEnabled = true;
+                quizAnswer.answer = autocheckInput.value;
+                quizAnswer.isCorrect = true;
+                quizQuestion.answers.push(quizAnswer);
+            }
         }
         quizForm.questions.push(quizQuestion);
     }
 }
 
+document.querySelector('.auth-login-button').addEventListener('click', logOut);
+
+function logOut() {
+    CookieChanger.deleteCookie('auth');
+    window.location.href = "http://localhost:8080/login";
+}

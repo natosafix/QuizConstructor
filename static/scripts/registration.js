@@ -45,3 +45,6 @@ form.addEventListener('submit', async function (event) {
         console.error(error);
     }
 });
+
+document.querySelector('#login-redirect-button')
+    .addEventListener('click', () => window.location.href = 'http://localhost:8080/login');

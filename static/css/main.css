@@ -96,6 +96,17 @@
     pointer-events: none;
 }
 
+.base-quiz .quiz-edit-href {
+    display: grid;
+    grid-area: C;
+    justify-content: end;
+    align-self: center;
+}
+
+.base-quiz .quiz-edit-href img {
+    height: 35px;
+}
+
 .base-quiz:not(:has(.quiz-mark)) {
      grid-template-areas: "A . C";
  }
@@ -206,8 +217,4 @@
 
 .quiz-search-and-create-wrapper .create-quiz-btn {
     width: 40px;
-}
-
-.quiz-edit-btn {
-    width: 35px;
 }
