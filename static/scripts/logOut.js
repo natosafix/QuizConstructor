@@ -2,7 +2,7 @@ document.querySelector('.auth-login-button').addEventListener('click', logOut);
 
 function logOut() {
     CookieChanger.deleteCookie('auth');
-    window.location.href = "http://localhost:8080/login";
+    window.location.href = "https://norebesach.beget.app/login";
 }
 
 class CookieChanger {

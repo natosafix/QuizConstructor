@@ -101,7 +101,7 @@ async function sendAnswers() {
     }
     console.log(JSON.stringify(answers));
 
-    const response = await fetch('http://localhost:8080/db/apiRequest', {
+    const response = await fetch('https://norebesach.beget.app/db/apiRequest', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json;charset=utf-8'
@@ -111,7 +111,7 @@ async function sendAnswers() {
 }
 
 let mainPageButton = document.querySelector('#main-page-button');
-mainPageButton.addEventListener('click', () => window.location.href = 'http://localhost:8080/');
+mainPageButton.addEventListener('click', () => window.location.href = 'https://norebesach.beget.app/');
 
 let sendAnswersButton = document.querySelector('#send-answers-button');
 sendAnswersButton.addEventListener('click', submitClicked);

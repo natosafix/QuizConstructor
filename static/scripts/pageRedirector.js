@@ -1,2 +1,2 @@
 let mainPageButton = document.querySelector('#main-page-button');
-mainPageButton.addEventListener('click', () => window.location.href = 'http://localhost:8080/');
+mainPageButton.addEventListener('click', () => window.location.href = 'https://norebesach.beget.app/');

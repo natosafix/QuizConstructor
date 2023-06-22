@@ -1,6 +1,6 @@
 class DBController {
     //TODO
-    apiUrl = "http://localhost:8080/";
+    apiUrl = "https://norebesach.beget.app/";
     users = {};
     async getUser(username) {
         //TODO

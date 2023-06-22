@@ -35,7 +35,7 @@ document.body.addEventListener('keyup', function (e) {
 
 document.addEventListener('DOMContentLoaded', async function(event) {
     try {
-        /*let response = await fetch('http://localhost:8080/db/apiRequest?' + new URLSearchParams({method: "mainPage"}), {
+        /*let response = await fetch('https://norebesach.beget.app/db/apiRequest?' + new URLSearchParams({method: "mainPage"}), {
             method: 'GET',
         });
         data = await response.json();*/
@@ -443,7 +443,7 @@ class GroupHeaderDiv extends CustomDOMElement {
 
         if (isAdmin)  {
             let groupSettingsHref = new CustomDOMElement('a');
-            groupSettingsHref.element.href = `http://localhost:8080/quiz/groupSettings/${groupId}`; // TODO Страница с настройкой группы, где будет инвайт сслыка, участники
+            groupSettingsHref.element.href = `https://norebesach.beget.app/quiz/groupSettings/${groupId}`; // TODO Страница с настройкой группы, где будет инвайт сслыка, участники
             let img = new CustomDOMElement('img').withClass('admin-group-settings-btn');
             img.element.src = "img/svg/settings.svg";
             img.element.alt = "Настройки группы";
@@ -478,7 +478,7 @@ class BaseQuiz extends CustomDOMElement {
             .withClass('quiz-mark')
             .withClass('quiz-check-href')
             .withContent('Посмотреть ответы');
-        check.element.href = `http://localhost:8080/quiz/check/${this.quizId}`;
+        check.element.href = `https://norebesach.beget.app/quiz/check/${this.quizId}`;
         this.appendChild(check);
         return this;
     }
@@ -525,7 +525,7 @@ class ActiveQuizBtn extends BaseQuiz {
         this.withTime(endTime, 'Завершится');
         if (!isAdmin) {
             this.addEvent('click',
-                () => window.location.href = `http://localhost:8080/quiz/solve/${quizId}`);
+                () => window.location.href = `https://norebesach.beget.app/quiz/solve/${quizId}`);
         }
     }
 }
@@ -568,7 +568,7 @@ class AdminQuizDiv extends CustomDOMElement {
 
         let quizEditsHref = new CustomDOMElement('a')
             .withClass('quiz-edit-href');
-        quizEditsHref.element.href = `http://localhost:8080/quiz/edit/${this.quizId}` // TODO поставить норм адрес;
+        quizEditsHref.element.href = `https://norebesach.beget.app/quiz/edit/${this.quizId}` // TODO поставить норм адрес;
         let img = new CustomDOMElement('img').withClass();
         img.element.src = "img/svg/edit.svg";
         img.element.alt = "Редактировать опрос";
@@ -627,7 +627,7 @@ class GroupCreateModalWindow extends CustomDOMElement {
 
     createGroup() {
         let newGroupId = 1; // TODO request to db for create new group, get newGroupId
-        window.location.href = `http://localhost:8080/quiz/groupSettings/${newGroupId}`;
+        window.location.href = `https://norebesach.beget.app/quiz/groupSettings/${newGroupId}`;
         this.hide();
     }
 }

@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
 
     document.querySelector('#groupName').textContent = data.name;
     const groupId = document.querySelector('.backend-data').textContent;
-    inviteLinkInput.value = `localHost:8080/groupInvite/${groupId}`;
+    inviteLinkInput.value = `https://norebesach.beget.app/groupInvite/${groupId}`;
     inviteLinkInput.addEventListener('click', copyLink, false);
 
     fillMembers(data['members']);
