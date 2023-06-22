@@ -38,7 +38,7 @@ function getQuizData() {
                 isAutoCheck: true
             },
             {
-                content: "Что такое JS ?",
+                content: "Что такое Ягода ?",
                 id: 2233, // id вопроса в бд
                 type: {
                     typeId: 2,
@@ -48,15 +48,15 @@ function getQuizData() {
                 maxScore: 1,
                 answers: [
                     {
-                        content: "Срань",
+                        content: "Малина",
                         id: 96 // id ответа в бд
                     },
                     {
-                        content: "язык",
+                        content: "Мальвина",
                         id: 196 // id ответа в бд
                     },
                     {
-                        content: "гавна",
+                        content: "Буратина",
                         id: 199 // id ответа в бд
                     }
                 ],
@@ -295,11 +295,11 @@ class AnswerGetter {
                         score: 1,
                         answers: [
                             {
-                                content: "Срань",
+                                content: "Мальвина",
                                 id: 96 // id ответа в бд
                             },
                             {
-                                content: "язык",
+                                content: "Буратина",
                                 id: 96 // id ответа в бд
                             }
                         ],
@@ -308,7 +308,7 @@ class AnswerGetter {
                         score: 0,
                         answers: [
                             {
-                                content: "JS - говно",
+                                content: "JS - полный JS",
                                 id: 32 // id ответа в бд
                             }
                         ]
@@ -341,7 +341,7 @@ class AnswerGetter {
                         score: 1,
                         answers: [
                             {
-                                content: "язык",
+                                content: "Малина",
                                 id: 96 // id ответа в бд
                             }
                         ],
