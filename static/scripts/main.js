@@ -1,4 +1,5 @@
 const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+const prevPage = document.querySelector("#prevPage").textContent;
 
 const dateTimeOptions = {
     day: '2-digit',
@@ -443,7 +444,7 @@ class GroupHeaderDiv extends CustomDOMElement {
 
         if (isAdmin)  {
             let groupSettingsHref = new CustomDOMElement('a');
-            groupSettingsHref.element.href = `http://localhost:8080/quiz/groupSettings/${groupId}`; // TODO Страница с настройкой группы, где будет инвайт сслыка, участники
+            groupSettingsHref.element.href = `http://localhost:8080/group/settings/${groupId}`; // TODO Страница с настройкой группы, где будет инвайт сслыка, участники
             let img = new CustomDOMElement('img').withClass('admin-group-settings-btn');
             img.element.src = "img/svg/settings.svg";
             img.element.alt = "Настройки группы";
@@ -627,7 +628,7 @@ class GroupCreateModalWindow extends CustomDOMElement {
 
     createGroup() {
         let newGroupId = 1; // TODO request to db for create new group, get newGroupId
-        window.location.href = `http://localhost:8080/quiz/groupSettings/${newGroupId}`;
+        window.location.href = `http://localhost:8080/group/settings/${newGroupId}`;
         this.hide();
     }
 }
