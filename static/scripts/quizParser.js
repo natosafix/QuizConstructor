@@ -102,208 +102,284 @@ function getQuizData() {
     };
 }
 
-const quizData = getQuizData();
+class QuizParser {
+    constructor(quizData) {
+        this.quizData = quizData
+    }
 
+    parse() {
+        const form = document.createElement("form");
+        form.id = "myForm";
+        form.addEventListener("submit", (event) => event.preventDefault());
 
-function parse() {
-    const form = document.createElement("form");
-    form.id = "myForm";
-    form.addEventListener("submit", (event) => event.preventDefault());
+        document.querySelector(".main").prepend(form);
 
-    document.querySelector(".main").prepend(form);
+        form.append(this.createHeader());
 
-    form.append(createHeader());
+        let i = 1;
+        for (const question of this.quizData.questions) {
+            const name = "q" + i;
+            let element;
 
-    let i = 1;
-    for (const question of quizData.questions) {
-        const name = "q" + i;
-        let element;
+            if (["shortText", "longText"].includes(question.type.name)) {
+                element = this.createLineElement(question, name);
+            } else if (["oneList", "severalList"].includes(question.type.name)) {
+                element = this.createChoiceElement(question, name);
+            } else {
+                console.log("unknown question type: " + question.type.name)
+            }
 
-        if (["shortText", "longText"].includes(question.type.name)) {
-            element = createLineElement(question, name);
-        } else if (["oneList", "severalList"].includes(question.type.name)) {
-            element = createChoiceElement(question, name);
+            element.prepend(this.createQuestionNumber(i));
+
+            form.append(element);
+
+            i++;
+        }
+    }
+
+    createQuestionNumber(i) {
+        const div = document.createElement("div");
+        div.className = "question-number";
+        div.innerHTML = "Вопрос №" + i;
+        return div;
+    }
+
+    createHeader() {
+        const div = document.createElement("div");
+        div.className = "block";
+
+        const h2 = document.createElement("h2");
+        h2.innerHTML = this.quizData.title;
+
+        const description = document.createElement("span");
+        description.innerHTML = this.quizData.description;
+
+        div.append(h2);
+        div.append(description);
+
+        return div;
+    }
+
+    createElementMainDiv(question) {
+        const div = document.createElement("div");
+        div.classList.add("element", "block", question.type.name);
+        return div;
+    }
+
+    createElementDescription(question) {
+        const header = document.createElement("div");
+        header.classList.add("question-header");
+
+        const e = document.createElement("div");
+        e.className = "element-description";
+        e.innerHTML = question.content;
+
+        header.append(e);
+
+        return header;
+    }
+
+    isRequired(question) {
+        const required = question["required"];
+        return required === undefined ? false : required;
+    }
+
+    createLineElement(question, questionName) {
+        const div = this.createElementMainDiv(question);
+        const label = document.createElement("label");
+        const descriptionDiv = this.createElementDescription(question);
+
+        let inputElement;
+
+        if (question.type.name === "shortText") {
+            inputElement = document.createElement("input");
+            inputElement.type = "text";
+        } else if (question.type.name === "longText") {
+            inputElement = document.createElement("textarea");
         } else {
-            console.log("unknown question type: " + question.type.name)
+            console.log("unknown line type: " + question.type.name);
         }
 
-        element.prepend(createQuestionNumber(i));
+        inputElement.classList.add("element-input", "any-element")
+        inputElement.name = questionName;
+        inputElement.required = this.isRequired(question);
 
-        form.append(element);
+        label.append(descriptionDiv);
+        label.append(inputElement);
 
-        i++;
+        div.append(label);
+
+        return div;
+    }
+
+    createChoiceElement(question, questionName) {
+        const div = this.createElementMainDiv(question);
+        div.append(this.createElementDescription(question));
+
+        for (const answer of question.answers) {
+            const choiceDiv = this.createOption(question, answer.content, questionName);
+            div.append(choiceDiv);
+        }
+
+        return div;
+    }
+
+    createOption(question, answer, questionName) {
+        const choiceDiv = document.createElement("div");
+        choiceDiv.className = "element-choice";
+
+        const label = document.createElement("label");
+        const input = document.createElement("input");
+
+        if (question.type.name === "oneList") {
+            input.type = "radio";
+            input.required = this.isRequired(question);
+        } else if (question.type.name === "severalList") {
+            input.type = "checkbox";
+        } else {
+            console.log("unknown question type when input.type: " + question.type.name);
+        }
+
+        input.className = "any-element"
+        input.name = questionName;
+        input.value = answer;
+
+        label.append(input);
+        label.append(answer);
+
+        choiceDiv.append(label);
+
+        return choiceDiv;
     }
 }
 
-function createQuestionNumber(i) {
-    const div = document.createElement("div");
-    div.className = "question-number";
-    div.innerHTML = "Вопрос №" + i;
-    return div;
-}
+const quizData = getQuizData();
+const quizParser = new QuizParser(quizData);
 
-function createHeader() {
-    const div = document.createElement("div");
-    div.className = "block";
+quizParser.parse();
 
-    const h2 = document.createElement("h2");
-    h2.innerHTML = quizData.title;
 
-    const description = document.createElement("span");
-    description.innerHTML = quizData.description;
-
-    div.append(h2);
-    div.append(description);
-
-    return div;
-}
-
-function createElementMainDiv(question) {
-    const div = document.createElement("div");
-    div.classList.add("element", "block", question.type.name);
-    return div;
-}
-
-function createElementDescription(question) {
-    const header = document.createElement("div");
-    header.classList.add("question-header");
-
-    const e = document.createElement("div");
-    e.className = "element-description";
-    e.innerHTML = question.content;
-
-    header.append(e);
-
-    return header;
-}
-
-function isRequired(question) {
-    const required = question["required"];
-    return required === undefined ? false : required;
-}
-
-function createLineElement(question, questionName) {
-    const div = createElementMainDiv(question);
-    const label = document.createElement("label");
-    const descriptionDiv = createElementDescription(question);
-
-    let inputElement;
-
-    if (question.type.name === "shortText") {
-        inputElement = document.createElement("input");
-        inputElement.type = "text";
-    } else if (question.type.name === "longText") {
-        inputElement = document.createElement("textarea");
-    } else {
-        console.log("unknown line type: " + question.type.name);
+class AnswerGetter {
+    constructor() {
+        this.i = 0;
+        this.getAllAnswerIds();
     }
 
-    inputElement.classList.add("element-input", "any-element")
-    inputElement.name = questionName;
-    inputElement.required = isRequired(question);
+    getAllAnswerIds() {
+        // брать инфу с сервера
 
-    label.append(descriptionDiv);
-    label.append(inputElement);
-
-    div.append(label);
-
-    return div;
-}
-
-function createChoiceElement(question, questionName) {
-    const div = createElementMainDiv(question);
-    div.append(createElementDescription(question));
-
-    for (const answer of question.answers) {
-        const choiceDiv = createOption(question, answer.content, questionName);
-        div.append(choiceDiv);
+        this.answerIds = [0, 1]; // мок
     }
 
-    return div;
-}
+    getAnswers() {
+        const answerId = this.answerIds[this.i++];
 
-function createOption(question, answer, questionName) {
-    const choiceDiv = document.createElement("div");
-    choiceDiv.className = "element-choice";
+        // звонить на сервер и вызывать соответствующие ответы c id == answerId
+        // ниже мок
 
-    const label = document.createElement("label");
-    const input = document.createElement("input");
-
-    if (question.type.name === "oneList") {
-        input.type = "radio";
-        input.required = isRequired(question);
-    } else if (question.type.name === "severalList") {
-        input.type = "checkbox";
-    } else {
-        console.log("unknown question type when input.type: " + question.type.name);
-    }
-
-    input.className = "any-element"
-    input.name = questionName;
-    input.value = answer;
-
-    label.append(input);
-    label.append(answer);
-
-    choiceDiv.append(label);
-
-    return choiceDiv;
-}
-
-
-function getAnswers() {
-    return {
-        id: 1,
-        name: "Полный Попуск", // так надо было тиму назвать кста
-        questions: [
+        return [
             {
-                score: 0,
-                answers: [
+                id: 1,
+                name: "Полный Попуск", // так надо было тиму назвать кста
+                questions: [
                     {
-                        content: "числ",
-                        id: 123 // id ответа в бд
-                    }
-                ],
-            },
-            {
-                score: 1,
-                answers: [
-                    {
-                        content: "Срань",
-                        id: 96 // id ответа в бд
+                        score: 0,
+                        answers: [
+                            {
+                                content: "числ",
+                                id: 123 // id ответа в бд
+                            }
+                        ],
                     },
                     {
-                        content: "язык",
-                        id: 96 // id ответа в бд
-                    }
-                ],
-            },
-            {
-                score: 0,
-                answers: [
+                        score: 1,
+                        answers: [
+                            {
+                                content: "Срань",
+                                id: 96 // id ответа в бд
+                            },
+                            {
+                                content: "язык",
+                                id: 96 // id ответа в бд
+                            }
+                        ],
+                    },
                     {
-                        content: "JS - говно",
-                        id: 32 // id ответа в бд
+                        score: 0,
+                        answers: [
+                            {
+                                content: "JS - говно",
+                                id: 32 // id ответа в бд
+                            }
+                        ]
+                    },
+                    {
+                        score: 0,
+                        answers: [
+                            {
+                                content: "Матвей полный леха и точка я сказал",
+                                id: 32 // id ответа в бд
+                            }
+                        ]
                     }
                 ]
             },
-            {
-                score: 0,
-                answers: [
+            { // тут должен вызываться getAnswers с новыми ответами
+                id: 2,
+                name: "Мэтью Алексеевич",
+                questions: [
                     {
-                        content: "Матвей полный леха и точка я сказал",
-                        id: 32 // id ответа в бд
+                        score: 0,
+                        answers: [
+                            {
+                                content: "глагол",
+                                id: 123 // id ответа в бд
+                            }
+                        ],
+                    },
+                    {
+                        score: 1,
+                        answers: [
+                            {
+                                content: "язык",
+                                id: 96 // id ответа в бд
+                            }
+                        ],
+                    },
+                    {
+                        score: 0,
+                        answers: [
+                            {
+                                content: "Мой любимый язык",
+                                id: 32 // id ответа в бд
+                            }
+                        ]
+                    },
+                    {
+                        score: 0,
+                        answers: [
+                            {
+                                content: "Это очевидно",
+                                id: 32 // id ответа в бд
+                            }
+                        ]
                     }
                 ]
             }
-        ]
-    };
+        ][answerId];
+    }
 }
 
-let answersJson = getAnswers()
+let answerGetter;
+
+function setAnswerGetter() {
+    answerGetter = new AnswerGetter();
+}
+
+let answersJson;
 
 function checkedStart() {
-    parse();
+    answersJson = answerGetter.getAnswers();
     addName();
     addCheckingElements();
     updateCurrentScore();
@@ -376,7 +452,7 @@ function createCounter(i) {
         const e = div.querySelector(".quantity");
         const prev = +e.innerText;
         if (prev === maxScore)
-            return
+            return;
         e.innerHTML = (prev + 1).toString();
         updateCurrentScore();
     });
@@ -425,60 +501,18 @@ function setMaxScore() {
 }
 
 function nextPressed() {
-    answersJson = { // тут должен вызываться getAnswers с новыми ответами
-        id: 2,
-        name: "Мэтью Алексеевич",
-        questions: [
-            {
-                score: 0,
-                answers: [
-                    {
-                        content: "глагол",
-                        id: 123 // id ответа в бд
-                    }
-                ],
-            },
-            {
-                score: 1,
-                answers: [
-                    {
-                        content: "язык",
-                        id: 96 // id ответа в бд
-                    }
-                ],
-            },
-            {
-                score: 0,
-                answers: [
-                    {
-                        content: "Мой любимый язык",
-                        id: 32 // id ответа в бд
-                    }
-                ]
-            },
-            {
-                score: 0,
-                answers: [
-                    {
-                        content: "Это очевидно",
-                        id: 32 // id ответа в бд
-                    }
-                ]
-            }
-        ]
-    };
-
     addScoreToTable(document.querySelector(".name").innerText, getCurrentScore());
 
     document.querySelector("#myForm").remove();
 
+    quizParser.parse();
     checkedStart();
 
     // TODO: send to egorable
-    const q = getCheckedAnswers();
+    const q = collectCheckedAnswers();
 }
 
-function getCheckedAnswers() {
+function collectCheckedAnswers() {
     let i = 0;
     const points = [];
     for (const quantity of document.querySelectorAll(".quantity")) {
@@ -493,6 +527,16 @@ function getCheckedAnswers() {
         id: answersJson.id,
         points: points
     };
+}
+
+
+
+function fillResultsTable() {
+    const data = getScoresFromDB();
+
+    for (const e of data) {
+        addScoreToTable(e.name, e.score);
+    }
 }
 
 function getScoresFromDB() {
@@ -522,14 +566,6 @@ function getScoresFromDB() {
             score: 100
         },
     ];
-}
-
-function fillResultsTable() {
-    const data = getScoresFromDB();
-
-    for (const e of data) {
-        addScoreToTable(e.name, e.score);
-    }
 }
 
 function addScoreToTable(name, score) {
