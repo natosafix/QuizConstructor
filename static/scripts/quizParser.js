@@ -254,6 +254,7 @@ function createOption(question, answer, questionName) {
 function getAnswers() {
     return {
         id: 1,
+        name: "Полный Попуск", // так надо было тиму назвать кста
         questions: [
             {
                 score: 0,
@@ -302,9 +303,25 @@ function getAnswers() {
 let answersJson = getAnswers()
 
 function checkedStart() {
+    parse();
+    addName();
     addCheckingElements();
     updateCurrentScore();
     setMaxScore();
+}
+
+function addName() {
+    const container = document.createElement("div");
+    container.className = "name-container";
+    container.innerText = "Заполнил: ";
+
+    const div = document.createElement("div");
+    div.className = "name";
+    div.innerText = answersJson.name;
+
+    container.append(div);
+
+    document.querySelector("#myForm h2").before(container);
 }
 
 function addCheckingElements() {
@@ -390,13 +407,16 @@ function addAutocheck(elem) {
     elem.querySelector(".question-header").append(autocheck);
 }
 
-function updateCurrentScore() {
+function getCurrentScore() {
     let score = 0;
     for (const elem of document.querySelectorAll(".quantity")) {
         score += +elem.innerText;
     }
+    return score;
+}
 
-    document.getElementById("total-score").innerText = score.toString();
+function updateCurrentScore() {
+    document.getElementById("total-score").innerText = getCurrentScore().toString();
 }
 
 function setMaxScore() {
@@ -407,6 +427,7 @@ function setMaxScore() {
 function nextPressed() {
     answersJson = { // тут должен вызываться getAnswers с новыми ответами
         id: 2,
+        name: "Мэтью Алексеевич",
         questions: [
             {
                 score: 0,
@@ -447,10 +468,12 @@ function nextPressed() {
         ]
     };
 
+    addScoreToTable(document.querySelector(".name").innerText, getCurrentScore());
+
     document.querySelector("#myForm").remove();
 
-    parse();
     checkedStart();
+
     // TODO: send to egorable
     const q = getCheckedAnswers();
 }
@@ -470,4 +493,56 @@ function getCheckedAnswers() {
         id: answersJson.id,
         points: points
     };
+}
+
+function getScoresFromDB() {
+    return [
+        {
+            name: "Рулон Обоев",
+            score: 76
+        },
+        {
+            name: "Ушат Помоев",
+            score: 40
+        },
+        {
+            name: "Улов Налимов",
+            score: 5
+        },
+        {
+            name: "Полно Засосов",
+            score: 69
+        },
+        {
+            name: "Рекорд Надоев",
+            score: 12
+        },
+        {
+            name: "Егор Лопарев",
+            score: 100
+        },
+    ];
+}
+
+function fillResultsTable() {
+    const data = getScoresFromDB();
+
+    for (const e of data) {
+        addScoreToTable(e.name, e.score);
+    }
+}
+
+function addScoreToTable(name, score) {
+    function createCol(text) {
+        const col = document.createElement("td");
+        col.innerText = text;
+        return col;
+    }
+
+    const table = document.querySelector(".results-table table");
+    const row = document.createElement("tr");
+
+    row.append(createCol(name), createCol(score));
+
+    table.append(row);
 }

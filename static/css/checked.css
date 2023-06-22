@@ -61,6 +61,43 @@
     color: dimgrey;
 }
 
+.results-button {
+    position: fixed;
+    top: 0;
+    right: 0;
+    padding: 15px;
+    margin: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    border: solid 1px dimgrey;
+    border-radius: 20px;
+    background-color: var(--white-color);
+    cursor: pointer;
+}
+
+table {
+    border: 1px solid grey;
+    border-collapse: collapse;
+}
+
+td {
+    border: 1px solid grey;
+    padding: 10px 20px;
+}
+
+.name-container * {
+    display: inline;
+}
+
+.name-container {
+    color: dimgrey;
+}
+
+.name {
+    color: black;
+    /*font-style: italic;*/
+}
+
 
 @media screen and (max-width: 980px) {
     .bt_minus, .bt_plus, .quantity {
@@ -75,5 +112,13 @@
     .bt_minus svg, .bt_plus svg {
         height: 60px;
         width: 60px;
+    }
+
+    .modal *, .modal p {
+        font-size: 40px;
+    }
+
+    .question-header * {
+        font-size: 40px;
     }
 }
