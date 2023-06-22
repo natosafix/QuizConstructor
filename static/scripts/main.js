@@ -780,18 +780,28 @@ class ButtonsGroupHandler {
     }
 
     onClick(buttonHandler) {
-        console.log(1);
         for (let buttonHandler of this.buttonsHandlers) {
             buttonHandler.setInactive();
         }
 
         buttonHandler.setActive();
     }
+
+    setActiveById(activeId) {
+        for (let buttonHandler of this.buttonsHandlers) {
+            if (buttonHandler.id === activeId) {
+                buttonHandler.setActive();
+            } else {
+                buttonHandler.setInactive();
+            }
+        }
+    }
 }
 
 class NavButton {
     constructor(button) {
         this.button = button;
+        this.id = button.id;
         let pageId = button.id.replace('btn', 'page');
         this.matchDiv = document.querySelector(`#${pageId}`);
     }
@@ -824,7 +834,10 @@ for (let navButton of groupsNavButtons) {
 }
 const groupsNavButtonsGroup = new ButtonsGroupHandler(groupsNavButtonsHandlers);
 
-function planQuizPressed() {
-    const values =  Array.from(document.querySelectorAll("#chosenGroups option:checked")).map(e => e.value);
-    console.log(values);
+if (['check', 'settings'].includes(prevPage)) {
+    navButtonsGroup.setActiveById('nav-groups-btn');
+    groupsNavButtonsGroup.setActiveById('groups-quiz-nav-groups-btn');
+} else if (['edit'].includes(prevPage)) {
+    navButtonsGroup.setActiveById('nav-groups-btn');
+    groupsNavButtonsGroup.setActiveById('groups-quiz-nav-quizzes-btn');
 }
