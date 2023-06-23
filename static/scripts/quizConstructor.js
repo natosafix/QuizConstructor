@@ -330,7 +330,8 @@ function buildConstructor(event) {
         }
         quizForm.questions.push(quizQuestion);
     }
-    console.log(JSON.stringify(quizForm));
+    alert(JSON.stringify(quizForm));
+    window.location.href = 'http://localhost:8080/';
 }
 
 function getDatabaseId(element) {

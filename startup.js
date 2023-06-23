@@ -2,9 +2,11 @@ const express = require('express');
 const authRouter = require('./routes/authRouter');
 const quizRouter = require('./routes/quizRouter')
 const baseRouter = require('./routes/baseRouter');
+const groupRouter = require('./routes/groupRouter');
 const databaseRouter = require('./routes/databaseRouter');
 const path = require('path');
 const authMiddleware = require('./middleware/authMiddleware');
+const userPageMiddleware = require('./middleware/userPageMiddleware');
 const cookieParser = require('cookie-parser');
 const multer = require('multer');
 const upload = multer();
@@ -19,16 +21,18 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')))
-app.use(express.static(path.resolve(__dirname, 'static')))
+app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));
+app.use(express.static(path.resolve(__dirname, 'static')));
 
-app.use(authRouter)
+app.use(authRouter);
 
 app.use(authMiddleware);
+app.use(userPageMiddleware);
 
-app.use(baseRouter)
+app.use(baseRouter);
 app.use('/quiz', quizRouter);
 app.use('/db', databaseRouter);
+app.use('/group', groupRouter);
 
 app.listen(PORT, () => {
     console.log(`Server started: http://${HOST}:${PORT}`);

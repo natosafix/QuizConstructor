@@ -1,4 +1,5 @@
 const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+const prevPage = document.querySelector("#prevPage").textContent;
 
 const dateTimeOptions = {
     day: '2-digit',
@@ -443,7 +444,7 @@ class GroupHeaderDiv extends CustomDOMElement {
 
         if (isAdmin)  {
             let groupSettingsHref = new CustomDOMElement('a');
-            groupSettingsHref.element.href = `https://norebesach.beget.app/quiz/groupSettings/${groupId}`; // TODO Страница с настройкой группы, где будет инвайт сслыка, участники
+            groupSettingsHref.element.href = `http://norebesach.beget.app/group/settings/${groupId}`; // TODO Страница с настройкой группы, где будет инвайт сслыка, участники
             let img = new CustomDOMElement('img').withClass('admin-group-settings-btn');
             img.element.src = "img/svg/settings.svg";
             img.element.alt = "Настройки группы";
@@ -627,7 +628,7 @@ class GroupCreateModalWindow extends CustomDOMElement {
 
     createGroup() {
         let newGroupId = 1; // TODO request to db for create new group, get newGroupId
-        window.location.href = `https://norebesach.beget.app/quiz/groupSettings/${newGroupId}`;
+        window.location.href = `http://norebesach.beget.app/group/settings/${newGroupId}`;
         this.hide();
     }
 }
@@ -779,18 +780,28 @@ class ButtonsGroupHandler {
     }
 
     onClick(buttonHandler) {
-        console.log(1);
         for (let buttonHandler of this.buttonsHandlers) {
             buttonHandler.setInactive();
         }
 
         buttonHandler.setActive();
     }
+
+    setActiveById(activeId) {
+        for (let buttonHandler of this.buttonsHandlers) {
+            if (buttonHandler.id === activeId) {
+                buttonHandler.setActive();
+            } else {
+                buttonHandler.setInactive();
+            }
+        }
+    }
 }
 
 class NavButton {
     constructor(button) {
         this.button = button;
+        this.id = button.id;
         let pageId = button.id.replace('btn', 'page');
         this.matchDiv = document.querySelector(`#${pageId}`);
     }
@@ -823,7 +834,10 @@ for (let navButton of groupsNavButtons) {
 }
 const groupsNavButtonsGroup = new ButtonsGroupHandler(groupsNavButtonsHandlers);
 
-function planQuizPressed() {
-    const values =  Array.from(document.querySelectorAll("#chosenGroups option:checked")).map(e => e.value);
-    console.log(values);
+if (['check', 'settings'].includes(prevPage)) {
+    navButtonsGroup.setActiveById('nav-groups-btn');
+    groupsNavButtonsGroup.setActiveById('groups-quiz-nav-groups-btn');
+} else if (['edit'].includes(prevPage)) {
+    navButtonsGroup.setActiveById('nav-groups-btn');
+    groupsNavButtonsGroup.setActiveById('groups-quiz-nav-quizzes-btn');
 }

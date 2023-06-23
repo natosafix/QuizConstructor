@@ -32,6 +32,8 @@ html {
 
 h2 {
     font-size: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .element-choice {
@@ -84,9 +86,14 @@ img {
     border: none;
     border-radius: 13px;
     cursor: pointer;
+    height: 100%;
 
     color: var(--white-color);
     font-size: 17px;
+    margin-left: 0;
+    margin-right: 0;
+    justify-content: center;
+    display: inline;
 }
 
 .question-number {
@@ -183,10 +190,18 @@ input[type='radio']:checked, input[type='checkbox']:checked {
     }
 
     .submit-button {
-        font-size: 60px;
+        font-size: 50px;
         padding: 30px;
         margin-top: 30px;
         margin-bottom: 20px;
         border-radius: 30px;
+    }
+
+    .question-number, .element-description, span, .element-choice {
+        font-size: 1.7em;
+    }
+
+    h2 {
+        font-size: 2em;
     }
 }

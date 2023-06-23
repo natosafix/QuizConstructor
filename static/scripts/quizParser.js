@@ -268,18 +268,31 @@ class AnswerGetter {
     getAllAnswerIds() {
         // брать инфу с сервера
 
-        this.answerIds = [0, 1]; // мок
+        this.answerIds = [0, 1, 2]; // мок
+        this.answersCount = this.answerIds.length;
     }
 
-    getAnswers() {
-        const answerId = this.answerIds[this.i++];
+    getNext() {
+        if (this.i === this.answersCount - 1)
+            return null;
 
+        return this.getAnswers(this.answerIds[++this.i]);
+    }
+
+    getPrev() {
+        if (this.i === 0)
+            return null;
+
+        return this.getAnswers(this.answerIds[--this.i]);
+    }
+
+    getAnswers(answerId) {
         // звонить на сервер и вызывать соответствующие ответы c id == answerId
         // ниже мок
 
         return [
             {
-                id: 1,
+                id: 11,
                 name: "Полный Попуск", // так надо было тиму назвать кста
                 questions: [
                     {
@@ -325,7 +338,7 @@ class AnswerGetter {
                 ]
             },
             { // тут должен вызываться getAnswers с новыми ответами
-                id: 2,
+                id: 22,
                 name: "Мэтью Алексеевич",
                 questions: [
                     {
@@ -365,21 +378,208 @@ class AnswerGetter {
                         ]
                     }
                 ]
+            },
+            { // тут должен вызываться getAnswers с новыми ответами
+                id: 33,
+                name: "Жээс Говнович",
+                questions: [
+                    {
+                        score: 0,
+                        answers: [
+                            {
+                                content: "сущ",
+                                id: 123 // id ответа в бд
+                            }
+                        ],
+                    },
+                    {
+                        score: 1,
+                        answers: [
+                            {
+                                content: "гавна",
+                                id: 96 // id ответа в бд
+                            }
+                        ],
+                    },
+                    {
+                        score: 0,
+                        answers: [
+                            {
+                                content: "Да",
+                                id: 32 // id ответа в бд
+                            }
+                        ]
+                    },
+                    {
+                        score: 0,
+                        answers: [
+                            {
+                                content: "Сам пиши",
+                                id: 32 // id ответа в бд
+                            }
+                        ]
+                    }
+                ]
             }
         ][answerId];
+    }
+
+    getById(answerId) {
+        const copiedFromAbove = [
+            {
+                id: 11,
+                name: "Полный Попуск", // так надо было тиму назвать кста
+                questions: [
+                    {
+                        score: 0,
+                        answers: [
+                            {
+                                content: "числ",
+                                id: 123 // id ответа в бд
+                            }
+                        ],
+                    },
+                    {
+                        score: 1,
+                        answers: [
+                            {
+                                content: "Срань",
+                                id: 96 // id ответа в бд
+                            },
+                            {
+                                content: "язык",
+                                id: 96 // id ответа в бд
+                            }
+                        ],
+                    },
+                    {
+                        score: 0,
+                        answers: [
+                            {
+                                content: "JS - говно",
+                                id: 32 // id ответа в бд
+                            }
+                        ]
+                    },
+                    {
+                        score: 0,
+                        answers: [
+                            {
+                                content: "Матвей полный леха и точка я сказал",
+                                id: 32 // id ответа в бд
+                            }
+                        ]
+                    }
+                ]
+            },
+            { // тут должен вызываться getAnswers с новыми ответами
+                id: 22,
+                name: "Мэтью Алексеевич",
+                questions: [
+                    {
+                        score: 0,
+                        answers: [
+                            {
+                                content: "глагол",
+                                id: 123 // id ответа в бд
+                            }
+                        ],
+                    },
+                    {
+                        score: 1,
+                        answers: [
+                            {
+                                content: "язык",
+                                id: 96 // id ответа в бд
+                            }
+                        ],
+                    },
+                    {
+                        score: 0,
+                        answers: [
+                            {
+                                content: "Мой любимый язык",
+                                id: 32 // id ответа в бд
+                            }
+                        ]
+                    },
+                    {
+                        score: 0,
+                        answers: [
+                            {
+                                content: "Это очевидно",
+                                id: 32 // id ответа в бд
+                            }
+                        ]
+                    }
+                ]
+            },
+            { // тут должен вызываться getAnswers с новыми ответами
+                id: 33,
+                name: "Жээс Говнович",
+                questions: [
+                    {
+                        score: 0,
+                        answers: [
+                            {
+                                content: "сущ",
+                                id: 123 // id ответа в бд
+                            }
+                        ],
+                    },
+                    {
+                        score: 1,
+                        answers: [
+                            {
+                                content: "гавна",
+                                id: 96 // id ответа в бд
+                            }
+                        ],
+                    },
+                    {
+                        score: 0,
+                        answers: [
+                            {
+                                content: "Да",
+                                id: 32 // id ответа в бд
+                            }
+                        ]
+                    },
+                    {
+                        score: 0,
+                        answers: [
+                            {
+                                content: "Сам пиши",
+                                id: 32 // id ответа в бд
+                            }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        let i = 0;
+        for (const e of copiedFromAbove) {
+            if (answerId === e.id) {
+                this.i = i;
+                return e;
+            }
+            i++;
+        }
     }
 }
 
 let answerGetter;
-
-function setAnswerGetter() {
-    answerGetter = new AnswerGetter();
-}
-
 let answersJson;
 
 function checkedStart() {
-    answersJson = answerGetter.getAnswers();
+    answerGetter = new AnswerGetter();
+    answersJson = answerGetter.getAnswers(0);
+    addElements();
+    fillResultsTable();
+}
+
+function addElements() {
     addName();
     addCheckingElements();
     updateCurrentScore();
@@ -492,7 +692,7 @@ function getCurrentScore() {
 }
 
 function updateCurrentScore() {
-    document.getElementById("total-score").innerText = getCurrentScore().toString();
+    document.getElementById("current-score").innerText = getCurrentScore().toString();
 }
 
 function setMaxScore() {
@@ -501,15 +701,37 @@ function setMaxScore() {
 }
 
 function nextPressed() {
-    addScoreToTable(document.querySelector(".name").innerText, getCurrentScore());
+    answersJson = answerGetter.getNext();
+    adjustNextPrevButtons();
+    redrawWithNewAnswers();
+}
 
+function previousPressed() {
+    answersJson = answerGetter.getPrev();
+    adjustNextPrevButtons();
+    redrawWithNewAnswers();
+}
+
+function redrawWithNewAnswers() {
     document.querySelector("#myForm").remove();
-
     quizParser.parse();
-    checkedStart();
+    addElements();
+}
 
+function adjustNextPrevButtons() {
+    document.querySelector("#prev-button").style.visibility = "visible";
+    document.querySelector("#next-button").style.visibility = "visible";
+    if (answerGetter.i === 0)
+        document.querySelector("#prev-button").style.visibility = "hidden";
+    if (answerGetter.i === answerGetter.answersCount - 1)
+        document.querySelector("#next-button").style.visibility = "hidden";
+}
+
+function savePressed() {
     // TODO: send to egorable
     const q = collectCheckedAnswers();
+
+    // addScoreToTable(document.querySelector(".quiz-filler-name").innerText, getCurrentScore()); // TODO: add third argument
 }
 
 function collectCheckedAnswers() {
@@ -535,40 +757,31 @@ function fillResultsTable() {
     const data = getScoresFromDB();
 
     for (const e of data) {
-        addScoreToTable(e.name, e.score);
+        addScoreToTable(e.name, e.answerId, e.score);
     }
 }
 
 function getScoresFromDB() {
     return [
         {
-            name: "Рулон Обоев",
+            name: "Полный Попуск",
+            answerId: 11,
             score: 76
         },
         {
-            name: "Ушат Помоев",
+            name: "Мэтью Алексеевич",
+            answerId: 22,
             score: 40
         },
         {
-            name: "Улов Налимов",
-            score: 5
-        },
-        {
-            name: "Полно Засосов",
-            score: 69
-        },
-        {
-            name: "Рекорд Надоев",
-            score: 12
-        },
-        {
-            name: "Егор Лопарев",
-            score: 100
-        },
+            name: "Жээс Говнович",
+            answerId: 33,
+            score: 40
+        }
     ];
 }
 
-function addScoreToTable(name, score) {
+function addScoreToTable(name, answerId, score) {
     function createCol(text) {
         const col = document.createElement("td");
         col.innerText = text;
@@ -578,7 +791,19 @@ function addScoreToTable(name, score) {
     const table = document.querySelector(".results-table table");
     const row = document.createElement("tr");
 
-    row.append(createCol(name), createCol(score));
+    const nameCol = createCol(name);
+    nameCol.className = "table__name";
+    nameCol.setAttribute("answerId", answerId);
+    nameCol.addEventListener("click", tableNamePressed);
+
+    row.append(nameCol, createCol(score));
 
     table.append(row);
+}
+
+function tableNamePressed(event) {
+    const answerId = +event.target.getAttribute("answerId");
+    answersJson = answerGetter.getById(answerId);
+    adjustNextPrevButtons();
+    redrawWithNewAnswers();
 }
