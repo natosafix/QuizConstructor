@@ -792,6 +792,7 @@ function addScoreToTable(name, answerId, score) {
     const row = document.createElement("tr");
 
     const nameCol = createCol(name);
+    nameCol.className = "table__name";
     nameCol.setAttribute("answerId", answerId);
     nameCol.addEventListener("click", tableNamePressed);
 
