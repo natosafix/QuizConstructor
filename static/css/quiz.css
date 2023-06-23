@@ -32,6 +32,8 @@ html {
 
 h2 {
     font-size: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .element-choice {
@@ -88,6 +90,10 @@ img {
 
     color: var(--white-color);
     font-size: 17px;
+    margin-left: 0;
+    margin-right: 0;
+    justify-content: center;
+    display: inline;
 }
 
 .question-number {
@@ -189,5 +195,13 @@ input[type='radio']:checked, input[type='checkbox']:checked {
         margin-top: 30px;
         margin-bottom: 20px;
         border-radius: 30px;
+    }
+
+    .question-number, .element-description, span, .element-choice {
+        font-size: 1.7em;
+    }
+
+    h2 {
+        font-size: 2em;
     }
 }
