@@ -1,4 +1,5 @@
 ﻿using Application.Quizzes.Commands.CreateQuiz;
+using Application.Quizzes.Commands.UpdateQuiz;
 using Application.Quizzes.Queries.GetQuiz;
 using Application.Quizzes.Queries.GetQuizzesByUserLogin;
 using AutoMapper;
@@ -28,6 +29,13 @@ public class QuizController : BaseController
 
     [HttpPost("createQuiz")]
     public async Task<ActionResult<int>> CreateQuiz([FromBody] CreateQuizCommand command)
+    {
+        var quizId = await Mediator.Send(command);
+        return Ok(quizId);
+    }
+    
+    [HttpPut("updateQuiz")]
+    public async Task<ActionResult<int>> UpdateQuiz([FromBody] UpdateQuizCommand command)
     {
         var quizId = await Mediator.Send(command);
         return Ok(quizId);

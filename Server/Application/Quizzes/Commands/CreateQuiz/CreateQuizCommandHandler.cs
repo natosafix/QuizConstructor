@@ -16,16 +16,36 @@ public class CreateQuizCommandHandler : RequestHandler, IRequestHandler<CreateQu
     {
 
         var user = await context.Users
-            .FirstOrDefaultAsync(user => user.Login == request.UserLogin, cancellationToken);
+            .FirstOrDefaultAsync(user => user.Login == request.Login, cancellationToken);
         
         if (user == null)
-            throw new NotFoundException(nameof(User), request.UserLogin);
+            throw new NotFoundException(nameof(User), request.Login);
 
+        var types = await context.QuestionTypes.ToListAsync(cancellationToken);
+        
         var quiz = new Quiz
         {
-            Name = request.Name,
+            Name = request.Title,
             Description = request.Description,
-            Creator = user
+            Creator = user,
+            Questions = request.Questions.Select( input => new Question
+            {
+                Type = types.FirstOrDefault(type => type.Id == input.TypeId),
+                Content = input.Content,
+                Required = input.Required,
+                Score = input.MaxScore,
+                Answers = input.Options.Select(option => new Answer
+                {
+                    Content = option.Answer
+                })
+                    .ToList(),
+                CorrectAnswers = input.CorrectOptions.Select(option => new CorrectAnswer
+                {
+                    Content = option.Answer
+                })
+                    .ToList()
+            })
+                .ToList()
         };
 
         await context.Quizzes.AddAsync(quiz, cancellationToken);

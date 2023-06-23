@@ -82,9 +82,9 @@ public class GroupController : BaseController
     }
     
     [HttpGet("getGroups")]
-    public async Task<ActionResult<int>> GetGroups([FromBody] GetGroupVmsQuery command)
+    public async Task<ActionResult<List<GroupVm>>> GetGroups([FromBody] GetGroupVmsQuery command)
     {
         var groupVmList = await Mediator.Send(command);
-        return Ok(groupVmList);
+        return Ok(groupVmList.GroupVms);
     }
 }

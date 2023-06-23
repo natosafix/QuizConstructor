@@ -21,6 +21,8 @@ public class QuestionConfiguration : IEntityTypeConfiguration<Question>
             .IsRequired();
         builder.Property(question => question.QuizId)
             .IsRequired();
+        builder.Property(question => question.Required)
+            .IsRequired();
 
         builder.HasOne(question => question.Quiz)
             .WithMany(quiz => quiz.Questions)

@@ -22,6 +22,7 @@
 
     <ItemGroup>
       <Folder Include="Questions\Queries\" />
+      <Folder Include="QuizGroups\Commands\" />
     </ItemGroup>
 
 </Project>

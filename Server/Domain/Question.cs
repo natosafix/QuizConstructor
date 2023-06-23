@@ -12,6 +12,7 @@ public class Question
     
     public string Content { get; set; }
     public int ImageId { get; set; }
+    public bool Required { get; set; }
     public int Score { get; set; }
     
     public List<Answer> Answers { get; set; } = new();
