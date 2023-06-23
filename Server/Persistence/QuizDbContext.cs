@@ -15,6 +15,7 @@ public class QuizDbContext : DbContext, IDbContext
     public DbSet<QuestionType> QuestionTypes { get; set; }
     public DbSet<UserQuiz> UserQuizzes { get; set; }
     public DbSet<Quiz> Quizzes { get; set; }
+    public DbSet<QuizGroup> QuizGroups { get; set; }
 
     public QuizDbContext(DbContextOptions<QuizDbContext> options) : base(options) { }
 

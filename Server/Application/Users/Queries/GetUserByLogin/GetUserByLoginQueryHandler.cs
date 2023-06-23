@@ -25,7 +25,8 @@ public class GetUserByLoginQueryHandler : RequestHandler,  IRequestHandler<GetUs
             throw new NotFoundException(nameof(User), request.Login);
 
         entity.Quizzes =
-            await context.Quizzes.Where(quiz => quiz.CreatorId == entity.Id).ToListAsync(cancellationToken);
+            await context.Quizzes.Where(quiz => quiz.CreatorId == entity.Id)
+                .ToListAsync(cancellationToken);
         
         return mapper.Map<UserVm>(entity);
     }

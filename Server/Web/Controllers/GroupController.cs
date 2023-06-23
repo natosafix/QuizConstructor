@@ -3,7 +3,15 @@ using Application.Groups.Commands.AddAdminInGroup;
 using Application.Groups.Commands.AddUserInGroup;
 using Application.Groups.Commands.AssignQuiz;
 using Application.Groups.Commands.CreateGroup;
+using Application.Groups.Commands.DeleteAdmin;
+using Application.Groups.Commands.DeleteUser;
+using Application.Groups.Queries.GetGroupAdmins;
+using Application.Groups.Queries.GetGroupsInfo;
+using Application.Groups.Queries.GetGroupUsers;
+using Application.Groups.Queries.GetGroupVms;
+using Application.Vms;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Web.Controllers;
 
@@ -36,5 +44,47 @@ public class GroupController : BaseController
     {
         var groupId = await Mediator.Send(command);
         return Ok(groupId);
+    }
+
+    [HttpDelete("deleteAdmin")]
+    public async Task<ActionResult<int>> DeleteAdmin([FromBody] DeleteAdminCommand command)
+    {
+        var groupId = await Mediator.Send(command);
+        return Ok(groupId);
+    }
+    
+    [HttpDelete("deleteUser")]
+    public async Task<ActionResult<int>> DeleteUser([FromBody] DeleteUserCommand command)
+    {
+        var groupId = await Mediator.Send(command);
+        return Ok(groupId);
+    }
+    
+    [HttpGet("getAdmins")]
+    public async Task<ActionResult<int>> GetAdmins([FromBody] GetGroupAdminsQuery command)
+    {
+        var userInfoList = await Mediator.Send(command);
+        return Ok(userInfoList);
+    }
+    
+    [HttpGet("getUsers")]
+    public async Task<ActionResult<int>> GetUsers([FromBody] GetGroupUsersQuery command)
+    {
+        var userInfoList = await Mediator.Send(command);
+        return Ok(userInfoList);
+    }
+    
+    [HttpGet("getGroupsInfo")]
+    public async Task<ActionResult<int>> GetGroupsInfo([FromBody] GetGroupsInfoQuery command)
+    {
+        var groupListInfo = await Mediator.Send(command);
+        return Ok(groupListInfo);
+    }
+    
+    [HttpGet("getGroups")]
+    public async Task<ActionResult<int>> GetGroups([FromBody] GetGroupVmsQuery command)
+    {
+        var groupVmList = await Mediator.Send(command);
+        return Ok(groupVmList);
     }
 }
