@@ -147,10 +147,6 @@ td {
         font-size: 40px;
     }
 
-    .current-max-score-container {
-        height: 100%;
-    }
-
     #current-score, #max-score {
         font-size: 80px;
     }
