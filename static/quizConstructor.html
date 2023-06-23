@@ -47,10 +47,6 @@
 <span class="backend-data" id="quiz-id">{ quizId }</span>
 <span class="backend-data" id="user-id">{ userId }</span>
 
-<div>
-    <button class="myButton" type="button" style="position: fixed" id="add-unit-button" name="add-unit">Добавить вопрос</button>
-</div>
-
 <div class="main">
 
     <form class="quiz-form-header block">
@@ -199,7 +195,8 @@
         </div>
 
     </form>
-    <button type="button" class="build-button myButton" onclick="buildConstructor(event)">Отправить форму</button>
+    <button type="button" class="myButton" id="add-unit-button" name="add-unit">Добавить вопрос</button>
+    <button type="button" class="build-button myButton" onclick="buildConstructor(event)">Сохранить изменения</button>
 </div>
 
 <script src="/scripts/quizConstructor.js"></script>

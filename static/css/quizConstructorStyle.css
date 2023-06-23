@@ -181,3 +181,8 @@ input, textarea {
 .remove-unit {
     margin: 0;
 }
+
+#add-unit-button, .build-button {
+    width: 100%;
+    margin: 0 0 1em;
+}
