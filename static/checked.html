@@ -16,21 +16,21 @@
 <div class="main">
 
     <div class="under-blocks">
-        <div class="current-total-score-container">
-            <div id="total-score">
-
-            </div>
-            <div id="max-score">
-
-            </div>
+        <button form="myForm" class="submit-button" id="save-button" onclick="savePressed()">Сохранить</button>
+        <div class="next-prev-buttons-container">
+            <button form="myForm" class="submit-button" id="prev-button" onclick="previousPressed()">❮ Назад</button>
+            <button form="myForm" class="submit-button" id="next-button" onclick="nextPressed()">Вперед ❯</button>
         </div>
-
-        <button form="myForm" class="submit-button" onclick="nextPressed()">Следующий</button>
     </div>
 
     <button class="results-button js-open-modal" data-modal="1">
         Результаты
     </button>
+
+    <div class="current-max-score-container">
+        <div id="current-score"></div>
+        <div id="max-score"></div>
+    </div>
 
     <div class="modal" data-modal="1">
         <div class="modal__top">
@@ -47,9 +47,7 @@
 
 </body>
 
-<script src='/scripts/quizParser.js'></script>
-<script>setAnswerGetter()</script>
-<script>checkedStart()</script>
 <script src='/scripts/modal.js'></script>
-<script>fillResultsTable()</script>
+<script src='/scripts/quizParser.js'></script>
+<script>checkedStart()</script>
 </html>
