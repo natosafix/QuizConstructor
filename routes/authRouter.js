@@ -1,6 +1,6 @@
 const Router = require('express');
 const router = new Router();
-const authController = require('../conttoller/authController');
+const authController = require('../controllers/authController');
 const {body} = require('express-validator');
 const pattern = /^[A-Za-z0-9!@#\$%\^&\*\(\)]+$/
 

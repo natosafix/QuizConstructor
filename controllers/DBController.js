@@ -1,6 +1,6 @@
 class DBController {
     //TODO
-    apiUrl = "https://norebesach.beget.app/";
+    apiUrl = "http://31.129.97.40:3000/api/";
     users = {};
     async getUser(username) {
         //TODO
@@ -16,10 +16,11 @@ class DBController {
         return userData;
     }
 
-    async getRequest(method, params) {
+    async getRequest(method, body) {
         try {
-            return await fetch(this.apiUrl + method + '?' + new URLSearchParams(params), {
-                method: 'GET'
+            return await fetch(this.apiUrl + method, {
+                method: 'GET',
+                body: body
             });
         } catch (e) {
             console.error(e);
@@ -32,7 +33,7 @@ class DBController {
             return await fetch(this.apiUrl + method, {
                 method: 'POST',
                 body: body
-        });
+            });
         } catch (e) {
             console.error(e);
         }

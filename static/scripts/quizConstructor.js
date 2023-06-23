@@ -331,7 +331,7 @@ function buildConstructor(event) {
         quizForm.questions.push(quizQuestion);
     }
     alert(JSON.stringify(quizForm));
-    window.location.href = 'http://localhost:8080/';
+    window.location.href = 'https://norebesach.beget.app/';
 }
 
 function getDatabaseId(element) {

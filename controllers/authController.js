@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const {validationResult} = require('express-validator')
 const {secret} = require("../config")
-const apiController = require('./DBController');
+const DBController = require('./DBController');
 const path = require('path');
 
 const generateAccessToken = (username) => {
@@ -43,12 +43,24 @@ class AuthController {
             if (validationInfo)
                 return res.json(validationInfo);
             const {username, password, firstName, lastName} = req.body;
-            const candidate = await apiController.getUser(username);
+            let candidate;
+            const response = await DBController.getRequest('user/getUser', {"login": username});
+            if (response) {
+                if (!response.ok)
+                    return await res.status(response.status);
+                try {
+                    candidate = await response.json();
+                } catch (e) {
+                    console.error(e);
+                    return res.status(400);
+                }
+            }
             if (candidate) {
                 return res.json({message: "Пользователь с таким именем уже существует", type: "username"});
             }
             const hashPassword = bcrypt.hashSync(password, 7);
-            const user = await apiController.createUser({
+            const user = await DBController.postRequest('user/createUser',
+                {
                 username: username,
                 password: hashPassword,
                 firstName: firstName,
@@ -71,7 +83,18 @@ class AuthController {
             if (validationInfo)
                 return res.json(validationInfo);
             const {username, password} = req.body;
-            const user = await apiController.getUser(username);
+            const response = await DBController.getRequest('user/getUser', {'username': username});
+            let user;
+            if (response) {
+                if (!response.ok)
+                    return await res.status(response.status);
+                try {
+                    user = await response.json();
+                } catch (e) {
+                    console.error(e);
+                    return res.status(400);
+                }
+            }
             if (!user) {
                 return res.json({message: `Пользователь ${username} не найден`, type: "username"});
             }
@@ -80,7 +103,7 @@ class AuthController {
                 return res.json({message: `Введен неверный пароль`, type: "password"});
             }
             const token = generateAccessToken(user.username);
-            res.cookie('auth', `${token}`, {maxAge: 2592000000/*, httpOnly: true*/, secure: true});
+            res.cookie('auth', `${token}`, {maxAge: 2592000000, secure: true});
             return res.redirect('/');
         } catch (e) {
             console.error(e);

@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const {secret} = require('../config');
-const api = require('../conttoller/DBController');
+const api = require('../controllers/DBController');
 
 function authMiddleware(req, res, next) {
     if (req.method === "OPTIONS") {
