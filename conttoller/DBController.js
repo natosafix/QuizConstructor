@@ -29,9 +29,9 @@ class DBController {
 
     async postRequest(method, body) {
         try {
-        return await fetch(this.apiUrl + method, {
-            method: 'POST',
-            body: body
+            return await fetch(this.apiUrl + method, {
+                method: 'POST',
+                body: body
         });
         } catch (e) {
             console.error(e);
