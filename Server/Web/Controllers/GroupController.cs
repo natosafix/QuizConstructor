@@ -61,28 +61,28 @@ public class GroupController : BaseController
     }
     
     [HttpGet("getAdmins")]
-    public async Task<ActionResult<int>> GetAdmins([FromBody] GetGroupAdminsQuery command)
+    public async Task<ActionResult<int>> GetAdmins([FromQuery] GetGroupAdminsQuery command)
     {
         var userInfoList = await Mediator.Send(command);
         return Ok(userInfoList);
     }
     
     [HttpGet("getUsers")]
-    public async Task<ActionResult<int>> GetUsers([FromBody] GetGroupUsersQuery command)
+    public async Task<ActionResult<int>> GetUsers([FromQuery] GetGroupUsersQuery command)
     {
         var userInfoList = await Mediator.Send(command);
         return Ok(userInfoList);
     }
     
     [HttpGet("getGroupsInfo")]
-    public async Task<ActionResult<int>> GetGroupsInfo([FromBody] GetGroupsInfoQuery command)
+    public async Task<ActionResult<int>> GetGroupsInfo([FromQuery] GetGroupsInfoQuery command)
     {
         var groupListInfo = await Mediator.Send(command);
         return Ok(groupListInfo);
     }
     
     [HttpGet("getGroups")]
-    public async Task<ActionResult<List<GroupVm>>> GetGroups([FromBody] GetGroupVmsQuery command)
+    public async Task<ActionResult<List<GroupVm>>> GetGroups([FromQuery] GetGroupVmsQuery command)
     {
         var groupVmList = await Mediator.Send(command);
         return Ok(groupVmList.GroupVms);

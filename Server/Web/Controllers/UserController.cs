@@ -16,14 +16,14 @@ public class UserController : BaseController
     public UserController(IMapper mapper) => this.mapper = mapper;
 
     [HttpGet("login")]
-    public async Task<ActionResult<UserVm>> GetUserByPassword([FromBody] GetUserByPasswordQuery query)
+    public async Task<ActionResult<UserVm>> GetUserByPassword([FromQuery] GetUserByPasswordQuery query)
     {
         var userVm = await Mediator.Send(query);
         return Ok(userVm);
     }
     
     [HttpGet("getUser")]
-    public async Task<ActionResult<UserVm>> GetUserByLogin([FromBody] GetUserByLoginQuery query)
+    public async Task<ActionResult<UserVm>> GetUserByLogin([FromQuery] GetUserByLoginQuery query)
     {
         var userVm = await Mediator.Send(query);
         return Ok(userVm);

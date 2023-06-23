@@ -14,14 +14,14 @@ public class QuizController : BaseController
     public QuizController(IMapper mapper) => this.mapper = mapper;
 
     [HttpGet("getQuiz")]
-    public async Task<ActionResult<int>> GetQuiz([FromBody] GetQuizQuery command)
+    public async Task<ActionResult<int>> GetQuiz([FromQuery] GetQuizQuery command)
     {
         var quizVm = await Mediator.Send(command);
         return Ok(quizVm);
     }
     
     [HttpGet("getQuizzesByLogin")]
-    public async Task<ActionResult<int>> GetQuizzesByLogin([FromBody] GetQuizzesByUserLoginQuery command)
+    public async Task<ActionResult<int>> GetQuizzesByLogin([FromQuery] GetQuizzesByUserLoginQuery command)
     {
         var quizListVm = await Mediator.Send(command);
         return Ok(quizListVm);

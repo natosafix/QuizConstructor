@@ -9,7 +9,7 @@ public class QuestionTypeController : BaseController
 {
     
     [HttpGet("getAll")]
-    public async Task<ActionResult<int>> GetAll([FromBody] GetAllQuestionTypesQuery command)
+    public async Task<ActionResult<int>> GetAll([FromQuery] GetAllQuestionTypesQuery command)
     {
         var questionTypes = await Mediator.Send(command);
         return Ok(questionTypes);

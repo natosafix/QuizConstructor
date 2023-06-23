@@ -14,7 +14,7 @@ public class QuizGroupController : BaseController
 {
     
     [HttpGet("getQuizGroup")]
-    public async Task<ActionResult<UserVm>> GetQuizGroup([FromBody] GetQuizGroupQuery query)
+    public async Task<ActionResult<UserVm>> GetQuizGroup([FromQuery] GetQuizGroupQuery query)
     {
         var quizChecking = await Mediator.Send(query);
         return Ok(quizChecking);
