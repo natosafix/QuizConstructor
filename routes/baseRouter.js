@@ -1,6 +1,6 @@
 const Router = require('express');
 const router = new Router();
-const baseController = require('../conttoller/baseController');
+const baseController = require('../controllers/baseController');
 
 router.get('/', baseController.getMainPage);
 router.get('/mainPage', baseController.getMainQuizzes);

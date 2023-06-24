@@ -1,6 +1,6 @@
 const Router = require('express');
 const router = new Router();
-const quizController = require('../conttoller/quizController');
+const quizController = require('../controllers/quizController');
 
 router.get('/edit/:id', quizController.editQuiz);
 router.get('/solve/:id', quizController.solveQuiz);
