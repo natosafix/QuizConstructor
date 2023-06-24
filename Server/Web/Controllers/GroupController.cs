@@ -21,8 +21,15 @@ public class GroupController : BaseController
     [HttpPost("create")]
     public async Task<ActionResult<int>> Create([FromBody] CreateGroupCommand command)
     {
-        var groupId = await Mediator.Send(command);
-        return Ok(groupId);
+        try
+        {
+            var groupId = await Mediator.Send(command);
+            return Ok(groupId);
+        }
+        catch
+        {
+            return Ok(null);
+        }
     }
     
     [HttpPost("addAdmin")]

@@ -11,10 +11,10 @@ public class Question
     public int QuizId { get; set; }
     
     public string Content { get; set; }
-    public int ImageId { get; set; }
     public bool Required { get; set; }
     public int Score { get; set; }
-    
+
+    public List<UserAnswer> UserAnswers { get; set; } = new();
     public List<Answer> Answers { get; set; } = new();
     public List<CorrectAnswer> CorrectAnswers { get; set; } = new();
     
