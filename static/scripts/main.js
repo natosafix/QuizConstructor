@@ -40,8 +40,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
             method: 'GET',
         });
         data = await response.json();*/
-        data = {
-            "groups": [
+        data = [
                 {
                     "id": 1,
                     "name": "Контора",
@@ -194,7 +193,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
                     ]
                 }
             ]
-        }
+        data = [];
 
         adminQuizzes = {
             "quizVms": [
@@ -211,7 +210,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
             ]
         }
 
-        for (let currentGroup of data['groups']) {
+        for (let currentGroup of data) {
             if (currentGroup.isAdmin) {
                 adminGroupId2Name[currentGroup.id] = currentGroup.name;
             }
@@ -238,8 +237,9 @@ function buildPage() {
 
 function fillActiveQuizzes() {
     let activePaste = document.querySelector('#active-paste-place');
+    let shownGroupsCount = 0;
 
-    for (let currentGroup of data['groups']) {
+    for (let currentGroup of data) {
         if (currentGroup['isAdmin'])
             continue;
         let group = new GroupBlockDiv(currentGroup.id, currentGroup.name);
@@ -258,10 +258,16 @@ function fillActiveQuizzes() {
         }
         if (group.activeCount > 0) {
             activePaste.appendChild(group.element);
+            shownGroupsCount++;
             group.show();
         } else {
             group.remove();
         }
+    }
+
+    if (shownGroupsCount === 0) {
+        activePaste.appendChild(new CustomDOMElement('label')
+            .withContent("Пусто").element)
     }
 }
 
@@ -269,7 +275,7 @@ function fillEndedQuizzes() {
     let endedPaste = document.querySelector('#ended-paste-place');
     let quizzes = [];
 
-    for (let currentGroup of data['groups']) {
+    for (let currentGroup of data) {
         if (currentGroup['isAdmin'])
             continue;
 
@@ -305,7 +311,7 @@ function fillEndedQuizzes() {
 function fillGroupsPage() {
     let pastePlace = document.querySelector('#groups-paste-place');
 
-    for (let currentGroup of data['groups']) {
+    for (let currentGroup of data) {
         let group = new GroupBlockDiv(currentGroup.id, currentGroup.name, currentGroup['isAdmin']);
         for (let quizKey in currentGroup.quizVms) {
             let currentQuiz = currentGroup.quizVms[quizKey];
