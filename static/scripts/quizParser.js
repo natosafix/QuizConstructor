@@ -755,9 +755,11 @@ function collectCheckedAnswers() {
 
 function fillResultsTable() {
     const data = getScoresFromDB();
-
-    for (const e of data) {
-        addScoreToTable(e.name, e.answerId, e.score);
+    // TODO убрать внешний for
+    for (let i = 0; i < 10; i++) {
+        for (const e of data) {
+            addScoreToTable(e.name, e.answerId, e.score);
+        }
     }
 }
 
@@ -788,7 +790,7 @@ function addScoreToTable(name, answerId, score) {
         return col;
     }
 
-    const table = document.querySelector(".results-table table");
+    const table = document.querySelector(".results-table table tbody");
     const row = document.createElement("tr");
 
     const nameCol = createCol(name);
