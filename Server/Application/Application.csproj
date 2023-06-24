@@ -16,7 +16,13 @@
       <PackageReference Include="MediatR" Version="12.0.1" />
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.5" />
+      <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Questions\Queries\" />
+      <Folder Include="QuizGroups\Commands\" />
     </ItemGroup>
 
 </Project>

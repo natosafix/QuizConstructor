@@ -7,9 +7,4 @@ public class Answer
     
     public Question Question { get; set; }
     public int QuestionId { get; set; }
-    
-    public UserQuiz UserQuiz { get; set; }
-    public int UserQuizId { get; set; }
-    
-    public int Score { get; set; }
 }
