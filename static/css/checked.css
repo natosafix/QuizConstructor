@@ -86,9 +86,15 @@
     cursor: pointer;
 }
 
+.results-table {
+    height: 400px;
+    overflow: auto;
+}
+
 table {
-    border: 1px solid grey;
+    border: none;
     border-collapse: collapse;
+    width: 100%;
 }
 
 td {
