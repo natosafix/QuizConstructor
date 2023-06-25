@@ -18,6 +18,7 @@ public class GetUserQuizQueryHandler : RequestHandler, IRequestHandler<GetUserQu
             await context.UserQuizzes
                 .Include(userQuiz => userQuiz.Questions)
                     .ThenInclude(question => question.UserAnswers)
+                .Include(quiz => quiz.User)
                 .FirstOrDefaultAsync(userQuiz => userQuiz.Id == request.Id, cancellationToken);
 
         if (userQuiz == null)
@@ -26,6 +27,8 @@ public class GetUserQuizQueryHandler : RequestHandler, IRequestHandler<GetUserQu
         return new UserQuizVm
         {
             Id = userQuiz.Id,
+            FirstName = userQuiz.User.FirstName,
+            LastName = userQuiz.User.FirstName,
             Questions = userQuiz.Questions.Select(question => new UserQuestionVm
                 {
                     Score = question.Score,
