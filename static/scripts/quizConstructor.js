@@ -19,8 +19,9 @@ const questionType = quizQuestion.querySelector(".answer-type-selector");
 let question2PrevType = {1: 'shortText'};
 
 const choiceTypes = ['oneList', 'severalList', 'dropList'];
-const questionType2Id = {'shortText': 1, 'longText': 2, 'codeEditor': 3, 'oneList': 4, 'severalList': 5};
-const id2QuestionType = {1: 'shortText', 2: 'longText', 3: 'codeEditor', 4: 'oneList', 5: 'severalList'};
+const codeTypes = ['javascript', 'xml', 'css'];
+const questionType2Id = {'shortText': 1, 'longText': 2, 'javascript': 3, 'oneList': 4, 'severalList': 5, 'xml': 6, 'css': 7};
+const id2QuestionType = {1: 'shortText', 2: 'longText', 3: 'javascript', 4: 'oneList', 5: 'severalList', 6: 'xml', 7: 'css'};
 
 //questionType.addEventListener('change', changeQuestionType)
 
@@ -293,6 +294,9 @@ function buildConstructor(event) {
         quizQuestion.id = getDatabaseId(question);
         quizQuestion.content = question.querySelector('.question').value;
         let answerType = question.querySelector('.answer-type-selector').value;
+        if (answerType === 'codeEditor') {
+            answerType = question.querySelector('.code-type-select').value;
+        }
         quizQuestion.typeId = questionType2Id[answerType];
         quizQuestion.maxScore = parseInt(question.querySelector("[name='maxScore']").value);
         let answerHolder = question.querySelector(`.${answerType}`);
@@ -309,7 +313,7 @@ function buildConstructor(event) {
             }
         } else  {
             let autocheckInput;
-            if (answerType === 'codeEditor') {
+            if (codeTypes.includes(answerType)) {
                 autocheckInput = answerHolder.querySelector(".correct-answer");
                 autocheckInput = autocheckInput.CodeMirror.getValue();
             } else {
@@ -379,6 +383,17 @@ let data =
                     {"id": 3, "answer": "Вариант 3"}
                 ],
                 "correctOptions" : []
+            },
+            {
+                "id": 8,
+                "content": "четвертый",
+                "typeId": 7,
+                "maxScore": 3,
+                "required" : true,
+                "options": [],
+                "correctOptions" : [
+                    {"id": 1, "answer": "color"}
+                ]
             }
         ]
     }
@@ -402,6 +417,11 @@ function createConstructorFromJson() {
         question.querySelector('.question').value = questionData.content;
         let answerType = id2QuestionType[questionData.typeId];
         let answerTypeSelect = question.querySelector('.answer-type-selector');
+        let codeType;
+        if (codeTypes.includes(answerType)) {
+            codeType = answerType;
+            answerType = 'codeEditor';
+        }
         answerTypeSelect.value = answerType;
         let changeEvent = new Event('change');
         answerTypeSelect.dispatchEvent(changeEvent);
@@ -431,6 +451,9 @@ function createConstructorFromJson() {
         } else if (questionData.correctOptions.length > 0) {
             let autocheckInput = answerHolder.querySelector(".correct-answer");
             if (answerType === 'codeEditor') {
+                let codeTypeSelect = question.querySelector('.code-type-select');
+                codeTypeSelect.value = codeType;
+                codeTypeSelect.dispatchEvent(changeEvent);
                 autocheckInput.CodeMirror.setValue(questionData.correctOptions[0].answer);
             } else {
                 autocheckInput.value = questionData.correctOptions[0].answer;
