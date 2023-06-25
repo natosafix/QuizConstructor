@@ -256,7 +256,7 @@ class QuizParser {
 
         label.append(descriptionDiv);
 
-        if (question.correctOptions !== null) {
+        if (question.correctOptions) {
             const correctAnswer = document.createElement("div");
             correctAnswer.className = "element-correct-answer";
             correctAnswer.innerHTML = question.correctOptions[0].content;
@@ -299,7 +299,7 @@ class QuizParser {
         }
 
         input.classList.add("any-element");
-        if (question.correctOptions !== null) {
+        if (question.correctOptions) {
             for (const e of question.correctOptions)
                 if (e.content === answer) {
                     input.classList.add("correct-option");
@@ -362,8 +362,8 @@ class AnswerGetter {
         // ниже мок
         let response = await fetch('http://localhost:8080/db/apiRequest?' + new URLSearchParams(
             {
-                method: "quizGroup/getUserQuizIds",
-                data: JSON.stringify({id: quizId})
+                method: "quiz/getUserQuiz",
+                data: JSON.stringify({id: answerId})
             }),
             {
                 method: 'GET',
