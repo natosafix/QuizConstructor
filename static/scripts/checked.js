@@ -1,4 +1,4 @@
-function getQuizData() {
+function getQuizDataForOwner() {
     return {
         id: 1,
         title: "Анкета",
@@ -183,9 +183,9 @@ class QuizParser {
     }
 
     createQuestionNumber(i) {
-        const div = document.createElement("div");
+        const div = document.createElement("h2");
         div.className = "question-number";
-        div.innerHTML = "Вопрос №" + i;
+        div.textContent = "Вопрос №" + i;
         return div;
     }
 
@@ -195,6 +195,8 @@ class QuizParser {
 
         const h2 = document.createElement("h2");
         h2.innerHTML = this.quizData.title;
+        h2.classList.add("quiz-title");
+        h2.classList.add("quiz-title");
 
         const description = document.createElement("span");
         description.innerHTML = this.quizData.description;
@@ -314,7 +316,7 @@ class QuizParser {
     }
 }
 
-const quizData = getQuizData();
+const quizData = getQuizDataForOwner();
 const quizParser = new QuizParser(quizData);
 
 quizParser.parse();

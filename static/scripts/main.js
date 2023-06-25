@@ -12,7 +12,8 @@ const dateTimeOptions = {
 };
 
 let data;
-let adminQuizzes;
+let adminQuizzesData;
+let adminQuizzes = [];
 let planModalWindow;
 let createGroupModalWindow;
 let adminGroupId2Name = {};
@@ -252,6 +253,7 @@ function buildPage() {
 
 function fillActiveQuizzes() {
     let activePaste = document.querySelector('#active-paste-place');
+    let shownGroupsCount = 0;
 
     for (let currentGroup of data) {
         if (currentGroup['isAdmin'])
@@ -272,10 +274,18 @@ function fillActiveQuizzes() {
         }
         if (group.activeCount > 0) {
             activePaste.appendChild(group.element);
+            shownGroupsCount++;
             group.show();
         } else {
             group.remove();
         }
+    }
+
+    if (shownGroupsCount === 0) {
+        let emptyBlock = new CustomDOMElement('div')
+            .withClass('block')
+            .withContent("Нет активных опросов");
+        activePaste.appendChild(emptyBlock.element);
     }
 }
 
@@ -298,6 +308,12 @@ function fillEndedQuizzes() {
             finishedDiv.hide();
             quizzes.push(finishedDiv);
         }
+    }
+
+    if (quizzes.length === 0) {
+        endedPaste.appendChild(new CustomDOMElement('label')
+            .withContent('Нет завершённых опросов').element);
+        return;
     }
 
     quizzes.sort((a, b) => {
@@ -348,8 +364,9 @@ function fillGroupsPage() {
 function fillAdminQuizzes() {
     let pastePlace = document.querySelector("#admin-quizzes-paste-place");
 
-    for (let currentQuiz of adminQuizzes['quizVms']) {
+    for (let currentQuiz of adminQuizzesData['quizVms']) {
         let quizDiv = new AdminQuizDiv(currentQuiz.id, currentQuiz.name);
+        adminQuizzes.push(quizDiv);
         pastePlace.appendChild(quizDiv.element);
     }
 }
@@ -362,11 +379,13 @@ function getFormatDateStr(date) {
 class CustomDOMElement {
     constructor(tag) {
         this.element = document.createElement(tag);
-        this._displayStyle = 'block';
+        this._displayStyle = null;
     }
 
     hide() {
-        this._displayStyle = this.element.style.display;
+        if (this._displayStyle === null) {
+            this._displayStyle = window.getComputedStyle(this.element).display;
+        }
         this.element.style.display = 'none';
     }
 
@@ -458,7 +477,7 @@ class GroupHeaderDiv extends CustomDOMElement {
 
         if (isAdmin)  {
             let groupSettingsHref = new CustomDOMElement('a');
-            groupSettingsHref.element.href = `http://localhost:8080/group/settings/${groupId}`; // TODO Страница с настройкой группы, где будет инвайт сслыка, участники
+            groupSettingsHref.element.href = `http://localhost:8080/group/settings/${groupId}`;
             let img = new CustomDOMElement('img').withClass('admin-group-settings-btn');
             img.element.src = "img/svg/settings.svg";
             img.element.alt = "Настройки группы";
@@ -570,6 +589,7 @@ class AdminQuizDiv extends CustomDOMElement {
         super('div').withClass('admin-quiz').withClass('clamped-info');
         this.quizId = quizId;
         this.header = header;
+        this.lowerHeader = header.toLowerCase();
         let name = new CustomDOMElement('label')
             .withClass('quiz-header')
             .withContent(header);
@@ -584,7 +604,7 @@ class AdminQuizDiv extends CustomDOMElement {
         let quizEditsHref = new CustomDOMElement('a')
             .withClass('quiz-edit-href');
         quizEditsHref.element.href = `http://localhost:8080/quiz/edit/${this.quizId}` // TODO поставить норм адрес;
-        let img = new CustomDOMElement('img').withClass();
+        let img = new CustomDOMElement('img')
         img.element.src = "img/svg/edit.svg";
         img.element.alt = "Редактировать опрос";
         quizEditsHref.appendChild(img);
@@ -594,6 +614,19 @@ class AdminQuizDiv extends CustomDOMElement {
     startPlaning() {
         planModalWindow.acceptQuiz(this.quizId, this.header);
         planModalWindow.show();
+    }
+}
+
+
+
+function onSearch(event) {
+    let value = event.target.value.toLowerCase();
+    for (let adminQuiz of adminQuizzes) {
+        if (value.length === 0 || adminQuiz.lowerHeader.includes(value)) {
+            adminQuiz.show();
+        } else {
+            adminQuiz.hide();
+        }
     }
 }
 
@@ -869,19 +902,11 @@ for (let navButton of navButtons) {
 const navButtonsGroup = new ButtonsGroupHandler(navButtonsHandler);
 
 
-const groupsNavButtons = document.querySelectorAll('.groups-quiz-nav-button');
-let groupsNavButtonsHandlers = [];
-for (let navButton of groupsNavButtons) {
-    groupsNavButtonsHandlers.push(new NavButton(navButton));
-}
-const groupsNavButtonsGroup = new ButtonsGroupHandler(groupsNavButtonsHandlers);
 
 if (['check', 'settings'].includes(prevPage)) {
     navButtonsGroup.setActiveById('nav-groups-btn');
-    groupsNavButtonsGroup.setActiveById('groups-quiz-nav-groups-btn');
 } else if (['edit'].includes(prevPage)) {
-    navButtonsGroup.setActiveById('nav-groups-btn');
-    groupsNavButtonsGroup.setActiveById('groups-quiz-nav-quizzes-btn');
+    navButtonsGroup.setActiveById('nav-admin-quizzes-btn');
 }
 
 document.querySelector('.create-quiz-btn').addEventListener('click', createQuiz);

@@ -1,89 +1,65 @@
 @import 'constants.css';
 
+@font-face {
+    font-family: 'Inter';
+    src: url("../fonts/Inter/Inter-VariableFont_slnt,wght.ttf") format("truetype");
+}
+
 html {
     box-sizing: border-box;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
 }
 *, *::before, *::after{
     box-sizing: border-box;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
 }
 
 body {
-    margin-top: 90px; /* Отступ, равный высоте шапки */
+
 }
 
 html {
     overflow-y: scroll;  /* Без этого на маленьких страницах без скролла шапка сдвигается на несколько пикселей */
     background-color: var(--page-bg-color);
-    font-family: Trebuchet MS, serif;
-    font-size: 18px;
 }
 
 .header {
-    position: fixed;
     width: 100%;
-    height: 85px;
+    height: 70px;
+
+    padding: 5px 10% 5px 5%;
+
     z-index: 1000;
     top: 0;
     display: flex;
     justify-content: space-between;
-    background-color: var(--header-color);
-    box-shadow: var(--box-shadow);
-}
-
-.header-wrapper {
-    min-width: 100%;
-    display: flex;
     align-items: center;
-    justify-content: space-between;
+    background-color: var(--page-bg-color);
 }
 
-.header-logo {
-    width: 60px;
-    height: 100%;
-    margin-top: 15px;
-    margin-left: calc(10%);
-}
 
 .header-logo-img {
     width: 100%;
 }
 
-.header-search {
-    width: 40%;
-}
-
-.search-field {
-    padding: 4px 20px;
-    width: auto;
-    height: 35px;
-    border: none;
-    border-radius: 100px;
-    outline: none;
-}
-
-.header-auth {
-    margin-right: 10%;
-}
-
-.header-auth {
-    grid-column: 3 / 4;
-    justify-self: end;
-    margin-left: 10px;
-}
 
 .auth-list {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    align-items: center;
     margin: 0;
     padding: 0;
 }
 
-.auth-list-item {
-}
-
 button {
-    padding: 10px 20px;
-    margin: 10px 10px;
     justify-content: center;
     display: block;
     outline: none;
@@ -94,9 +70,24 @@ button {
 }
 
 .auth-signup-button {
-    background-color: var(--accent-color);
     text-decoration: none;
+    color: var(--accent-color);
+    margin: 0 10px;
+    padding: 5px 15px;
+    border-radius: 8px;
+}
+
+.auth-logout-button {
+    text-align: center;
+    background-color: var(--accent-color);
     color: white;
+    padding: 5px 15px;
+    border-radius: 8px;
+}
+
+.auth-logout-button:hover {
+    background-color: var(--hover-color);
+    color: var(--hover-text-color);
 }
 
 h2 {
@@ -106,8 +97,9 @@ h2 {
 
 hr {
     border: none;
-    border-top: 2px solid var(--accent-color);
+    border-top: 3px solid var(--accent-color);
     margin: 4px 0;
+    color: var(--accent-color);
 }
 
 
@@ -137,4 +129,13 @@ hr {
 
 .backend-data {
     display: none;
+}
+
+
+.search-field {
+    padding: 4px 20px;
+    height: 35px;
+    border: none;
+    border-radius: 100px;
+    outline: none;
 }
