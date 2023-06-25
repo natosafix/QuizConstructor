@@ -104,7 +104,7 @@ button {
     text-decoration: none;
     color: var(--accent-color);
     margin: 0 10px;
-    padding: 5px 15px;
+    padding: 7px 20px;
     border-radius: 8px;
     font-weight: bold;
 }
@@ -113,7 +113,7 @@ button {
     text-align: center;
     background-color: var(--accent-color);
     color: white;
-    padding: 5px 15px;
+    padding: 7px 20px;
     border-radius: 8px;
 }
 
