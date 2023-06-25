@@ -1,4 +1,5 @@
 ﻿using Application.Common.Abstracts;
+using Application.Common.Exceptions;
 using Application.Inputs;
 using Application.Interfaces;
 using Domain;
@@ -16,9 +17,15 @@ public class CreateUserQuizCommandHandler : RequestHandler, IRequestHandler<Crea
         var quizGroup = await context.QuizGroups
             .FirstOrDefaultAsync(quizGroup => quizGroup.Id == request.QuizGroupId, cancellationToken);
 
+        if (quizGroup == null)
+            throw new NotFoundException(nameof(QuizGroup), request.QuizGroupId);
+
         var user = await context.Users
             .FirstOrDefaultAsync(user => user.Login == request.UserLogin, cancellationToken);
 
+        if (user == null)
+            throw new NotFoundException(nameof(User), request.UserLogin);
+        
         var userQuiz = new UserQuiz
         {
             User = user,
@@ -33,11 +40,17 @@ public class CreateUserQuizCommandHandler : RequestHandler, IRequestHandler<Crea
                     {
                         Content = x.Content
                     })
-                    .ToList()
+                    .ToList(),
+                Score = request.Questions
+                    .FirstOrDefault(userQuestion => userQuestion.Id == question.Id, new UserQuestionInput()).Answers
+                    .Select(x => x.Content)
+                    .Intersect(question.CorrectAnswers.
+                        Select(answer => answer.Content))
+                    .Count()
             })
                 .ToList()
         };
-
+        userQuiz.Score = userQuiz.Questions.Sum(x => x.Score);
         await context.UserQuizzes.AddAsync(userQuiz, cancellationToken);
         await context.SaveChangesAsync(cancellationToken);
 
