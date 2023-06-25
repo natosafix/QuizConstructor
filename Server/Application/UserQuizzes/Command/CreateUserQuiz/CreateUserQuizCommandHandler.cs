@@ -15,6 +15,12 @@ public class CreateUserQuizCommandHandler : RequestHandler, IRequestHandler<Crea
     public async Task<int> Handle(CreateUserQuizCommand request, CancellationToken cancellationToken)
     {
         var quizGroup = await context.QuizGroups
+            .Include(qg => qg.Quiz)
+                .ThenInclude(q => q.Questions)
+                    .ThenInclude(q => q.Answers)
+            .Include(qg => qg.Quiz)
+                .ThenInclude(q => q.Questions)
+                    .ThenInclude(q => q.CorrectAnswers)
             .FirstOrDefaultAsync(quizGroup => quizGroup.Id == request.QuizGroupId, cancellationToken);
 
         if (quizGroup == null)
@@ -29,7 +35,7 @@ public class CreateUserQuizCommandHandler : RequestHandler, IRequestHandler<Crea
         var userQuiz = new UserQuiz
         {
             User = user,
-            EndTime = DateTime.Now,
+            EndTime = DateTime.UtcNow,
             QuizGroup = quizGroup,
             Questions = quizGroup.Quiz.Questions.Select(question => new UserQuestion
             {
@@ -53,7 +59,7 @@ public class CreateUserQuizCommandHandler : RequestHandler, IRequestHandler<Crea
         userQuiz.Score = userQuiz.Questions.Sum(x => x.Score);
         await context.UserQuizzes.AddAsync(userQuiz, cancellationToken);
         await context.SaveChangesAsync(cancellationToken);
-
+        
         return userQuiz.Id;
     }
 }
