@@ -3,7 +3,7 @@ let inviteLinkInput = document.querySelector('#inviteLink');
 let data;
 
 document.addEventListener('DOMContentLoaded', async function(event) {
-    let response = await fetch('https://norebesach.beget.app/db/apiRequest?' +
+    let response = await fetch('http://localhost:8080/db/apiRequest?' +
         new URLSearchParams({
             method: "group/getUsers",
             data: JSON.stringify({"groupId": groupId})
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
     }*/
 
     document.querySelector('#groupName').textContent = data.name;
-    inviteLinkInput.value = `https://norebesach.beget.app/group/invite/${groupId}`;
+    inviteLinkInput.value = `http://localhost:8080/group/invite/${groupId}`;
     inviteLinkInput.addEventListener('click', copyLink, false);
 
     fillMembers(data['userInfos']);
@@ -101,7 +101,7 @@ class GroupMemberDiv extends CustomDOMElement {
     }
 
     async removeMember() {
-        await fetch('https://norebesach.beget.app/db/apiRequest?',
+        await fetch('http://localhost:8080/db/apiRequest?',
             {
                 headers: {
                     'Accept': 'application/json',

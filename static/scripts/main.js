@@ -55,7 +55,7 @@ document.body.addEventListener('keyup', function (e) {
 const user = document.querySelector('.auth-signup-button').textContent;
 document.addEventListener('DOMContentLoaded', async function(event) {
     try {
-        let response = await fetch('https://norebesach.beget.app/db/apiRequest?' + new URLSearchParams(
+        let response = await fetch('http://localhost:8080/db/apiRequest?' + new URLSearchParams(
             {
                 method: "group/getGroups",
                 data: JSON.stringify({login: user})
@@ -219,7 +219,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
                 }
             ]
         }*/
-        response = await fetch('https://norebesach.beget.app/db/apiRequest?' + new URLSearchParams(
+        response = await fetch('http://localhost:8080/db/apiRequest?' + new URLSearchParams(
             {
                 method: "quiz/getQuizzesByLogin",
                 data: JSON.stringify({login: user})
@@ -529,7 +529,7 @@ class BaseQuiz extends CustomDOMElement {
             .withClass('quiz-mark')
             .withClass('quiz-check-href')
             .withContent('Посмотреть ответы');
-        check.element.href = `https://norebesach.beget.app/quiz/check/${this.quizId}`;
+        check.element.href = `http://localhost:8080/quiz/check/${this.quizId}`;
         this.appendChild(check);
         return this;
     }
@@ -576,7 +576,7 @@ class ActiveQuizBtn extends BaseQuiz {
         this.withTime(endTime, 'Завершится');
         if (!isAdmin) {
             this.addEvent('click',
-                () => window.location.href = `https://norebesach.beget.app/quiz/solve/${quizId}`);
+                () => window.location.href = `http://localhost:8080/quiz/solve/${quizId}`);
         }
     }
 }
@@ -620,7 +620,7 @@ class AdminQuizDiv extends CustomDOMElement {
 
         let quizEditsHref = new CustomDOMElement('a')
             .withClass('quiz-edit-href');
-        quizEditsHref.element.href = `https://norebesach.beget.app/quiz/edit/${this.quizId}` // TODO поставить норм адрес;
+        quizEditsHref.element.href = `http://localhost:8080/quiz/edit/${this.quizId}` // TODO поставить норм адрес;
         let img = new CustomDOMElement('img')
         img.element.src = "img/svg/edit.svg";
         img.element.alt = "Редактировать опрос";
@@ -692,7 +692,7 @@ class GroupCreateModalWindow extends CustomDOMElement {
 
     async createGroup() {
         let newGroupName = createGroupModalWindow.input.element.value;
-        let response = await fetch('https://norebesach.beget.app/db/apiRequest?',
+        let response = await fetch('http://localhost:8080/db/apiRequest?',
             {
                 headers: {
                     'Accept': 'application/json',
@@ -705,7 +705,7 @@ class GroupCreateModalWindow extends CustomDOMElement {
                 method: 'POST'
             });
         let newGroupId = await response.json();
-        window.location.href = `https://norebesach.beget.app/group/settings/${newGroupId}`;
+        window.location.href = `http://localhost:8080/group/settings/${newGroupId}`;
         this.hide();
     }
 }
@@ -761,7 +761,7 @@ class PlanModalWindow extends CustomDOMElement {
         alert(`Groups: ${this._groupsSelector.getSelectedGroupsId()}\n
         Start: ${this._timeSelector.getStartTime()}\n
         End: ${this._timeSelector.getEndTime()}`);
-        await fetch('https://norebesach.beget.app/db/apiRequest?', {
+        await fetch('http://localhost:8080/db/apiRequest?', {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -937,7 +937,7 @@ if (['check', 'settings'].includes(prevPage)) {
 
 document.querySelector('.create-quiz-btn').addEventListener('click', createQuiz);
 async function createQuiz() {
-    let response = await fetch('https://norebesach.beget.app/db/apiRequest',
+    let response = await fetch('http://localhost:8080/db/apiRequest',
         {
             headers: {
                 'Accept': 'application/json',
@@ -956,5 +956,5 @@ async function createQuiz() {
                 })
         });
     let quizId = await response.json();
-    window.location.href = `https://norebesach.beget.app/quiz/edit/${quizId}`;
+    window.location.href = `http://localhost:8080/quiz/edit/${quizId}`;
 }

@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
     setTimer();
 });
 async function getQuizDataForFiller() {
-    let response = await fetch('https://norebesach.beget.app/db/apiRequest?' + new URLSearchParams(
+    let response = await fetch('http://localhost:8080/db/apiRequest?' + new URLSearchParams(
         {
             method: "quiz/getQuizForUser",
             data: JSON.stringify({id: quizId})
@@ -437,7 +437,7 @@ async function sendAnswers(answers) {
         questions: getUserAnswers()
     };
 
-    await fetch('https://norebesach.beget.app/db/apiRequest', {
+    await fetch('http://localhost:8080/db/apiRequest', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -448,7 +448,7 @@ async function sendAnswers(answers) {
 }
 
 let mainPageButton = document.querySelector('#main-page-button');
-mainPageButton.addEventListener('click', () => window.location.href = 'https://norebesach.beget.app/');
+mainPageButton.addEventListener('click', () => window.location.href = 'http://localhost:8080/');
 
 let sendAnswersButton = document.querySelector('#send-answers-button');
 sendAnswersButton.addEventListener('click', submitClicked);

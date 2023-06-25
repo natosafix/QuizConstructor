@@ -11,7 +11,7 @@ form.addEventListener('submit', async function (event) {
 
     try {
         // Использовать fetch для отправки данных формы
-        const response = await fetch('https://norebesach.beget.app/login/check', {
+        const response = await fetch('http://localhost:8080/login/check', {
             redirect: 'follow',
             method: 'POST',
             body: formData
@@ -38,4 +38,4 @@ form.addEventListener('submit', async function (event) {
 });
 
 document.querySelector('#registration-redirect-button')
-    .addEventListener('click', () => window.location.href = 'https://norebesach.beget.app/registration');
+    .addEventListener('click', () => window.location.href = 'http://localhost:8080/registration');

@@ -1,4 +1,4 @@
 module.exports = {
     secret: "very_reliable_key",
-    host: "https://norebesach.beget.app/"
+    host: "http://localhost:8080/"
 }
