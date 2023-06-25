@@ -4,6 +4,7 @@ using Application.Groups.Commands.AddAdminInGroup;
 using Application.Groups.Commands.AddUserInGroup;
 using Application.Groups.Commands.AssignQuiz;
 using Application.Groups.Commands.CreateGroup;
+using Application.Groups.Commands.Delete;
 using Application.Groups.Commands.DeleteAdmin;
 using Application.Groups.Commands.DeleteUser;
 using Application.Groups.Queries.GetGroupAdmins;
@@ -136,4 +137,18 @@ public class GroupController : BaseController
             return NotFound();
         }
     }
+    
+    [HttpDelete("deleteGroup")]
+    public async Task<ActionResult<int>> Delete([FromQuery] DeleteCommand command)
+    {
+        try
+        {
+            var result = await Mediator.Send(command);
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return NotFound();
+        }
+    } 
 }
