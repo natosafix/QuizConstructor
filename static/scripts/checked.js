@@ -255,6 +255,14 @@ class QuizParser {
         inputElement.required = this.isRequired(question);
 
         label.append(descriptionDiv);
+
+        if (question.correctOptions !== null) {
+            const correctAnswer = document.createElement("div");
+            correctAnswer.className = "element-correct-answer";
+            correctAnswer.innerHTML = question.correctOptions[0].content;
+            label.append(correctAnswer)
+        }
+
         label.append(inputElement);
 
         div.append(label);
@@ -290,7 +298,15 @@ class QuizParser {
             console.log("unknown question type when input.type: " + question.type.name);
         }
 
-        input.className = "any-element"
+        input.classList.add("any-element");
+        if (question.correctOptions !== null) {
+            for (const e of question.correctOptions)
+                if (e.content === answer) {
+                    input.classList.add("correct-option");
+                    break;
+                }
+        }
+
         input.name = questionName;
         input.value = answer;
 

@@ -5,7 +5,6 @@
     --custom-border: solid 2px var(--accent-color)
 }
 
-
 main {
     width: 55%;
     margin: 0 auto;
@@ -141,6 +140,16 @@ input[type='radio']:checked, input[type='checkbox']:checked {
     color: darkseagreen;
 }
 
+.correct-option {
+    border-color: darkseagreen !important;
+}
+
+.element-correct-answer {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    color: darkseagreen;
+}
+
 #time {
     position: fixed;
     top: 0;
@@ -157,7 +166,7 @@ input[type='radio']:checked, input[type='checkbox']:checked {
 }
 
 @media screen and (max-width: 980px) {
-    .main {
+    main {
         width: 97%;
         font-size: 1.5em;
     }
