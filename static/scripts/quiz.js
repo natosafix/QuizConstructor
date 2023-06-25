@@ -1,16 +1,22 @@
 const quizId = parseInt(document.querySelector('#quiz-id').textContent);
+const userId = document.querySelector('#user-id').textContent;
 
+const choiceTypes = ['oneList', 'severalList', 'dropList'];
+const codeTypes = ['javascript', 'xml', 'css'];
+const questionType2Id = {'shortText': 1, 'longText': 2, 'javascript': 3, 'oneList': 4, 'severalList': 5, 'xml': 6, 'css': 7};
+const id2QuestionType = {1: 'shortText', 2: 'longText', 3: 'javascript', 4: 'oneList', 5: 'severalList', 6: 'xml', 7: 'css'};
 let quizData;
 let quizParser;
 document.addEventListener('DOMContentLoaded', async function(event) {
-    quizData = getQuizDataForFiller();
+    quizData = await getQuizDataForFiller();
     quizParser = new QuizParser(quizData);
     quizParser.parse();
+    setTimer();
 });
 async function getQuizDataForFiller() {
     let response = await fetch('http://localhost:8080/db/apiRequest?' + new URLSearchParams(
         {
-            method: "group/getGroups",
+            method: "quiz/getQuizForUser",
             data: JSON.stringify({id: quizId})
         }),
         {
@@ -131,12 +137,12 @@ class QuizParser {
         form.id = "myForm";
         form.addEventListener("submit", (event) => event.preventDefault());
 
-        document.querySelector(".main").prepend(form);
+        document.querySelector("main").prepend(form);
 
         form.append(this.createHeader());
 
         let i = 1;
-        for (const question of this.quizData.questions) {
+        for (const question of this.quizData.questionVms) {
             const name = "q" + i;
             let element;
 
@@ -364,13 +370,13 @@ function getUserAnswers() {
         const nodes = document.getElementsByName("q" + i);
 
         const e = {
-            id: quizData.questions[i - 1].id,
+            id: quizData.questionVms[i - 1].id,
             answers: []
         };
 
         if (nodes.length === 1) {
             let value;
-            if (codeTypes.includes(quizData.questions[i - 1].type.name))
+            if (codeTypes.includes(quizData.questionVms[i - 1].type.name))
                 value = nodes[0].CodeMirror.getValue();
             else
                 value = nodes[0].value;
@@ -399,17 +405,18 @@ function getUserAnswers() {
 
 async function sendAnswers(answers) {
     const data = {
-        quizGroupId: quizData.id,
-        userLogin: "", //TODO
+        quizGroupId: quizId,
+        userLogin: userId,
         questions: getUserAnswers()
     };
 
-    const response = await fetch('http://localhost:8080/db/apiRequest', {
+    await fetch('http://localhost:8080/db/apiRequest', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json;charset=utf-8'
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
         },
-        body: JSON.stringify({method: "saveAnswers", data: data})
+        body: JSON.stringify({method: "quiz/createUserQuiz", data: data})
     });
 }
 

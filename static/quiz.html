@@ -19,7 +19,6 @@
 </head>
 <body>
 <span class="backend-data" id="quiz-id">{ quizId }</span>
-<span class="backend-data">{ userId }</span>
 <span id="time"></span>
 
 <header class="header">
@@ -30,7 +29,7 @@
     <div>
         <ul class="auth-list">
             <li>
-                <button type="button" class="auth-signup-button">{ userId }</button>
+                <button type="button" class="auth-signup-button" id="user-id">{ userId }</button>
             </li>
             <li>
                 <button type="button" class="auth-logout-button">Выйти</button>
@@ -55,7 +54,6 @@
         </div>
     </div>
 </main>
-<script src='/scripts/quizParser.js'></script>
+<script src='/scripts/quiz.js'></script>
 </body>
-<script>setUpQuizHtml()</script>
 </html>

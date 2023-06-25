@@ -1,5 +1,16 @@
-function getQuizDataForOwner() {
-    return {
+const quizId = parseInt(document.querySelector('#quiz-id').textContent);
+const userId = document.querySelector('#user-id').textContent;
+
+let quizData;
+let quizParser;
+document.addEventListener('DOMContentLoaded', async function(event) {
+    quizData = getQuizDataForOwner();
+    quizParser = new QuizParser(quizData);
+    quizParser.parse();
+});
+
+async function getQuizDataForOwner() {
+    /*return {
         id: 1,
         title: "Анкета",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
@@ -99,7 +110,16 @@ function getQuizDataForOwner() {
                 isAutoCheck: false
             }
         ]
-    };
+    };*/
+    let response = await fetch('http://localhost:8080/db/apiRequest?' + new URLSearchParams(
+        {
+            method: "quiz/getUserQuiz",
+            data: JSON.stringify({id: quizId})
+        }),
+        {
+            method: 'GET',
+        });
+    return await response.json();
 }
 
 class QuizParser {
@@ -254,12 +274,6 @@ class QuizParser {
         return choiceDiv;
     }
 }
-
-const quizData = getQuizDataForOwner();
-const quizParser = new QuizParser(quizData);
-
-quizParser.parse();
-
 
 class AnswerGetter {
     constructor() {
