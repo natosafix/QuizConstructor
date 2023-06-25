@@ -162,6 +162,8 @@
 
     background-color: var(--accent2-color);
     transition: transform 0.3s ease;
+
+    font-weight: bold;
 }
 
 #group-create-modal-window-open-btn:hover {

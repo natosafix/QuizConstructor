@@ -81,3 +81,7 @@
     background-color: var(--page-bg-color);
     padding: 0.25em 0.5em;
 }
+
+@media screen and (max-width: 980px) {
+
+}
