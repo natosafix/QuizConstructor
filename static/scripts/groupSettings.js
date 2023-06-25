@@ -3,7 +3,7 @@ let inviteLinkInput = document.querySelector('#inviteLink');
 let data;
 
 document.addEventListener('DOMContentLoaded', async function(event) {
-    let response = await fetch('http://localhost:8080/db/apiRequest?' +
+    let response = await fetch('https://norebesach.beget.app/db/apiRequest?' +
         new URLSearchParams({
             method: "group/getUsers",
             data: JSON.stringify({"groupId": groupId})
@@ -101,7 +101,7 @@ class GroupMemberDiv extends CustomDOMElement {
     }
 
     async removeMember() {
-        await fetch('http://localhost:8080/db/apiRequest?',
+        await fetch('https://norebesach.beget.app/db/apiRequest?',
             {
                 headers: {
                     'Accept': 'application/json',

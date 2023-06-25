@@ -116,7 +116,7 @@ async function getQuizDataForOwner() {
             }
         ]
     };*/
-    let response = await fetch('http://localhost:8080/db/apiRequest?' + new URLSearchParams(
+    let response = await fetch('https://norebesach.beget.app/db/apiRequest?' + new URLSearchParams(
         {
             method: "quizGroup/getQuizGroup",
             data: JSON.stringify({id: quizId})
@@ -331,7 +331,7 @@ class AnswerGetter {
 
     async getAllAnswerIds() {
         // брать инфу с сервера
-        let response = await fetch('http://localhost:8080/db/apiRequest?' + new URLSearchParams(
+        let response = await fetch('https://norebesach.beget.app/db/apiRequest?' + new URLSearchParams(
             {
                 method: "quizGroup/getUserQuizIds",
                 data: JSON.stringify({id: quizId})
@@ -360,7 +360,7 @@ class AnswerGetter {
     async getAnswers(answerId) {
         // звонить на сервер и вызывать соответствующие ответы c id == answerId
         // ниже мок
-        let response = await fetch('http://localhost:8080/db/apiRequest?' + new URLSearchParams(
+        let response = await fetch('https://norebesach.beget.app/db/apiRequest?' + new URLSearchParams(
             {
                 method: "quiz/getUserQuiz",
                 data: JSON.stringify({id: answerId})
@@ -684,7 +684,7 @@ function adjustNextPrevButtons() {
 async function savePressed() {
     // TODO: send to egorable
     const q = collectCheckedAnswers();
-    let response = await fetch('http://localhost:8080/db/apiRequest?',
+    let response = await fetch('https://norebesach.beget.app/db/apiRequest?',
         {
             headers: {
                 'Accept': 'application/json',
@@ -728,7 +728,7 @@ async function fillResultsTable() {
 }
 
 async function getScoresFromDB() {
-    let response = await fetch('http://localhost:8080/db/apiRequest?' + new URLSearchParams(
+    let response = await fetch('https://norebesach.beget.app/db/apiRequest?' + new URLSearchParams(
         {
             method: "quizGroup/getUserScores",
             data: JSON.stringify({id: quizId})

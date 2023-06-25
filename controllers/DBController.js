@@ -192,46 +192,6 @@ class DBController {
             }
         return data;
     }
-
-    async getGroups(userId) {
-        return undefined;
-    }
-
-    async createGroup(groupData) {
-        return undefined;
-    }
-
-    async deleteGroup(groupData) {
-        return undefined;
-    }
-
-    async addGroupMember(userId) {
-        return undefined;
-    }
-
-    async addQuiz(quizData) {
-        return undefined;
-    }
-
-    async deleteQuiz(quizId) {
-        return undefined;
-    }
-
-    async updateQuiz(quizData) {
-        return undefined;
-    }
-
-    async addAnswers(answersData) {
-        return undefined;
-    }
-
-    async updateScore(scoreData) {
-        return undefined;
-    }
-
-    async getQuiz(quizId) {
-        return undefined;
-    }
 }
 
 module.exports = new DBController();

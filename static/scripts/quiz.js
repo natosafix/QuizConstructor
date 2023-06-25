@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
     setTimer();
 });
 async function getQuizDataForFiller() {
-    let response = await fetch('http://localhost:8080/db/apiRequest?' + new URLSearchParams(
+    let response = await fetch('https://norebesach.beget.app/db/apiRequest?' + new URLSearchParams(
         {
             method: "quiz/getQuizForUser",
             data: JSON.stringify({id: quizId})

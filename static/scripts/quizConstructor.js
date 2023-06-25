@@ -340,7 +340,7 @@ function getDatabaseId(element) {
 }
 
 async function saveConstructorBuild(quizForm) {
-    let newGroupId = await fetch('http://localhost:8080/db/apiRequest?',
+    let newGroupId = await fetch('https://norebesach.beget.app/db/apiRequest?',
         {
             headers: {
                 'Accept': 'application/json',
@@ -417,7 +417,7 @@ async function saveConstructorBuild(quizForm) {
 
 let quizId = parseInt(document.querySelector('#quiz-id').textContent);
 document.addEventListener('DOMContentLoaded', async function () {
-    let response = await fetch('http://localhost:8080/db/apiRequest?' + new URLSearchParams(
+    let response = await fetch('https://norebesach.beget.app/db/apiRequest?' + new URLSearchParams(
         {
             method: "quiz/getQuiz",
             data: JSON.stringify({id: quizId})
