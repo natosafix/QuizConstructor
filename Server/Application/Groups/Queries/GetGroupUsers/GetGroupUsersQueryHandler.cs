@@ -23,6 +23,12 @@ public class GetGroupUsersQueryHandler : RequestHandler, IRequestHandler<GetGrou
         if (group == null)
             throw new NotFoundException(nameof(Group), request.GroupId);
 
-        return mapper.Map<UserInfoList>(group.Users);
+        return new UserInfoList
+        {
+            Name = group.Name,
+            UserInfos = group.Users
+                .Select(user => mapper.Map<UserInfo>(user))
+                .ToList()
+        };
     }
 }

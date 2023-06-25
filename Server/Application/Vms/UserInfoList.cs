@@ -6,6 +6,7 @@ namespace Application.Vms;
 
 public class UserInfoList : IMapWith<ICollection<User>>
 {
+    public string Name { get; set; }
     public List<UserInfo> UserInfos { get; set; }
     
     public void Mapping(Profile profile)
