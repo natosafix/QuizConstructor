@@ -1,6 +1,7 @@
 ﻿using Application.Common.Abstracts;
 using Application.Common.Exceptions;
 using Application.Interfaces;
+using Application.Vms;
 using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -23,7 +24,7 @@ public class EstimateUserQuizCommandHandler : RequestHandler, IRequestHandler<Es
         var score = 0;
         foreach (var question in userQuiz.Questions)
         {
-            var pointScore = request.Points.FirstOrDefault(x => x.QuestionId == question.QuestionId).Score;
+            var pointScore = request.Points.FirstOrDefault(x => x.QuestionId == question.QuestionId, new Point{Score = 0}).Score;
             question.Score = pointScore;
             score += pointScore;
         }

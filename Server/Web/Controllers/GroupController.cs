@@ -1,5 +1,4 @@
 ﻿using Application.Common.Exceptions;
-using Application.Groups.Commands;
 using Application.Groups.Commands.AddAdminInGroup;
 using Application.Groups.Commands.AddUserInGroup;
 using Application.Groups.Commands.AssignQuiz;
@@ -13,7 +12,6 @@ using Application.Groups.Queries.GetGroupUsers;
 using Application.Groups.Queries.GetGroupVms;
 using Application.Vms;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace Web.Controllers;
 

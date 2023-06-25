@@ -10,9 +10,7 @@ namespace Application.Groups.Commands.Delete;
 
 public class DeleteCommandHandler : RequestHandler, IRequestHandler<DeleteCommand, int>
 {
-    public DeleteCommandHandler(IDbContext context) : base(context)
-    {
-    }
+    public DeleteCommandHandler(IDbContext context) : base(context) { }
 
     public async Task<int> Handle(DeleteCommand request, CancellationToken cancellationToken)
     {
