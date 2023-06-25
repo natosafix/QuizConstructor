@@ -10,7 +10,7 @@ public class UserQuiz
     public User User { get; set; }
     public int UserId { get; set; }
 
-    public List<UserAnswer> Answers { get; set; } = new();
+    public List<UserQuestion> Questions { get; set; } = new();
     
     public int Score { get; set; }
     
