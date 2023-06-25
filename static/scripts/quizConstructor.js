@@ -22,8 +22,7 @@ const choiceTypes = ['oneList', 'severalList', 'dropList'];
 const codeTypes = ['javascript', 'xml', 'css'];
 const questionType2Id = {'shortText': 1, 'longText': 2, 'javascript': 3, 'oneList': 4, 'severalList': 5, 'xml': 6, 'css': 7};
 const id2QuestionType = {1: 'shortText', 2: 'longText', 3: 'javascript', 4: 'oneList', 5: 'severalList', 6: 'xml', 7: 'css'};
-
-document.querySelector('.build-button').addEventListener(buildConstructor);
+document.querySelector('.build-button').addEventListener('click', buildConstructor);
 //questionType.addEventListener('change', changeQuestionType)
 
 // меняет тип вариантов ответа на вопрос
@@ -416,18 +415,20 @@ async function saveConstructorBuild(quizForm) {
     }*/
 
 let quizId = parseInt(document.querySelector('#quiz-id').textContent);
-response = await fetch('http://localhost:8080/db/apiRequest?' + new URLSearchParams(
-    {
-        method: "quiz/getQuiz",
-        data: JSON.stringify({id: quizId})
-    }),
-    {
-        method: 'GET',
-    });
-let data = await response.json();
-createConstructorFromJson();
+document.addEventListener('DOMContentLoaded', async function () {
+    let response = await fetch('http://localhost:8080/db/apiRequest?' + new URLSearchParams(
+        {
+            method: "quiz/getQuiz",
+            data: JSON.stringify({id: quizId})
+        }),
+        {
+            method: 'GET',
+        });
+    let data = await response.json();
+    createConstructorFromJson(data);
+});
 
-function createConstructorFromJson() {
+function createConstructorFromJson(data) {
     document.querySelector('.databaseId').textContent = data.id;
     document.getElementsByName('title')[0].value = data.title;
     document.getElementsByName('description')[0].value = data.description;

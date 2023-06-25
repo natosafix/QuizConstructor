@@ -104,7 +104,8 @@ async function sendAnswers() {
     const response = await fetch('http://localhost:8080/db/apiRequest', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json;charset=utf-8'
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify({method: "saveAnswers", data: answers})
     });

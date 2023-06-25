@@ -712,12 +712,16 @@ class PlanModalWindow extends CustomDOMElement {
         Start: ${this._timeSelector.getStartTime()}\n
         End: ${this._timeSelector.getEndTime()}`);
         await fetch('http://localhost:8080/db/apiRequest?', {
-            body: {
-                method: "group/assign",
-                data: JSON.stringify(
-                    {quizId: this._activeQuizId, groupId: this._groupsSelector.getSelectedGroupsId(),
-                        startTime: this._timeSelector.getStartTime(), endTime: this._timeSelector.getEndTime()})
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             },
+            body: JSON.stringify({
+                method: "group/assign",
+                data:
+                    {quizId: parseInt(this._activeQuizId), groupsId: this._groupsSelector.getSelectedGroupsId(),
+                        startTime: this._timeSelector.getStartTime(), endTime: this._timeSelector.getEndTime()}
+            }),
             method: 'POST'
         });
         this.hide();
@@ -760,6 +764,9 @@ class PlanGroupsPicker extends CustomDOMElement {
             if (this._selector.element.options[groupId].selected) {
                 result.push(this._selector.element.options[groupId].value);
             }
+        }
+        for (let i = 0; i < result.length; i++) {
+            result[i] = (parseInt(result[i]));
         }
         return result;
     }
@@ -881,15 +888,22 @@ document.querySelector('.create-quiz-btn').addEventListener('click', createQuiz)
 async function createQuiz() {
     let response = await fetch('http://localhost:8080/db/apiRequest',
         {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
             method: 'POST',
             body: JSON.stringify(
                 {
-                    login: user,
-                    title: "",
-                    description: "",
-                    questions: []
+                    method: 'quiz/createQuiz',
+                    data: {
+                        login: user,
+                        title: "",
+                        description: "",
+                        questions: []
+                    }
                 })
         });
-    let respJson = await response.json();
-    window.location.href = `http://localhost:8080/quiz/edit/${respJson.quizId}`;
+    let quizId = await response.json();
+    window.location.href = `http://localhost:8080/quiz/edit/${quizId}`;
 }

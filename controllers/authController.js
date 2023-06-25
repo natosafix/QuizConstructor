@@ -98,8 +98,8 @@ class AuthController {
             if (!user) {
                 return res.json({message: `Пользователь ${username} не найден`, type: "username"});
             }
-            /*const validPassword = bcrypt.compareSync(password, user.password);
-            */const validPassword = password === user.password;
+            /*const validPassword = bcrypt.compareSync(password, user.password);*/
+            const validPassword = password === user.password;
             if (!validPassword) {
                 return res.json({message: `Введен неверный пароль`, type: "password"});
             }

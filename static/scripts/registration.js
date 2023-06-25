@@ -19,7 +19,6 @@ form.addEventListener('submit', async function (event) {
     }
 
     try {
-        // Использовать fetch для отправки данных формы
         const response = await fetch('http://localhost:8080/registration/check', {
             redirect: 'follow',
             method: 'POST',
