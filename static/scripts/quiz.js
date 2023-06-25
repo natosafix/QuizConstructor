@@ -164,7 +164,7 @@ class QuizParser {
 
     addCode() {
         let i = 0
-        for (const question of quizParser.quizData.questions) {
+        for (const question of quizParser.quizData.questionVms) {
             i++;
             if (!codeTypes.includes(question.type.name))
                 continue;
@@ -266,7 +266,7 @@ class QuizParser {
         const div = this.createElementMainDiv(question);
         div.append(this.createElementDescription(question));
 
-        for (const answer of question.answers) {
+        for (const answer of question.options) {
             const choiceDiv = this.createOption(question, answer.content, questionName);
             div.append(choiceDiv);
         }

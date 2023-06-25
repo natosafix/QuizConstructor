@@ -294,10 +294,11 @@ async function buildConstructor(event) {
         quizQuestion.id = getDatabaseId(question);
         quizQuestion.content = question.querySelector('.question').value;
         let answerType = question.querySelector('.answer-type-selector').value;
+        let codeType = answerType;
         if (answerType === 'codeEditor') {
-            answerType = question.querySelector('.code-type-select').value;
+            codeType = question.querySelector('.code-type-select').value;
         }
-        quizQuestion.typeId = questionType2Id[answerType];
+        quizQuestion.typeId = questionType2Id[codeType];
         quizQuestion.maxScore = parseInt(question.querySelector("[name='maxScore']").value);
         let answerHolder = question.querySelector(`.${answerType}`);
         if (choiceTypes.includes(answerType)) {
@@ -313,7 +314,7 @@ async function buildConstructor(event) {
             }
         } else  {
             let autocheckInput;
-            if (codeTypes.includes(answerType)) {
+            if (answerType === 'codeEditor') {
                 autocheckInput = answerHolder.querySelector(".correct-answer");
                 autocheckInput = autocheckInput.CodeMirror.getValue();
             } else {
