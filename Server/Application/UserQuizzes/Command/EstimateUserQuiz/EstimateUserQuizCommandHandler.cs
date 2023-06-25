@@ -16,11 +16,17 @@ public class EstimateUserQuizCommandHandler : RequestHandler, IRequestHandler<Es
     {
         var userQuiz = await context.UserQuizzes
             .Include(uq => uq.Questions)
+            .Include(uq => uq.QuizGroup)
+            .ThenInclude(qg => qg.Group)
+            .ThenInclude(g => g.Admins)
             .FirstOrDefaultAsync(uq => uq.Id == request.Id, cancellationToken);
 
-        if (userQuiz == null || userQuiz.Questions == null)
+        if (userQuiz?.Questions == null)
             throw new NotFoundException(nameof(UserQuiz), request.Id);
 
+        if (userQuiz.QuizGroup.Group.Admins.All(x => x.Login != request.Login))
+            throw new PermissionDeniedException();
+        
         var score = 0;
         foreach (var question in userQuiz.Questions)
         {

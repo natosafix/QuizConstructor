@@ -17,10 +17,15 @@ public class GetUserScoresQueryHandler : RequestHandler, IRequestHandler<GetUser
         var quizGroup = await context.QuizGroups
             .Include(quizGroup => quizGroup.UserQuizzes)
                 .ThenInclude(userQuizzes => userQuizzes.User)
+            .Include(qg => qg.Group)
+            .ThenInclude(g => g.Admins)
             .FirstOrDefaultAsync(quizGroup => quizGroup.Id == request.Id, cancellationToken);
 
         if (quizGroup == null)
             throw new NotFoundException(nameof(QuizGroup), request.Id);
+
+        if (quizGroup.Group.Admins.All(x => x.Login != request.Login))
+            throw new PermissionDeniedException();
         
         return quizGroup.UserQuizzes.Select(userQuizzes => new UserScoreVm
             {

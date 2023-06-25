@@ -24,10 +24,15 @@ public class GetQuizGroupQueryHandler : RequestHandler, IRequestHandler<GetQuizG
             .Include(quizGroup => quizGroup.Quiz)
                 .ThenInclude(quiz => quiz.Questions)
                     .ThenInclude(question => question.Type)
+            .Include(qg => qg.Group)
+                .ThenInclude(g => g.Admins)
             .FirstOrDefaultAsync(quizGroup => quizGroup.Id == request.Id, cancellationToken);
 
         if (quiz == null)
             throw new NotFoundException(nameof(QuizGroup), request.Id);
+        
+        if (quiz.Group.Admins.All(x => x.Login != request.Login))
+            throw new PermissionDeniedException();
 
         return new QuizChecking
         {

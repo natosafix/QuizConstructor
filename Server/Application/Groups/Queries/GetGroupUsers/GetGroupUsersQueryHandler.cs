@@ -18,11 +18,16 @@ public class GetGroupUsersQueryHandler : RequestHandler, IRequestHandler<GetGrou
     {
         var group = await context.Groups
             .Include(group => group.Users)
+            .Include(group => group.Admins)
             .FirstOrDefaultAsync(group => group.Id == request.GroupId, cancellationToken);
 
         if (group == null)
             throw new NotFoundException(nameof(Group), request.GroupId);
+        
 
+        if (group.Admins.All(x => x.Login != request.Login))
+            throw new PermissionDeniedException();
+        
         return new UserInfoList
         {
             Name = group.Name,

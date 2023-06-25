@@ -15,6 +15,7 @@ public class DeleteUserCommandHandler : RequestHandler, IRequestHandler<DeleteUs
     {
         var group = await context.Groups
             .Include(g => g.Users)
+            .Include(g => g.Admins)
             .FirstOrDefaultAsync(group => group.Id == request.GroupId, cancellationToken);
 
         if (group == null)
@@ -25,9 +26,10 @@ public class DeleteUserCommandHandler : RequestHandler, IRequestHandler<DeleteUs
 
         if (user == null)
             throw new NotFoundException(nameof(User), request.UserLogin);
-
-        if (!group.Users.Contains(user))
-            throw new Exception();
+        
+        
+        if (!group.Users.Contains(user) || group.Admins.All(x => x.Login != request.AdminLogin))
+            throw new PermissionDeniedException();
         
         group.Users.Remove(user);
 

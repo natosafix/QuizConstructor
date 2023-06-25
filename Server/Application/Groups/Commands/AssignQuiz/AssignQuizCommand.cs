@@ -4,6 +4,7 @@ namespace Application.Groups.Commands.AssignQuiz;
 
 public class AssignQuizCommand : IRequest<int>
 {
+    public string Login { get; set; }
     public int QuizId { get; set; }
     public List<int> GroupsId { get; set; }
     

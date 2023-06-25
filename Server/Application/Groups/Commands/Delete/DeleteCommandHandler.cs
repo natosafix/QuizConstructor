@@ -15,11 +15,16 @@ public class DeleteCommandHandler : RequestHandler, IRequestHandler<DeleteComman
     public async Task<int> Handle(DeleteCommand request, CancellationToken cancellationToken)
     {
         var group = await context.Groups
+            .Include(group => group.Admins)
             .FirstOrDefaultAsync(group => group.Id == request.Id, cancellationToken);
 
         if (group == null)
             throw new NotFoundException(nameof(Group), request.Id);
+        
 
+        if (group.Admins.Any(x => x.Login != request.Login))
+            throw new PermissionDeniedException();
+        
         context.Groups.Remove(group);
         await context.SaveChangesAsync(cancellationToken);
 

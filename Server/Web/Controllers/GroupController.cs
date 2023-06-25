@@ -49,9 +49,12 @@ public class GroupController : BaseController
         }
         catch (Exception ex)
         {
-            if (ex is NotFoundException)
-                return NotFound();
-            return Forbid();
+            return ex switch
+            {
+                NotFoundException => NotFound(),
+                PermissionDeniedException => Forbid(),
+                _ => BadRequest()
+            };
         }
     }
     
@@ -65,7 +68,12 @@ public class GroupController : BaseController
         }
         catch (Exception ex)
         {
-            return NotFound();
+            return ex switch
+            {
+                NotFoundException => NotFound(),
+                PermissionDeniedException => Forbid(),
+                _ => BadRequest()
+            };
         }
         
     }
@@ -87,9 +95,12 @@ public class GroupController : BaseController
         }
         catch (Exception ex)
         {
-            if (ex is NotFoundException)
-                return NotFound();
-            return Forbid();
+            return ex switch
+            {
+                NotFoundException => NotFound(),
+                PermissionDeniedException => Forbid(),
+                _ => BadRequest()
+            };
         }
        
     }
@@ -109,9 +120,14 @@ public class GroupController : BaseController
             var userInfoList = await Mediator.Send(command);
             return Ok(userInfoList);
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            return NotFound();
+            return ex switch
+            {
+                NotFoundException => NotFound(),
+                PermissionDeniedException => Forbid(),
+                _ => BadRequest()
+            };
         }
     }
     
@@ -146,7 +162,12 @@ public class GroupController : BaseController
         }
         catch (Exception ex)
         {
-            return NotFound();
+            return ex switch
+            {
+                NotFoundException => NotFound(),
+                PermissionDeniedException => Forbid(),
+                _ => BadRequest()
+            };
         }
     } 
 }

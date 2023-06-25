@@ -16,6 +16,7 @@ public class GetQuizQueryHandler : RequestHandler, IRequestHandler<GetQuizQuery,
     public async Task<QuizView> Handle(GetQuizQuery request, CancellationToken cancellationToken)
     {
         var entity = await context.Quizzes
+            .Include(q => q.Creator)
             .Include(quiz => quiz.Questions)
                 .ThenInclude(question => question.Answers)
             .Include(quiz => quiz.Questions)
@@ -25,6 +26,9 @@ public class GetQuizQueryHandler : RequestHandler, IRequestHandler<GetQuizQuery,
         if (entity == null)
             throw new NotFoundException(nameof(Quiz), request.Id);
 
+        if (entity.Creator.Id != request.Id)
+            throw new PermissionDeniedException();
+        
         var quiz = new QuizView
         {
             Id = entity.Id,

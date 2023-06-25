@@ -20,6 +20,9 @@ public class AddUserInGroupCommandHandler : RequestHandler, IRequestHandler<AddU
         
         if (group == null)
             throw new NotFoundException(nameof(Group), request.GroupId);
+        
+        if (group.Admins.All(x => x.Login != request.Login))
+            throw new PermissionDeniedException();
 
         var user = await context.Users
             .FirstOrDefaultAsync(user => user.Login == request.Login, cancellationToken);

@@ -23,9 +23,12 @@ public class QuizController : BaseController
         }
         catch (Exception ex)
         {
-            if (ex is NotFoundException)
-                return NotFound();
-            return Forbid();
+            return ex switch
+            {
+                NotFoundException => NotFound(),
+                PermissionDeniedException => Forbid(),
+                _ => BadRequest()
+            };
         }
         
     }
@@ -105,9 +108,12 @@ public class QuizController : BaseController
         }
         catch (Exception ex)
         {
-            if (ex is NotFoundException)
-                return NotFound();
-            return Forbid();
+            return ex switch
+            {
+                NotFoundException => NotFound(),
+                PermissionDeniedException => Forbid(),
+                _ => BadRequest()
+            };
         }
     }
 
@@ -137,9 +143,12 @@ public class QuizController : BaseController
         }
         catch (Exception ex)
         {
-            if (ex is NotFoundException)
-                return NotFound();
-            return Forbid();
+            return ex switch
+            {
+                NotFoundException => NotFound(),
+                PermissionDeniedException => Forbid(),
+                _ => BadRequest()
+            };
         }
     }
 }

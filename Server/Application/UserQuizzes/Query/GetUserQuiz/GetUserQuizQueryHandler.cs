@@ -19,11 +19,17 @@ public class GetUserQuizQueryHandler : RequestHandler, IRequestHandler<GetUserQu
                 .Include(userQuiz => userQuiz.Questions)
                     .ThenInclude(question => question.UserAnswers)
                 .Include(quiz => quiz.User)
+                .Include(q => q.QuizGroup)
+                    .ThenInclude(qg => qg.Group)
+                        .ThenInclude(qg => qg.Admins)
                 .FirstOrDefaultAsync(userQuiz => userQuiz.Id == request.Id, cancellationToken);
 
         if (userQuiz == null)
             throw new NotFoundException(nameof(UserQuiz), request.Id);
 
+        if (userQuiz.QuizGroup.Group.Admins.All(x => x.Login != request.Login))
+            throw new PermissionDeniedException();
+        
         return new UserQuizVm
         {
             Id = userQuiz.Id,

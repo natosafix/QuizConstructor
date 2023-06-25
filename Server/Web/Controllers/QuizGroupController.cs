@@ -20,9 +20,12 @@ public class QuizGroupController : BaseController
         }
         catch (Exception ex)
         {
-            if (ex is NotFoundException)
-                return NotFound();
-            return Forbid();
+            return ex switch
+            {
+                NotFoundException => NotFound(),
+                PermissionDeniedException => Forbid(),
+                _ => BadRequest()
+            };
         }
     }
     
@@ -36,9 +39,12 @@ public class QuizGroupController : BaseController
         }
         catch (Exception ex)
         {
-            if (ex is NotFoundException)
-                return NotFound();
-            return Forbid();
+            return ex switch
+            {
+                NotFoundException => NotFound(),
+                PermissionDeniedException => Forbid(),
+                _ => BadRequest()
+            };
         }
     } 
     
@@ -52,9 +58,12 @@ public class QuizGroupController : BaseController
         }
         catch (Exception ex)
         {
-            if (ex is NotFoundException)
-                return NotFound();
-            return Forbid();
+            return ex switch
+            {
+                NotFoundException => NotFound(),
+                PermissionDeniedException => Forbid(),
+                _ => BadRequest()
+            };
         }
     } 
 }

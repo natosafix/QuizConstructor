@@ -14,6 +14,7 @@ public class AssignQuizCommandHandler : RequestHandler, IRequestHandler<AssignQu
     public async Task<int> Handle(AssignQuizCommand request, CancellationToken cancellationToken)
     {
         var groups = await context.Groups
+            .Include(g => g.Admins)
             .Where(group => request.GroupsId.Contains(group.Id))
             .ToListAsync(cancellationToken);
         
@@ -21,11 +22,15 @@ public class AssignQuizCommandHandler : RequestHandler, IRequestHandler<AssignQu
             throw new NotFoundException(nameof(Group), request.GroupsId);
 
         var quiz = await context.Quizzes
+            .Include(q => q.Creator)
             .FirstOrDefaultAsync(quiz => quiz.Id == request.QuizId, cancellationToken);
         
         if (quiz == null)
             throw new NotFoundException(nameof(Quiz), request.QuizId);
 
+        if (quiz.Creator.Login != request.Login || groups.Any(x => x.Admins.All(u => u.Login != request.Login)))
+            throw new PermissionDeniedException();
+        
         foreach (var group in groups)
         {
             var quizGroup = new QuizGroup
