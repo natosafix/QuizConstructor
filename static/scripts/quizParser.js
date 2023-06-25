@@ -15,7 +15,7 @@ function getQuizData() {
                 },
                 required: true,
                 maxScore: 2,
-                answers: [
+                options: [
                     {
                         content: "глагол",
                         id: 123 // id ответа в бд
@@ -29,7 +29,7 @@ function getQuizData() {
                         id: 21234 // id ответа в бд
                     }
                 ],
-                correctAnswers: [
+                correctOptions: [
                     {
                         content: "глагол",
                         id: 456 // id правильного ответа в бд
@@ -46,7 +46,7 @@ function getQuizData() {
                 },
                 required: true,
                 maxScore: 1,
-                answers: [
+                options: [
                     {
                         content: "Срань",
                         id: 96 // id ответа в бд
@@ -60,7 +60,7 @@ function getQuizData() {
                         id: 199 // id ответа в бд
                     }
                 ],
-                correctAnswers: [
+                correctOptions: [
                     {
                         content: "Срань",
                         id: 100 // id ответа в бд
@@ -81,9 +81,14 @@ function getQuizData() {
                 },
                 required: true,
                 maxScore: 1,
-                answers: null,
-                correctAnswers: null,
-                isAutoCheck: false
+                options: null,
+                correctOptions: [
+                    {
+                        content: "говно",
+                        id: 1012 // id ответа в бд
+                    },
+                ],
+                isAutoCheck: true
             },
             {
                 content: "Напишите сочинение на тему 'Почему Матвей леха?'",
@@ -94,8 +99,8 @@ function getQuizData() {
                 },
                 required: true,
                 maxScore: 5,
-                answers: null,
-                correctAnswers: null,
+                options: null,
+                correctOptions: null,
                 isAutoCheck: false
             },
             {
@@ -107,8 +112,8 @@ function getQuizData() {
                 },
                 required: true,
                 maxScore: 5,
-                answers: null,
-                correctAnswers: null,
+                options: null,
+                correctOptions: null,
                 isAutoCheck: false
             }
         ]
@@ -152,7 +157,7 @@ class QuizParser {
         form.id = "myForm";
         form.addEventListener("submit", (event) => event.preventDefault());
 
-        document.querySelector(".main").prepend(form);
+        document.querySelector("main").prepend(form);
 
         form.append(this.createHeader());
 
@@ -245,6 +250,14 @@ class QuizParser {
         inputElement.required = this.isRequired(question);
 
         label.append(descriptionDiv);
+
+        if (question.correctOptions !== null) {
+            const correctAnswer = document.createElement("div");
+            correctAnswer.className = "element-correct-answer";
+            correctAnswer.innerHTML = question.correctOptions[0].content;
+            label.append(correctAnswer)
+        }
+
         label.append(inputElement);
 
         div.append(label);
@@ -256,7 +269,7 @@ class QuizParser {
         const div = this.createElementMainDiv(question);
         div.append(this.createElementDescription(question));
 
-        for (const answer of question.answers) {
+        for (const answer of question.options) {
             const choiceDiv = this.createOption(question, answer.content, questionName);
             div.append(choiceDiv);
         }
@@ -280,7 +293,15 @@ class QuizParser {
             console.log("unknown question type when input.type: " + question.type.name);
         }
 
-        input.className = "any-element"
+        input.classList.add("any-element");
+        if (question.correctOptions !== null) {
+            for (const e of question.correctOptions)
+                if (e.content === answer) {
+                    input.classList.add("correct-option");
+                    break;
+                }
+        }
+
         input.name = questionName;
         input.value = answer;
 
