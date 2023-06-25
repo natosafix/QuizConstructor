@@ -16,21 +16,21 @@ public class QuizGroupController : BaseController
 {
     
     [HttpGet("getQuizGroup")]
-    public async Task<ActionResult<UserVm>> GetQuizGroup([FromQuery] GetQuizGroupQuery query)
+    public async Task<ActionResult<int>> GetQuizGroup([FromQuery] GetQuizGroupQuery query)
     {
         var quizChecking = await Mediator.Send(query);
         return Ok(quizChecking);
     }
     
     [HttpGet("getUserQuizIds")]
-    public async Task<ActionResult<UserVm>> GetUserQuizIds([FromQuery] GetUserQuizIdsQuery query)
+    public async Task<ActionResult<int>> GetUserQuizIds([FromQuery] GetUserQuizIdsQuery query)
     {
         var ids = await Mediator.Send(query);
         return Ok(ids);
     } 
     
     [HttpGet("getUserScores")]
-    public async Task<ActionResult<UserVm>> GetUserScores([FromQuery] GetUserScoresQuery query)
+    public async Task<ActionResult<int>> GetUserScores([FromQuery] GetUserScoresQuery query)
     {
         var userScores = await Mediator.Send(query);
         return Ok(userScores);
