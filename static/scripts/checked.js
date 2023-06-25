@@ -134,7 +134,7 @@ class QuizParser {
         form.id = "myForm";
         form.addEventListener("submit", (event) => event.preventDefault());
 
-        document.querySelector(".main").prepend(form);
+        document.querySelector("main").prepend(form);
 
         form.append(this.createHeader());
 
