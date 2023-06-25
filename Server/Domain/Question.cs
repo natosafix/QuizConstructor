@@ -14,7 +14,7 @@ public class Question
     public bool Required { get; set; }
     public int Score { get; set; }
 
-    public List<UserAnswer> UserAnswers { get; set; } = new();
+    public List<UserQuestion> UserQuestions { get; set; } = new();
     public List<Answer> Answers { get; set; } = new();
     public List<CorrectAnswer> CorrectAnswers { get; set; } = new();
     

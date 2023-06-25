@@ -17,17 +17,10 @@ public class UserAnswerConfiguration : IEntityTypeConfiguration<UserAnswer>
             .IsRequired();
         builder.Property(answer => answer.Content)
             .IsRequired();
-        builder.Property(answer => answer.UserQuizId)
-            .IsRequired();
         builder.Property(answer => answer.QuestionId)
             .IsRequired();
-        
-        builder.HasOne(userAnswer => userAnswer.UserQuiz)
-            .WithMany(userQuiz => userQuiz.Answers)
-            .HasForeignKey(quizGroup => quizGroup.UserQuizId)
-            .OnDelete(DeleteBehavior.Cascade);
-        
-        builder.HasOne(userAnswer => userAnswer.Question)
+
+        builder.HasOne(userAnswer => userAnswer.UserQuestion)
             .WithMany(userQuiz => userQuiz.UserAnswers)
             .HasForeignKey(quizGroup => quizGroup.QuestionId)
             .OnDelete(DeleteBehavior.Cascade);

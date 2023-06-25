@@ -1,4 +1,5 @@
 ﻿using Application.Common.Abstracts;
+using Application.Inputs;
 using Application.Interfaces;
 using Domain;
 using MediatR;
@@ -18,24 +19,23 @@ public class CreateUserQuizCommandHandler : RequestHandler, IRequestHandler<Crea
         var user = await context.Users
             .FirstOrDefaultAsync(user => user.Login == request.UserLogin, cancellationToken);
 
-        var userAnswers = new List<UserAnswer>();
-
-        foreach (var userQuestion in request.Questions)
-        {
-            userAnswers.AddRange(userQuestion.Answers
-                .Select(userAnswerInput => new UserAnswer
-                {
-                    Content = userAnswerInput.Content,
-                    QuestionId = userQuestion.Id
-                }));
-        }
-
         var userQuiz = new UserQuiz
         {
             User = user,
-            EndTime = request.Finished,
+            EndTime = DateTime.Now,
             QuizGroup = quizGroup,
-            Answers = userAnswers
+            Questions = quizGroup.Quiz.Questions.Select(question => new UserQuestion
+            {
+                Question = question,
+                UserAnswers = request.Questions
+                    .FirstOrDefault(userQuestion => userQuestion.Id == question.Id, new UserQuestionInput())
+                    .Answers.Select(x => new UserAnswer
+                    {
+                        Content = x.Content
+                    })
+                    .ToList()
+            })
+                .ToList()
         };
 
         await context.UserQuizzes.AddAsync(userQuiz, cancellationToken);

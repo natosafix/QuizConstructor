@@ -20,9 +20,4 @@
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Questions\Queries\" />
-      <Folder Include="QuizGroups\Commands\" />
-    </ItemGroup>
-
 </Project>
