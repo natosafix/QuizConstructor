@@ -37,6 +37,7 @@ h2 {
 
 .invite-wrapper {
     height: 100%;
+    cursor: pointer;
 }
 
 .invite-wrapper .share-link-input {
@@ -46,6 +47,7 @@ h2 {
     align-self: center;
     font-weight: bold;
     border: 0px;
+    cursor: inherit;
 }
 
 .invite-wrapper .invite-img {
