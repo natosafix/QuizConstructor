@@ -1,6 +1,6 @@
 class DBController {
     //TODO
-    apiUrl = "http://31.129.97.40:3000/api/";
+    apiUrl = "http://localhost:5201/api/";
     users = {};
     async getUser(username) {
         //TODO
@@ -16,16 +16,11 @@ class DBController {
         return userData;
     }
 
-    async getRequest(method, body) {
-        const link = this.apiUrl + method;
+    async getRequest(method, params) {
+        const link = this.apiUrl + method + '?' + new URLSearchParams(params);
         try {
             return await fetch(link, {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(body)
+                method: 'GET'
             });
         } catch (e) {
             console.error(e);

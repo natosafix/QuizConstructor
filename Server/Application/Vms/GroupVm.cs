@@ -10,7 +10,7 @@ public class GroupVm : IMapWith<Group>
     public string Name { get; set; }
     public bool IsAdmin { get; set; }
     
-    public List<QuizResult> QuizResults { get; set; }
+    public List<QuizResult> QuizVms { get; set; }
 
     public void Mapping(Profile profile)
     {

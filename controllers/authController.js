@@ -45,7 +45,7 @@ class AuthController {
             const {username, password, firstName, lastName} = req.body;
             let candidate;
             const response = await DBController.getRequest('user/getUser', {"login": username});
-            if (response) {
+            if (response && response.ok && response.status !== 204) {
                 if (!response.ok)
                     return await res.status(response.status);
                 try {
@@ -85,7 +85,7 @@ class AuthController {
             const {username, password} = req.body;
             const response = await DBController.getRequest('user/getUser', {'login': username});
             let user;
-            if (response) {
+            if (response && response.status !== 204) {
                 if (!response.ok)
                     return await res.status(response.status);
                 try {
@@ -98,11 +98,12 @@ class AuthController {
             if (!user) {
                 return res.json({message: `Пользователь ${username} не найден`, type: "username"});
             }
-            const validPassword = bcrypt.compareSync(password, user.password);
+            /*const validPassword = bcrypt.compareSync(password, user.password);
+            */const validPassword = password === user.password;
             if (!validPassword) {
                 return res.json({message: `Введен неверный пароль`, type: "password"});
             }
-            const token = generateAccessToken(user.username);
+            const token = generateAccessToken(user.login);
             res.cookie('auth', `${token}`, {maxAge: 2592000000, secure: true});
             return res.redirect('/');
         } catch (e) {

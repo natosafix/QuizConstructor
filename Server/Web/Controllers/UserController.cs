@@ -25,8 +25,17 @@ public class UserController : BaseController
     [HttpGet("getUser")]
     public async Task<ActionResult<UserVm>> GetUserByLogin([FromQuery] GetUserByLoginQuery query)
     {
-        var userVm = await Mediator.Send(query);
-        return Ok(userVm);
+
+        try
+        {
+            var userVm = await Mediator.Send(query);
+            return Ok(userVm);
+        }
+        catch
+        {
+            return Ok(null);
+        }
+        
     }
     
     [HttpPost("createUser")]

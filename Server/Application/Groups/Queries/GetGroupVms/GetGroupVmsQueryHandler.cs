@@ -31,9 +31,9 @@ public class GetGroupVmsQueryHandler : RequestHandler, IRequestHandler<GetGroupV
             .Select(group => new GroupVm
             {
                 Id = group.Id,
-                IsAdmin = false,
+                IsAdmin = true,
                 Name = group.Name,
-                QuizResults = group.QuizGroups.Select(x => new QuizResult
+                QuizVms = group.QuizGroups.Select(x => new QuizResult
                 {
                     Id = x.Id,
                     Name = x.Quiz.Name,
@@ -56,9 +56,9 @@ public class GetGroupVmsQueryHandler : RequestHandler, IRequestHandler<GetGroupV
             .Select(group => new GroupVm
             {
                 Id = group.Id,
-                IsAdmin = true,
+                IsAdmin = false,
                 Name = group.Name,
-                QuizResults = group.QuizGroups.Select(x => new QuizResult
+                QuizVms = group.QuizGroups.Select(x => new QuizResult
                     {
                         Id = x.Id,
                         Name = x.Quiz.Name,

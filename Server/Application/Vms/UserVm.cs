@@ -20,10 +20,10 @@ public class UserVm : IMapWith<User>
         profile.CreateMap<User, UserVm>()
             .ForMember(userVm => userVm.Login,
                 opt => opt.MapFrom(user => user.Login))
-            .ForMember(userVm => userVm.FirstName,
-                opt => opt.MapFrom(user => user.FirstName))
             .ForMember(userVm => userVm.Password,
                 opt => opt.MapFrom(user => user.Password))
+            .ForMember(userVm => userVm.FirstName,
+                opt => opt.MapFrom(user => user.FirstName))
             .ForMember(userVm => userVm.LastName,
                 opt => opt.MapFrom(user => user.LastName))
             .ForMember(userVm => userVm.QuizVms,
