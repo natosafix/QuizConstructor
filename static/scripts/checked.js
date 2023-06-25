@@ -653,12 +653,14 @@ function setMaxScore() {
 }
 
 async function nextPressed() {
+    await savePressed()
     answersJson = await answerGetter.getNext();
     adjustNextPrevButtons();
     redrawWithNewAnswers();
 }
 
 async function previousPressed() {
+    await savePressed();
     answersJson = await answerGetter.getPrev();
     adjustNextPrevButtons();
     redrawWithNewAnswers();
