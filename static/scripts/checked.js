@@ -1,6 +1,9 @@
 const quizId = parseInt(document.querySelector('#quiz-id').textContent);
 const userId = document.querySelector('#user-id').textContent;
-
+const choiceTypes = ['oneList', 'severalList', 'dropList'];
+const codeTypes = ['javascript', 'xml', 'css'];
+const questionType2Id = {'shortText': 1, 'longText': 2, 'javascript': 3, 'oneList': 4, 'severalList': 5, 'xml': 6, 'css': 7};
+const id2QuestionType = {1: 'shortText', 2: 'longText', 3: 'javascript', 4: 'oneList', 5: 'severalList', 6: 'xml', 7: 'css'};
 let quizData;
 let quizParser;
 document.addEventListener('DOMContentLoaded', async function(event) {
@@ -139,7 +142,7 @@ class QuizParser {
         form.append(this.createHeader());
 
         let i = 1;
-        for (const question of this.quizData.questions) {
+        for (const question of this.quizData.questionVms) {
             const name = "q" + i;
             let element;
 
@@ -161,7 +164,7 @@ class QuizParser {
 
     addCode() {
         let i = 0
-        for (const question of quizParser.quizData.questions) {
+        for (const question of quizParser.quizData.questionVms) {
             i++;
             if (!codeTypes.includes(question.type.name))
                 continue;
@@ -263,7 +266,7 @@ class QuizParser {
         const div = this.createElementMainDiv(question);
         div.append(this.createElementDescription(question));
 
-        for (const answer of question.answers) {
+        for (const answer of question.options) {
             const choiceDiv = this.createOption(question, answer.content, questionName);
             div.append(choiceDiv);
         }
@@ -653,7 +656,7 @@ function addCheckingElements() {
         if (element.classList.contains("image"))
             continue;
 
-        if (quizData.questions[i].isAutoCheck)
+        if (quizData.questionVms[i].isAutoCheck)
             addAutocheck(element);
 
         for (const input of element.querySelectorAll(".any-element")) {
@@ -693,7 +696,7 @@ function createCounter(i) {
     buttonDown.classList.add("bt_minus");
     buttonDown.innerHTML = "<svg viewBox=\"0 0 24 24\"><line x1=\"5\" y1=\"12\" x2=\"19\" y2=\"12\"></line></svg>";
 
-    const maxScore = quizData.questions[i].maxScore;
+    const maxScore = quizData.questionVms[i].maxScore;
 
     buttonUp.addEventListener("click", () => {
         const e = div.querySelector(".quantity");
@@ -743,7 +746,7 @@ function updateCurrentScore() {
 }
 
 function setMaxScore() {
-    const maxScore = quizData.questions.map(x => x.maxScore).reduce((prev, cur) => prev + cur);
+    const maxScore = quizData.questionVms.map(x => x.maxScore).reduce((prev, cur) => prev + cur);
     document.getElementById("max-score").innerText = "/" + maxScore.toString();
 }
 
