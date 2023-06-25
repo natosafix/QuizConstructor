@@ -115,7 +115,7 @@ async function getQuizDataForOwner() {
     };*/
     let response = await fetch('http://localhost:8080/db/apiRequest?' + new URLSearchParams(
         {
-            method: "quiz/getUserQuiz",
+            method: "quizGroup/getQuizGroup",
             data: JSON.stringify({id: quizId})
         }),
         {
