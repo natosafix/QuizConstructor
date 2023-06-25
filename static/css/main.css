@@ -183,6 +183,7 @@
     overflow-x: hidden;
 
     pointer-events: none;
+    text-align: start;
 }
 
 .admin-quiz .quiz-mark,
@@ -297,15 +298,12 @@
 }
 
 .quiz-search-and-create-wrapper .search-field {
-    width: 70%;
-}
-
-.create-quiz-btn {
-    transition: transform 0.3s ease;
+    width: 100%;
 }
 
 .quiz-search-and-create-wrapper .create-quiz-btn {
     width: 40px;
+    transition: transform 0.3s ease;
 }
 
 

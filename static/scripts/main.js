@@ -12,7 +12,8 @@ const dateTimeOptions = {
 };
 
 let data;
-let adminQuizzes;
+let adminQuizzesData;
+let adminQuizzes = [];
 let planModalWindow;
 let createGroupModalWindow;
 let adminGroupId2Name = {};
@@ -195,7 +196,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
             ]
 
 
-        adminQuizzes = {
+        adminQuizzesData = {
             "quizVms": [
                 {
                     "id": 1,
@@ -348,8 +349,9 @@ function fillGroupsPage() {
 function fillAdminQuizzes() {
     let pastePlace = document.querySelector("#admin-quizzes-paste-place");
 
-    for (let currentQuiz of adminQuizzes['quizVms']) {
+    for (let currentQuiz of adminQuizzesData['quizVms']) {
         let quizDiv = new AdminQuizDiv(currentQuiz.id, currentQuiz.name);
+        adminQuizzes.push(quizDiv);
         pastePlace.appendChild(quizDiv.element);
     }
 }
@@ -362,11 +364,13 @@ function getFormatDateStr(date) {
 class CustomDOMElement {
     constructor(tag) {
         this.element = document.createElement(tag);
-        this._displayStyle = 'block';
+        this._displayStyle = null;
     }
 
     hide() {
-        this._displayStyle = this.element.style.display;
+        if (this._displayStyle === null) {
+            this._displayStyle = window.getComputedStyle(this.element).display;
+        }
         this.element.style.display = 'none';
     }
 
@@ -570,6 +574,7 @@ class AdminQuizDiv extends CustomDOMElement {
         super('div').withClass('admin-quiz').withClass('clamped-info');
         this.quizId = quizId;
         this.header = header;
+        this.lowerHeader = header.toLowerCase();
         let name = new CustomDOMElement('label')
             .withClass('quiz-header')
             .withContent(header);
@@ -594,6 +599,19 @@ class AdminQuizDiv extends CustomDOMElement {
     startPlaning() {
         planModalWindow.acceptQuiz(this.quizId, this.header);
         planModalWindow.show();
+    }
+}
+
+
+
+function onSearch(event) {
+    let value = event.target.value.toLowerCase();
+    for (let adminQuiz of adminQuizzes) {
+        if (value.length === 0 || adminQuiz.lowerHeader.includes(value)) {
+            adminQuiz.show();
+        } else {
+            adminQuiz.hide();
+        }
     }
 }
 
