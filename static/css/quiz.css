@@ -12,7 +12,7 @@ html {
     font-size: 16px;
 }
 
-.main {
+main {
     width: 35%;
     margin: 0 auto;
 }
@@ -126,6 +126,16 @@ input[type='checkbox'] {
 input[type='radio']:checked, input[type='checkbox']:checked {
     border: 6px solid var(--main-color);
     outline: unset !important; /* Edge (chromium) support */
+}
+
+.correct-option {
+    border-color: darkseagreen !important;
+}
+
+.element-correct-answer {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    color: darkseagreen;
 }
 
 #time {
