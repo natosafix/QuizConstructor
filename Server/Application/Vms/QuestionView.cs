@@ -7,6 +7,8 @@ public class QuestionView
     public int MaxScore { get; set; }
     public bool Required { get; set; }
     
+    public string Content { get; set; }
+    
     public List<OptionView> Options { get; set; }
     public List<OptionView> CorrectOptions { get; set; }
 }

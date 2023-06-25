@@ -38,6 +38,7 @@ public class GetQuizQueryHandler : RequestHandler, IRequestHandler<GetQuizQuery,
                     TypeId = question.QuestionTypeId,
                     MaxScore = question.Score,
                     Required = question.Required,
+                    Content = question.Content,
                     Options = question.Answers.Select(answer => new OptionView
                         {
                             Answer = answer.Content,
