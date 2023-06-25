@@ -97,14 +97,54 @@ function getQuizData() {
                 answers: null,
                 correctAnswers: null,
                 isAutoCheck: false
+            },
+            {
+                content: "Напишите ядро линукса",
+                id: 126, // id вопроса в бд
+                type: {
+                    typeId: 3,
+                    name: "javascript"
+                },
+                required: true,
+                maxScore: 5,
+                answers: null,
+                correctAnswers: null,
+                isAutoCheck: false
             }
         ]
     };
 }
 
+const codeTypes = ['javascript', 'xml', 'css'];
+const questionType2Id = {'shortText': 1, 'longText': 2, 'javascript': 3, 'oneList': 4, 'severalList': 5, 'xml': 6, 'css': 7};
+const id2QuestionType = {1: 'shortText', 2: 'longText', 3: 'javascript', 4: 'oneList', 5: 'severalList', 6: 'xml', 7: 'css'};
+
 class QuizParser {
     constructor(quizData) {
         this.quizData = quizData
+    }
+
+    addCode() {
+        let i = 0
+        for (const question of quizParser.quizData.questions) {
+            i++;
+            if (!codeTypes.includes(question.type.name))
+                continue;
+
+            const codeMirrorOptions = {
+                mode: question.type.name,
+                lineNumbers: true,
+                indentUnit: 4,
+                matchBrackets: true,
+                theme: 'eclipse',
+                extraKeys: { "Tab": "insertSoftTab" }
+            };
+
+            let textarea = document.getElementsByName("q" + i)[0];
+            textarea.CodeMirror = CodeMirror.fromTextArea(textarea, codeMirrorOptions);
+            textarea.CodeMirror.setSize("100%", "100%");
+            textarea.required = false; // TODO: workaround, cannot set code field to be required
+        }
     }
 
     parse() {
@@ -121,7 +161,7 @@ class QuizParser {
             const name = "q" + i;
             let element;
 
-            if (["shortText", "longText"].includes(question.type.name)) {
+            if (["shortText", "longText"].includes(question.type.name) || codeTypes.includes(question.type.name)) {
                 element = this.createLineElement(question, name);
             } else if (["oneList", "severalList"].includes(question.type.name)) {
                 element = this.createChoiceElement(question, name);
@@ -194,7 +234,7 @@ class QuizParser {
         if (question.type.name === "shortText") {
             inputElement = document.createElement("input");
             inputElement.type = "text";
-        } else if (question.type.name === "longText") {
+        } else if (question.type.name === "longText" || codeTypes.includes(question.type.name)) {
             inputElement = document.createElement("textarea");
         } else {
             console.log("unknown line type: " + question.type.name);
@@ -257,6 +297,10 @@ const quizData = getQuizData();
 const quizParser = new QuizParser(quizData);
 
 quizParser.parse();
+
+function addCodeMirror() {
+    quizParser.addCode();
+}
 
 
 class AnswerGetter {
@@ -334,6 +378,17 @@ class AnswerGetter {
                                 id: 32 // id ответа в бд
                             }
                         ]
+                    },
+                    {
+                        score: 0,
+                        answers: [
+                            {
+                                content: "function yes() {" +
+                                    "return 0;" +
+                                    "}",
+                                id: 32 // id ответа в бд
+                            }
+                        ]
                     }
                 ]
             },
@@ -376,6 +431,15 @@ class AnswerGetter {
                                 id: 32 // id ответа в бд
                             }
                         ]
+                    },
+                    {
+                        score: 0,
+                        answers: [
+                            {
+                                content: 'console.log("hello valera")',
+                                id: 32 // id ответа в бд
+                            }
+                        ]
                     }
                 ]
             },
@@ -415,6 +479,15 @@ class AnswerGetter {
                         answers: [
                             {
                                 content: "Сам пиши",
+                                id: 32 // id ответа в бд
+                            }
+                        ]
+                    },
+                    {
+                        score: 0,
+                        answers: [
+                            {
+                                content: 'const five = 2 + 2',
                                 id: 32 // id ответа в бд
                             }
                         ]
@@ -469,6 +542,17 @@ class AnswerGetter {
                                 id: 32 // id ответа в бд
                             }
                         ]
+                    },
+                    {
+                        score: 0,
+                        answers: [
+                            {
+                                content: "function yes() {" +
+                                    "return 0;" +
+                                    "}",
+                                id: 32 // id ответа в бд
+                            }
+                        ]
                     }
                 ]
             },
@@ -508,6 +592,15 @@ class AnswerGetter {
                         answers: [
                             {
                                 content: "Это очевидно",
+                                id: 32 // id ответа в бд
+                            }
+                        ]
+                    },
+                    {
+                        score: 0,
+                        answers: [
+                            {
+                                content: 'console.log("hello valera")',
                                 id: 32 // id ответа в бд
                             }
                         ]
@@ -553,6 +646,15 @@ class AnswerGetter {
                                 id: 32 // id ответа в бд
                             }
                         ]
+                    },
+                    {
+                        score: 0,
+                        answers: [
+                            {
+                                content: 'const five = 2 + 2',
+                                id: 32 // id ответа в бд
+                            }
+                        ]
                     }
                 ]
             }
@@ -584,6 +686,7 @@ function addElements() {
     addCheckingElements();
     updateCurrentScore();
     setMaxScore();
+    addCodeMirror();
 }
 
 function addName() {
@@ -806,4 +909,152 @@ function tableNamePressed(event) {
     answersJson = answerGetter.getById(answerId);
     adjustNextPrevButtons();
     redrawWithNewAnswers();
+}
+
+
+
+function setUpQuizHtml() {
+    let mainPageButton = document.querySelector('#main-page-button');
+    mainPageButton.addEventListener('click', () => window.location.href = 'http://localhost:8080/');
+
+    let sendAnswersButton = document.querySelector('#send-answers-button');
+    sendAnswersButton.addEventListener('click', submitClicked);
+
+    setTimer();
+
+    document.addEventListener('DOMContentLoaded', addCodeMirror);
+}
+
+let timer;
+
+class Timer {
+    constructor(durationInSeconds, display, onFinish) {
+        this.seconds = durationInSeconds;
+        this.display = display;
+        this.onFinishAction = onFinish;
+
+        this.redColorAt = 60;
+    }
+
+    startTimer() {
+        let minutes, seconds;
+
+        const countdown = () => {
+            minutes = parseInt(this.seconds / 60, 10);
+            seconds = parseInt(this.seconds % 60, 10);
+
+            const minutesStr = minutes < 10 ? "0" + minutes : minutes;
+            const secondsStr = seconds < 10 ? "0" + seconds : seconds;
+
+            this.display.textContent = minutesStr + ":" + secondsStr;
+
+            if (--this.seconds < 0) {
+                this.stopTimer();
+                this.onFinish();
+            }
+
+            if (seconds <= this.redColorAt && minutes === 0) {
+                this.display.style.color = "red";
+            }
+        };
+
+        countdown();
+        this.intervalId = setInterval(countdown, 1000);
+    }
+
+    onFinish() {
+        this.onFinishAction();
+    }
+
+    stopTimer() {
+        clearInterval(this.intervalId);
+    }
+}
+
+function setTimer() {
+    const startTime = new Date(quizData.startTime);
+    const endTime = new Date(quizData.endTime);
+
+    const seconds = (endTime - startTime) / 1000;
+
+    timer = new Timer(seconds, document.querySelector("#time"), quizFinished);
+    timer.startTimer();
+}
+
+function hideTimer() {
+    document.querySelector("#time").style.display = "none";
+}
+
+function showThanks() {
+    document.querySelectorAll(".thanks").forEach(x => x.style.display = "block");
+    document.querySelector("form").style.display = "none";
+    document.querySelector(".under-blocks button[form='myForm']").style.display = "none";
+}
+
+async function quizFinished() {
+    hideTimer();
+    showThanks();
+    await sendAnswers(getUsersAnswers());
+}
+
+async function submitClicked() {
+    if (document.querySelector("form").checkValidity()) {
+        timer.stopTimer();
+        await quizFinished();
+    }
+}
+
+function getUsersAnswers() {
+    const questions = []
+    const questionCount = document.querySelectorAll(".element").length;
+
+    for (let i = 1; i <= questionCount; i++) {
+        const nodes = document.getElementsByName("q" + i);
+
+        const e = {
+            id: quizData.questions[i - 1].id,
+            answers: []
+        };
+
+        if (nodes.length === 1) {
+            let value;
+            if (codeTypes.includes(quizData.questions[i - 1].type.name))
+                value = nodes[0].CodeMirror.getValue();
+            else
+                value = nodes[0].value;
+
+            e.answers.push({
+                content: value
+            });
+        }
+        else {
+            for (const q of nodes) {
+                if (q.checked) {
+                    const value = q.value;
+                    e.answers.push({
+                        content: value
+                    });
+                }
+            }
+        }
+
+        questions.push(e);
+    }
+    console.log(JSON.stringify(questions));
+
+    return {
+        quizGroupId: quizData.id,
+        userLogin: "", //TODO
+        questions: questions
+    };
+}
+
+async function sendAnswers(answers) {
+    const response = await fetch('http://localhost:8080/db/apiRequest', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify({method: "saveAnswers", data: answers})
+    });
 }
