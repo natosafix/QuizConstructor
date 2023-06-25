@@ -25,6 +25,7 @@ public class GetUserScoresQueryHandler : RequestHandler, IRequestHandler<GetUser
         return quizGroup.UserQuizzes.Select(userQuizzes => new UserScoreVm
             {
                 Name = $"{userQuizzes.User.FirstName} {userQuizzes.User.LastName}",
+                AnswerId = userQuizzes.Id,
                 Score = userQuizzes.Score
             })
             .ToList();
