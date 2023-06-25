@@ -466,14 +466,12 @@ function createConstructorFromJson(data) {
             }
             let answers = answerHolder.querySelectorAll(`.${answerType}-option`);
             let answerCount = 0;
-            let correctOptionsCount = 0;
             for (const answerData of questionData.options) {
                 let answer = answers[answerCount];
                 answer.querySelector('.databaseId').textContent = answerData.id;
                 answer.querySelector('.answer').value = answerData.answer;
-                if (correctOptionsCount !== questionData.correctOptions.length && questionData.correctOptions[correctOptionsCount].id === answerData.id) {
+                if (isContainsOption(answerData, questionData.correctOptions)) {
                     answer.querySelector('.autocheck-choice').checked = true;
-                    correctOptionsCount++;
                 }
                 answerCount++;
             }
@@ -491,4 +489,12 @@ function createConstructorFromJson(data) {
             answerHolder.querySelector('.databaseId').textContent = questionData.correctOptions[0].id;
         }
     }
+}
+
+function isContainsOption(expectedOption, options) {
+    for (const option of options) {
+        if (expectedOption.answer === option.answer)
+            return true;
+    }
+    return false;
 }

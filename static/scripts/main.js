@@ -210,7 +210,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
             {
                 method: 'GET',
             });
-        adminQuizzes = await response.json();
+        adminQuizzesData = await response.json();
         /*adminQuizzes = {
             "quizVms": [
                 {
