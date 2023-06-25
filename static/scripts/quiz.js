@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
     quizData = await getQuizDataForFiller();
     quizParser = new QuizParser(quizData);
     quizParser.parse();
+    quizParser.addCode();
     setTimer();
 });
 async function getQuizDataForFiller() {

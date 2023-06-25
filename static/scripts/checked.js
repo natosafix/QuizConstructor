@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
     quizData = getQuizDataForOwner();
     quizParser = new QuizParser(quizData);
     quizParser.parse();
+    addCodeMirror();
 });
 
 async function getQuizDataForOwner() {
