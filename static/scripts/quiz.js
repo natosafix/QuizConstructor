@@ -120,6 +120,7 @@ async function getQuizDataForFiller() {
     };*/
 }
 
+
 class QuizParser {
     constructor(quizData) {
         this.quizData = quizData
@@ -354,36 +355,61 @@ async function submitClicked() {
     }
 }
 
-async function sendAnswers() {
-    const answers = []
+
+function getUserAnswers() {
+    const questions = []
     const questionCount = document.querySelectorAll(".element").length;
 
     for (let i = 1; i <= questionCount; i++) {
         const nodes = document.getElementsByName("q" + i);
 
+        const e = {
+            id: quizData.questions[i - 1].id,
+            answers: []
+        };
+
         if (nodes.length === 1) {
-            answers.push(nodes[0].value);
-            continue;
+            let value;
+            if (codeTypes.includes(quizData.questions[i - 1].type.name))
+                value = nodes[0].CodeMirror.getValue();
+            else
+                value = nodes[0].value;
+
+            e.answers.push({
+                content: value
+            });
         }
-
-        const t = [];
-
-        for (const q of nodes) {
-            if (q.checked) {
-                t.push(q.value);
+        else {
+            for (const q of nodes) {
+                if (q.checked) {
+                    const value = q.value;
+                    e.answers.push({
+                        content: value
+                    });
+                }
             }
         }
 
-        answers.push(t);
+        questions.push(e);
     }
-    console.log(JSON.stringify(answers));
+    console.log(JSON.stringify(questions));
+
+    return questions;
+}
+
+async function sendAnswers(answers) {
+    const data = {
+        quizGroupId: quizData.id,
+        userLogin: "", //TODO
+        questions: getUserAnswers()
+    };
 
     const response = await fetch('http://localhost:8080/db/apiRequest', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json;charset=utf-8'
         },
-        body: JSON.stringify({method: "quiz/createUserQuiz", data: {})
+        body: JSON.stringify({method: "saveAnswers", data: data})
     });
 }
 
