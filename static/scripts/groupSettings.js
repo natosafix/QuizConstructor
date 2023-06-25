@@ -1,4 +1,4 @@
-const groupId = document.querySelector("#group-id").textContent;
+const groupId = parseInt(document.querySelector("#group-id").textContent);
 let inviteLinkInput = document.querySelector('#inviteLink');
 let data;
 
@@ -6,10 +6,10 @@ document.addEventListener('DOMContentLoaded', async function(event) {
     let response = await fetch('http://localhost:8080/db/apiRequest?' +
         new URLSearchParams({
             method: "group/getUsers",
-            data: JSON.stringify({groupId: groupId})
+            data: JSON.stringify({"groupId": groupId})
         }),
         {
-            method: 'GET',
+        method: 'GET',
         }
     );
     data = await response.json();
@@ -35,11 +35,10 @@ document.addEventListener('DOMContentLoaded', async function(event) {
     }*/
 
     document.querySelector('#groupName').textContent = data.name;
-    const groupId = document.querySelector('.backend-data').textContent;
-    inviteLinkInput.value = `localHost:8080/groupInvite/${groupId}`;
+    inviteLinkInput.value = `localHost:8080/group/invite/${groupId}`;
     inviteLinkInput.addEventListener('click', copyLink, false);
 
-    fillMembers(data['members']);
+    fillMembers(data['userInfos']);
 });
 
 function copyLink() {
@@ -50,7 +49,7 @@ function fillMembers(members) {
     const pastePlace = document.querySelector("#member-paste-place");
 
     for (let member of members) {
-        pastePlace.appendChild(new GroupMemberDiv(member.id, member.firstName, member.lastName).element);
+        pastePlace.appendChild(new GroupMemberDiv(member.login, member.firstName, member.lastName).element);
     }
 }
 
@@ -104,11 +103,15 @@ class GroupMemberDiv extends CustomDOMElement {
     async removeMember() {
         await fetch('http://localhost:8080/db/apiRequest?',
             {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
                 body:
-                    {
+                    JSON.stringify({
                         method: "group/deleteUser",
-                        data: JSON.stringify({login: user, groupId: groupId})
-                    },
+                        data: {userLogin: this.memberId, groupId: groupId}
+                    }),
                 method: 'DELETE',
             });
         this.element.remove();

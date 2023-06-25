@@ -23,6 +23,7 @@ const codeTypes = ['javascript', 'xml', 'css'];
 const questionType2Id = {'shortText': 1, 'longText': 2, 'javascript': 3, 'oneList': 4, 'severalList': 5, 'xml': 6, 'css': 7};
 const id2QuestionType = {1: 'shortText', 2: 'longText', 3: 'javascript', 4: 'oneList', 5: 'severalList', 6: 'xml', 7: 'css'};
 
+document.querySelector('.build-button').addEventListener(buildConstructor);
 //questionType.addEventListener('change', changeQuestionType)
 
 // меняет тип вариантов ответа на вопрос
@@ -281,7 +282,7 @@ class QuizAnswer {
 
 const login = document.querySelector('.auth-signup-button').textContent
 
-function buildConstructor(event) {
+async function buildConstructor(event) {
     let quizForm = new QuizForm();
     quizForm.id = getDatabaseId(document);
     quizForm.login = login;
@@ -329,6 +330,7 @@ function buildConstructor(event) {
         quizForm.questions.push(quizQuestion);
     }
     alert(JSON.stringify(quizForm));
+    await saveConstructorBuild(quizForm)
     window.location.href = 'http://localhost:8080/';
 }
 
@@ -337,7 +339,22 @@ function getDatabaseId(element) {
     return id === "0" ? undefined : parseInt(id);
 }
 
-let data =
+async function saveConstructorBuild(quizForm) {
+    let newGroupId = await fetch('http://localhost:8080/db/apiRequest?',
+        {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                method: "quiz/updateQuiz",
+                data: quizForm
+            }),
+            method: 'PUT'
+        });
+}
+
+/*let data =
     {
         "id": 1,
         "login" : "Egorable",
@@ -396,9 +413,20 @@ let data =
                 ]
             }
         ]
-    }
+    }*/
 
+let quizId = parseInt(document.querySelector('#quiz-id').textContent);
+response = await fetch('http://localhost:8080/db/apiRequest?' + new URLSearchParams(
+    {
+        method: "quiz/getQuiz",
+        data: JSON.stringify({id: quizId})
+    }),
+    {
+        method: 'GET',
+    });
+let data = await response.json();
 createConstructorFromJson();
+
 function createConstructorFromJson() {
     document.querySelector('.databaseId').textContent = data.id;
     document.getElementsByName('title')[0].value = data.title;
