@@ -55,7 +55,7 @@ public class GetQuizGroupQueryHandler : RequestHandler, IRequestHandler<GetQuizG
                             Id = option.Id
                         })
                         .ToList(),
-                    TypeVm = new TypeVm
+                    Type = new TypeVm
                     {
                         Id = question.Type.Id,
                         Name = question.Type.Name

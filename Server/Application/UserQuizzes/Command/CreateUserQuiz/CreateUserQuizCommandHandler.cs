@@ -18,18 +18,29 @@ public class CreateUserQuizCommandHandler : RequestHandler, IRequestHandler<Crea
         var user = await context.Users
             .FirstOrDefaultAsync(user => user.Login == request.UserLogin, cancellationToken);
 
-        var k = request.Questions.SelectMany(x => x.Answers)
-            .Select(x => new UserAnswer
-            {
-                Content = x.Content,
-                QuestionId = 
-            });
-        
+        var userAnswers = new List<UserAnswer>();
+
+        foreach (var userQuestion in request.Questions)
+        {
+            userAnswers.AddRange(userQuestion.Answers
+                .Select(userAnswerInput => new UserAnswer
+                {
+                    Content = userAnswerInput.Content,
+                    QuestionId = userQuestion.Id
+                }));
+        }
+
         var userQuiz = new UserQuiz
         {
             User = user,
             EndTime = request.Finished,
             QuizGroup = quizGroup,
-        }
+            Answers = userAnswers
+        };
+
+        await context.UserQuizzes.AddAsync(userQuiz, cancellationToken);
+        await context.SaveChangesAsync(cancellationToken);
+
+        return userQuiz.Id;
     }
 }
