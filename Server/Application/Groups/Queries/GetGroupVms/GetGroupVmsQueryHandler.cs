@@ -72,7 +72,6 @@ public class GetGroupVmsQueryHandler : RequestHandler, IRequestHandler<GetGroupV
                     })
                     .ToList()
             }).ToListAsync(cancellationToken);
-        var tmp = adminGroupListVm.Concat(userGroupListVm).ToList();
-        return new GroupVmList {GroupVms = tmp};
+        return new GroupVmList {GroupVms = adminGroupListVm.Concat(userGroupListVm).ToList()};
     }
 }

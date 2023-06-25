@@ -1,4 +1,5 @@
-﻿using Application.Groups.Commands;
+﻿using Application.Common.Exceptions;
+using Application.Groups.Commands;
 using Application.Groups.Commands.AddAdminInGroup;
 using Application.Groups.Commands.AddUserInGroup;
 using Application.Groups.Commands.AssignQuiz;
@@ -28,7 +29,7 @@ public class GroupController : BaseController
         }
         catch
         {
-            return Ok(null);
+            return Ok();
         }
     }
     
@@ -42,15 +43,32 @@ public class GroupController : BaseController
     [HttpPost("addUser")]
     public async Task<ActionResult<int>> AddUser([FromBody] AddUserInGroupCommand command)
     {
-        var groupId = await Mediator.Send(command);
-        return Ok(groupId);
+        try
+        {
+            var groupId = await Mediator.Send(command);
+            return Ok(groupId);
+        }
+        catch (Exception ex)
+        {
+            if (ex is NotFoundException)
+                return NotFound();
+            return Forbid();
+        }
     }
     
     [HttpPost("assign")]
     public async Task<ActionResult<int>> AssignQuiz([FromBody] AssignQuizCommand command)
     {
-        var groupId = await Mediator.Send(command);
-        return Ok(groupId);
+        try
+        {
+            var groupId = await Mediator.Send(command);
+            return Ok(groupId);
+        }
+        catch (Exception ex)
+        {
+            return NotFound();
+        }
+        
     }
 
     [HttpDelete("deleteAdmin")]
@@ -63,8 +81,18 @@ public class GroupController : BaseController
     [HttpDelete("deleteUser")]
     public async Task<ActionResult<int>> DeleteUser([FromBody] DeleteUserCommand command)
     {
-        var groupId = await Mediator.Send(command);
-        return Ok(groupId);
+        try
+        {
+            var groupId = await Mediator.Send(command);
+            return Ok(groupId);
+        }
+        catch (Exception ex)
+        {
+            if (ex is NotFoundException)
+                return NotFound();
+            return Forbid();
+        }
+       
     }
     
     [HttpGet("getAdmins")]
@@ -77,8 +105,15 @@ public class GroupController : BaseController
     [HttpGet("getUsers")]
     public async Task<ActionResult<int>> GetUsers([FromQuery] GetGroupUsersQuery command)
     {
-        var userInfoList = await Mediator.Send(command);
-        return Ok(userInfoList);
+        try
+        {
+            var userInfoList = await Mediator.Send(command);
+            return Ok(userInfoList);
+        }
+        catch (Exception e)
+        {
+            return NotFound();
+        }
     }
     
     [HttpGet("getGroupsInfo")]
@@ -91,7 +126,14 @@ public class GroupController : BaseController
     [HttpGet("getGroups")]
     public async Task<ActionResult<List<GroupVm>>> GetGroups([FromQuery] GetGroupVmsQuery command)
     {
-        var groupVmList = await Mediator.Send(command);
-        return Ok(groupVmList.GroupVms);
+        try
+        {
+            var groupVmList = await Mediator.Send(command);
+            return Ok(groupVmList.GroupVms);
+        }
+        catch (Exception ex)
+        {
+            return NotFound();
+        }
     }
 }
