@@ -8,7 +8,7 @@
 
 main {
     width: 55%;
-    margin: 0 auto;
+    margin: 5% auto;
 }
 
 .under-blocks {
@@ -20,7 +20,7 @@ main {
     padding: 15px 20px;
     background-color: var(--accent-color);
     border: none;
-    border-radius: 13px;
+    border-radius: 8px;
     cursor: pointer;
 
     color: var(--block-bg-color);
@@ -30,11 +30,17 @@ main {
     background-color: var(--block-bg-color);
     border-radius: var(--border-radius);
     margin-bottom: 40px;
-    padding: 40px 30px 30px;
+    padding: 30px;
+    transition: transform 0.3s ease;
 }
 
+.block:hover {
+     transform: scale(1.01);
+     transition: transform 0.3s ease;
+ }
+
 .quiz-group {
-    margin-bottom: 30px;
+    margin: 30px 10px;
 }
 
 .quiz-group:nth-last-child(1) {
@@ -42,10 +48,11 @@ main {
 }
 
 .quiz-element-input {
-    background-color: #FFFFFF;
-    margin-top: 5px;
+    background-color: var(--accent3-color);
+    margin: 5px 0 10px;
     width: 99%;
     font-size: var(--input-font-size);
+    border-radius: 8px;
 }
 
 .quiz-header-label {
@@ -108,13 +115,13 @@ input {
     border: none;
     border-bottom: var(--custom-border);
     padding: 10px;
-    border-radius: 5px 5px 0 0;
+    border-radius: 8px;
 }
 
 textarea {
     resize: vertical;
-    border: var(--custom-border);
-    border-radius: 5px;
+    border-bottom: var(--custom-border);
+    border-radius: 8px;
 }
 
 input:focus, textarea:focus {
@@ -123,7 +130,7 @@ input:focus, textarea:focus {
 
 img {
     width: 100%;
-    border-radius: 5px;
+    border-radius: 8px;
 }
 
 .element-description {
@@ -144,7 +151,7 @@ input[type='radio'], input[type='checkbox']  {
     -moz-appearance: none;
     appearance: none;
 
-    border-radius: 50%;
+    border-radius: 8px;
     width: 16px;
     height: 16px;
 
@@ -157,7 +164,7 @@ input[type='radio'], input[type='checkbox']  {
 }
 
 input[type='checkbox'] {
-    border-radius: 4px;
+    border-radius: 8px;
 }
 
 input[type='radio']:checked, input[type='checkbox']:checked {
@@ -167,6 +174,11 @@ input[type='radio']:checked, input[type='checkbox']:checked {
 
 input, textarea {
     background-color: var(--page-bg-color) !important;
+    padding: 0.5rem 1rem;
+}
+
+input:hover, textarea:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .select {
@@ -181,6 +193,11 @@ input, textarea {
     padding: 10px 20px;
 }
 
+.add-option-btn:hover {
+    background-color: var(--hover-color);
+    color: var(--hover-text-color);
+}
+
 .remove-unit {
     background-color: var(--accent2-color);
     border-radius: 8px;
@@ -188,14 +205,26 @@ input, textarea {
     padding: 10px 20px;
 }
 
+.remove-unit:hover {
+    background-color: var(--hover-color);
+    color: var(--hover-text-color);
+}
+
 #add-unit-button, .build-button {
-    width: 100%;
+    width: calc(100% - 20%);
     border-radius: 8px;
     background-color: var(--accent2-color);
-    margin: 0 0 1em;
+    margin: 10px 10% 20px;
     padding: 10px 20px;
 }
-#add-unit-button, .build-button {
-    width: 100%;
-    margin: 0 0 1em;
+
+#add-unit-button:hover, .build-button:hover {
+    background-color: var(--hover-color);
+    color: var(--hover-text-color);
+}
+
+@media screen and (max-width: 980px) {
+    .main {
+        width: 90%;
+    }
 }

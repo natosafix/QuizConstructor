@@ -16,33 +16,50 @@
 <header class="header">
     <div class="overlay js-overlay-modal"></div>
 
-    <a href="/">
-        <img class="header-logo-img" src="/img/svg/quiz-logo.svg" alt="logo">
-    </a>
+    <div class="logos-list-wrapper">
+        <button class="menu-btn" id="menu-btn">
+            <img src="/../img/svg/menu.svg" class="menu-img" alt="Навигационное меню">
+        </button>
 
-    <div>
-        <ul class="auth-list">
+        <a href="/" class="header-logo-href">
+            <img class="header-logo-img" src="/img/svg/quiz-logo.svg" alt="Главная страница">
+        </a>
+    </div>
+
+    <nav>
+        <ol class="auth-list">
             <li>
                 <button type="button" class="auth-signup-button">{ userId }</button>
             </li>
             <li>
                 <button type="button" class="auth-logout-button">Выйти</button>
             </li>
-        </ul>
-    </div>
+        </ol>
+    </nav>
 
 </header>
 
 
 <span class="backend-data" id="prevPage">{ prevPage }</span>
 
+
+<div class="nav-button-hidder-overlay"></div>
+<nav class="index-nav-wrapper-hidder" id="side-menu">
+    <button class="nav-button-hidder active" id="nav-active-menu-btn">Активные</button>
+    <button class="nav-button-hidder inactive" id="nav-ended-menu-btn">Завершённые</button>
+    <button class="nav-button-hidder inactive" id="nav-groups-menu-btn">Группы</button>
+    <button class="nav-button-hidder inactive" id="nav-admin-quizzes-menu-btn">Мои опросы</button>
+</nav>
+
 <div class="index-wrapper">
 
-    <div class="index-nav-wrapper">
-        <button class="nav-button active" id="nav-active-btn">Активные</button>
-        <button class="nav-button inactive" id="nav-ended-btn">Завершённые</button>
-        <button class="nav-button inactive" id="nav-groups-btn">Группы</button>
-        <button class="nav-button inactive" id="nav-admin-quizzes-btn">Мои опросы</button>
+    <div class="sticky-block">
+        <nav class="index-nav-wrapper">
+            <button class="nav-button active" id="nav-active-btn" tabindex="1">Активные</button>
+            <button class="nav-button inactive" id="nav-ended-btn" tabindex="2">Завершённые</button>
+            <button class="nav-button inactive" id="nav-groups-btn" tabindex="3">Группы</button>
+            <button class="nav-button inactive" id="nav-admin-quizzes-btn" tabindex="4">Мои опросы</button>
+        </nav>
     </div>
 
     <div class="index-page-wrapper">

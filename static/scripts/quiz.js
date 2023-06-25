@@ -127,6 +127,7 @@ async function getQuizDataForFiller() {
     };*/
 }
 
+let tabindex = 0;
 
 class QuizParser {
     constructor(quizData) {
@@ -254,6 +255,7 @@ class QuizParser {
         inputElement.classList.add("element-input", "any-element")
         inputElement.name = questionName;
         inputElement.required = this.isRequired(question);
+        inputElement.tabIndex = ++tabindex;
 
         label.append(descriptionDiv);
         label.append(inputElement);
@@ -294,6 +296,7 @@ class QuizParser {
         input.className = "any-element"
         input.name = questionName;
         input.value = answer;
+        input.tabIndex = ++tabindex;
 
         label.append(input);
         label.append(answer);

@@ -22,22 +22,29 @@
 
 
 <header class="header">
-    <a href="/">
-        <img class="header-logo-img" src="/img/svg/quiz-logo.svg" alt="logo">
-    </a>
+    <div class="logos-list-wrapper">
+        <button class="menu-btn" id="menu-btn">
+            <img src="/../img/svg/menu.svg" class="menu-img" alt="Навигационное меню">
+        </button>
 
-    <div>
-        <ul class="auth-list">
+        <a href="/" class="header-logo-href">
+            <img class="header-logo-img" src="/img/svg/quiz-logo.svg" alt="Главная страница">
+        </a>
+    </div>
+
+    <nav>
+        <ol class="auth-list">
             <li>
                 <button type="button" class="auth-signup-button">{ userId }</button>
             </li>
             <li>
                 <button type="button" class="auth-logout-button">Выйти</button>
             </li>
-        </ul>
-    </div>
+        </ol>
+    </nav>
 
 </header>
+
 
 
 <span class="backend-data" id="quiz-id">{ quizId }</span>
@@ -142,7 +149,8 @@
                                type="radio" onclick="uncheckRadioOnCtrl(event)">
                         <input type="text" name="choice1text" value="Вариант 1" class="answer quiz-element-input"
                                onchange="onSeveralListAnswerChange(event)">
-                        <button type="button" class="delete-option" onclick="deleteOption(event)"></button>
+                        <button type="button" class="delete-option" onclick="deleteOption(event)"
+                                aria-label="Удалить вариант ответа"></button>
                     </div>
                 </label>
 
@@ -160,7 +168,8 @@
                         <input name="autocheck-answer" class="autocheck-choice" type="checkbox">
                         <input type="text" name="checkbox1text" value="Вариант 1" class="answer quiz-element-input"
                                onchange="onSeveralListAnswerChange(event)">
-                        <button type="button" class="delete-option" onclick="deleteOption(event)"></button>
+                        <button type="button" class="delete-option" onclick="deleteOption(event)"
+                                aria-label="Удалить вариант ответа"></button>
                     </div>
                 </label>
 
@@ -173,7 +182,8 @@
             <div class="quiz-group dropList">
                 <label class="dropList-option">
                     1. <input type="text" name="drop1text" placeholder="Вариант 1" class="answer">
-                    <button type="button" class="delete-option" onclick="deleteOption(event)"></button>
+                    <button type="button" class="delete-option" onclick="deleteOption(event)"
+                            aria-label="Удалить вариант ответа"></button>
                 </label>
             </div>
 

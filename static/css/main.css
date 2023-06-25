@@ -1,3 +1,21 @@
+.nav-button-hidder-overlay {
+    opacity: 0;
+    visibility: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, .5);
+    z-index: 1000;
+    transition: 0.3s all;
+    height: 100%;
+}
+
+.nav-button-hidder-overlay.active {
+     opacity: 1;
+     visibility: visible;
+ }
+
 .index-wrapper {
     width: 100%;
     margin: 0;
@@ -10,6 +28,42 @@
     background-color: rgba(0, 0, 0, 0);
 }
 
+.index-nav-wrapper-hidder {
+    background-color: var(--page-bg-color);
+    display: none;
+    position: fixed;
+    top: 0;
+    width: 0;
+    padding-top: 100px;
+    z-index: 10000;
+
+    transition: width 0.3s ease;
+    overflow-x: hidden;
+
+    font-size: 1.5rem;
+}
+
+.nav-button-hidder {
+    margin: 10px 10%;
+    padding: 2rem 0;
+    border-radius: 8px;
+}
+
+.nav-button-hidder.active {
+     background-color: var(--accent2-color);
+ }
+
+.nav-button-hidder.inactive {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.sticky-block {
+    width: 100%;
+    display: block;
+
+    padding: 0;
+    margin: 0;
+}
 
 .index-nav-wrapper {
     grid-area: A;
@@ -20,8 +74,10 @@
 
     padding: 10px 20px 0;
     gap: 10px;
-}
 
+    position: sticky;
+    top: 50px;
+}
 
 .nav-button {
     display: flex;
@@ -30,12 +86,6 @@
     align-items: center;
 
     padding: 0.3rem;
-
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 24px;
 
     border-radius: 8px;
 }
@@ -59,9 +109,10 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
 
     padding: 10px 0;
+    height: 100%;
 }
 
 
@@ -69,6 +120,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: start;
     align-items: center;
     gap: 40px;
 }
@@ -112,6 +164,8 @@
 
     background-color: var(--accent2-color);
     transition: transform 0.3s ease;
+
+    font-weight: bold;
 }
 
 #group-create-modal-window-open-btn:hover {
@@ -145,7 +199,7 @@
 }
 
 .admin-quiz {
-    width: 100%;
+    width: calc(100% - 10px);
 
     padding: 15px 40px;
     margin: 10px 0;
@@ -360,4 +414,41 @@
     height: 25px;
     transform: scale(1.1);
     transition: transform 0.15s ease;
+}
+
+
+@media screen and (max-width: 980px) {
+    .index-wrapper {
+        grid-template-columns: 0 100%;
+    }
+
+    .index-nav-wrapper {
+        visibility: hidden;
+    }
+
+    .index-nav-wrapper-hidder {
+        position: fixed;
+        top: 0;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .index-nav-wrapper-hidder.open {
+        width: 70%;
+        display: flex;
+        height: 100%;
+    }
+
+    .menu-btn {
+        visibility: visible;
+    }
+}
+
+
+@media screen and (min-width: 980px) {
+    .nav-button-hidder-overlay.active {
+        opacity: 0;
+        visibility: hidden;
+    }
 }

@@ -1,34 +1,40 @@
 @import "constants.css";
 
-html {
-    box-sizing: border-box;
-    background: var(--block-bg-color);
-}
-*, *::before, *::after{
-    box-sizing: border-box;
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 5%;
 }
 
-.login {
-    width: 25%;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: white;
-    padding: 20px;
+.login-form {
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--block-bg-color);
+    padding: 80px 5%;
+    gap: 20px;
     border-radius: 10px;
+    border-radius: var(--border-radius);
 }
 
 input {
     border: none;
     border-bottom: var(--custom-border);
+    border-radius: 8px;
+    background-color: var(--accent3-color);
     width: 100%;
+    padding: 1rem;
 }
 
 .form-group {
-    margin-bottom: 25px;
+    width: 100%;
 }
 
 h1 {
-    font-size: 1.2em;
+    font-size: 2rem;
     padding-bottom: 30px;
 }
 
@@ -36,17 +42,33 @@ h1 {
     margin: 0;
 }
 
-.myButton {
-    display: inline;
+.buttons {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 80%;
+    padding: 10px 0;
+    justify-content: space-around;
+    gap: 20px
 }
 
-.buttons {
-    margin-bottom: 0;
+
+.login {
+    padding: 20px 40px;
+    width: auto;
+    text-align: center;
+}
+
+.signup {
+    padding: 20px 40px;
+    width: auto;
+    text-align: center;
 }
 
 a {
     text-decoration: none;
 }
+
 #username-error, #password-error, #repeat-password-error {
     padding-top: 10px;
     display: none;
@@ -58,8 +80,7 @@ a {
 }
 
 @media screen and (max-width: 980px){
-    .login {
+    .login-form {
         width: 55%;
-        font-size: 2.5em;
     }
 }

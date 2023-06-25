@@ -46,10 +46,41 @@ html {
 }
 
 
-.header-logo-img {
+.header-logo-href {
     width: 100%;
+    height: 100%;
 }
 
+.header-logo-img {
+    width: 100%;
+    height: 100%;
+}
+
+.logos-list-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: end;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    height: 90%;
+    gap: 20%;
+    z-index: 100000;
+}
+
+.menu-btn {
+    background-color: rgba(0, 0, 0, 0);
+    visibility: hidden;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.menu-img {
+    width: 80%;
+    height: 100%;
+}
 
 .auth-list {
     display: flex;
@@ -73,15 +104,16 @@ button {
     text-decoration: none;
     color: var(--accent-color);
     margin: 0 10px;
-    padding: 5px 15px;
+    padding: 7px 20px;
     border-radius: 8px;
+    font-weight: bold;
 }
 
 .auth-logout-button {
     text-align: center;
     background-color: var(--accent-color);
     color: white;
-    padding: 5px 15px;
+    padding: 7px 20px;
     border-radius: 8px;
 }
 
@@ -119,6 +151,7 @@ hr {
 
 .delete-option::after {
     content: "×"; /* символ крестика */
+    font-size: 30px;
 }
 
 /* Стиль для кнопки при наведении курсора */

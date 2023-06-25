@@ -22,20 +22,26 @@
 <body>
 
 <header class="header">
-    <a href="/">
-        <img class="header-logo-img" src="/img/svg/quiz-logo.svg" alt="logo">
-    </a>
+    <div class="logos-list-wrapper">
+        <button class="menu-btn" id="menu-btn">
+            <img src="/../img/svg/menu.svg" class="menu-img" alt="Навигационное меню">
+        </button>
 
-    <div>
-        <ul class="auth-list">
+        <a href="/" class="header-logo-href">
+            <img class="header-logo-img" src="/img/svg/quiz-logo.svg" alt="Главная страница">
+        </a>
+    </div>
+
+    <nav>
+        <ol class="auth-list">
             <li>
                 <button type="button" class="auth-signup-button" id="user-id">{ userId }</button>
             </li>
             <li>
                 <button type="button" class="auth-logout-button">Выйти</button>
             </li>
-        </ul>
-    </div>
+        </ol>
+    </nav>
 
 </header>
 <div class="overlay js-overlay-modal"></div>
