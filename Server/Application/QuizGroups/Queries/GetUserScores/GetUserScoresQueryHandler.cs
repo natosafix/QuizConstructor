@@ -1,6 +1,8 @@
 ﻿using Application.Common.Abstracts;
+using Application.Common.Exceptions;
 using Application.Interfaces;
 using Application.Vms;
+using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,10 +19,12 @@ public class GetUserScoresQueryHandler : RequestHandler, IRequestHandler<GetUser
                 .ThenInclude(userQuizzes => userQuizzes.User)
             .FirstOrDefaultAsync(quizGroup => quizGroup.Id == request.Id, cancellationToken);
 
+        if (quizGroup == null)
+            throw new NotFoundException(nameof(QuizGroup), request.Id);
+        
         return quizGroup.UserQuizzes.Select(userQuizzes => new UserScoreVm
             {
-                FirstName = userQuizzes.User.FirstName,
-                LastName = userQuizzes.User.LastName,
+                Name = $"{userQuizzes.User.FirstName} {userQuizzes.User.LastName}",
                 Score = userQuizzes.Score
             })
             .ToList();

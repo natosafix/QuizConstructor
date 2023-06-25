@@ -27,8 +27,7 @@ public class GetUserQuizQueryHandler : RequestHandler, IRequestHandler<GetUserQu
         return new UserQuizVm
         {
             Id = userQuiz.Id,
-            FirstName = userQuiz.User.FirstName,
-            LastName = userQuiz.User.FirstName,
+            Name = $"{userQuiz.User.FirstName} {userQuiz.User.LastName}",
             Questions = userQuiz.Questions.Select(question => new UserQuestionVm
                 {
                     Score = question.Score,

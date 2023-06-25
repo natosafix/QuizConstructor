@@ -1,7 +1,7 @@
 ﻿namespace Application.Vms;
 
-public class UserScoreVm
+public class Point
 {
-    public string Name { get; set; }
+    public int QuestionId { get; set; }
     public int Score { get; set; }
 }
