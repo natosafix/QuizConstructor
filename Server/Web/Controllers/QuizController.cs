@@ -1,6 +1,7 @@
 ﻿using Application.Quizzes.Commands.CreateQuiz;
 using Application.Quizzes.Commands.UpdateQuiz;
 using Application.Quizzes.Queries.GetQuiz;
+using Application.Quizzes.Queries.GetQuizForUser;
 using Application.Quizzes.Queries.GetQuizzesByUserLogin;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -39,5 +40,12 @@ public class QuizController : BaseController
     {
         var quizId = await Mediator.Send(command);
         return Ok(quizId);
+    }
+    
+    [HttpGet("getQuizForUser")]
+    public async Task<ActionResult<int>> UpdateQuiz([FromQuery] GetQuizForUserQuery command)
+    {
+        var quiz = await Mediator.Send(command);
+        return Ok(quiz);
     }
 }
