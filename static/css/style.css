@@ -47,9 +47,31 @@ html {
 
 
 .header-logo-img {
-    width: 100%;
+
 }
 
+.logos-list-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: end;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    gap: 15%;
+    z-index: 100000;
+}
+
+.menu-btn {
+    background-color: rgba(0, 0, 0, 0);
+    visibility: hidden;
+    margin: 0;
+    padding: 0;
+    height: 10%;
+}
+
+.menu-img {
+    width: 90%;
+}
 
 .auth-list {
     display: flex;
@@ -75,6 +97,7 @@ button {
     margin: 0 10px;
     padding: 5px 15px;
     border-radius: 8px;
+    font-weight: bold;
 }
 
 .auth-logout-button {
@@ -138,4 +161,18 @@ hr {
     border: none;
     border-radius: 100px;
     outline: none;
+}
+
+@media screen and (max-width: 980px) {
+    .index-wrapper {
+        grid-template-columns: 0 100%;
+    }
+
+    .index-nav-wrapper {
+        visibility: hidden;
+    }
+
+    .menu-btn {
+        visibility: visible;
+    }
 }

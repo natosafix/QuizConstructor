@@ -1,3 +1,21 @@
+.nav-button-hidder-overlay {
+    opacity: 0;
+    visibility: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, .5);
+    z-index: 1000;
+    transition: 0.3s all;
+    height: 100%;
+}
+
+.nav-button-hidder-overlay.active {
+     opacity: 1;
+     visibility: visible;
+ }
+
 .index-wrapper {
     width: 100%;
     margin: 0;
@@ -7,6 +25,33 @@
     grid-template-areas: "A B";
     grid-template-columns: 20% 80%;
 
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.index-nav-wrapper-hidder {
+    background-color: var(--page-bg-color);
+    display: none;
+    position: absolute;
+    top: 0;
+    width: 0;
+    padding-top: 100px;
+    z-index: 10000;
+
+    transition: width 0.3s ease;
+    overflow-x: hidden;
+}
+
+.nav-button-hidder {
+    margin: 10px 10%;
+    padding: 2rem 0;
+    border-radius: 8px;
+}
+
+.nav-button-hidder.active {
+     background-color: var(--accent2-color);
+ }
+
+.nav-button-hidder.inactive {
     background-color: rgba(0, 0, 0, 0);
 }
 
@@ -22,7 +67,6 @@
     gap: 10px;
 }
 
-
 .nav-button {
     display: flex;
     flex-direction: row;
@@ -30,12 +74,6 @@
     align-items: center;
 
     padding: 0.3rem;
-
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 24px;
 
     border-radius: 8px;
 }
@@ -347,4 +385,37 @@
     height: 25px;
     transform: scale(1.1);
     transition: transform 0.15s ease;
+}
+
+
+@media screen and (max-width: 980px) {
+    .index-wrapper {
+        grid-template-columns: 0 100%;
+    }
+
+    .index-nav-wrapper {
+        visibility: hidden;
+    }
+
+    .index-nav-wrapper-hidder {
+        position: absolute;
+        top: 0;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .index-nav-wrapper-hidder.open {
+        width: 90%;
+        display: flex;
+        height: 100%;
+    }
+}
+
+
+@media screen and (min-width: 980px) {
+    .nav-button-hidder-overlay.active {
+        opacity: 0;
+        visibility: hidden;
+    }
 }

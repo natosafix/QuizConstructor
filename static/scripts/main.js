@@ -18,11 +18,28 @@ let planModalWindow;
 let createGroupModalWindow;
 let adminGroupId2Name = {};
 const overlay = document.querySelector('.js-overlay-modal');
+const navOverlay = document.querySelector('.nav-button-hidder-overlay');
 
 // Закрытие модального окна на бэкгрануд
 overlay.addEventListener('click', function () {
     planModalWindow.hide();
     createGroupModalWindow.hide();
+});
+
+let sideMenu = document.querySelector('#side-menu');
+document.querySelector('#menu-btn').addEventListener('click', () => {
+    sideMenu.classList.toggle('open');
+    if (sideMenu.classList.contains('open')) {
+        navOverlay.classList.add('active');
+    }
+    else {
+        navOverlay.classList.remove('active');
+    }
+});
+
+navOverlay.addEventListener('click', function () {
+    navOverlay.classList.remove('active');
+    sideMenu.classList.toggle('open');
 });
 
 // Закрытие модального окна на ESC
@@ -808,6 +825,7 @@ class ButtonsGroupHandler {
         this.buttonsHandlers = buttonsHandlers;
         for (let buttonHandler of this.buttonsHandlers) {
             buttonHandler.button.addEventListener('click', () => this.onClick(buttonHandler), false);
+            buttonHandler.parrentBtn.addEventListener('click', () => this.onClick(buttonHandler), false);
         }
     }
 
@@ -816,6 +834,8 @@ class ButtonsGroupHandler {
             buttonHandler.setInactive();
         }
 
+        sideMenu.classList.remove('open');
+        navOverlay.classList.remove('active');
         buttonHandler.setActive();
     }
 
@@ -834,17 +854,23 @@ class NavButton {
     constructor(button) {
         this.button = button;
         this.id = button.id;
+        let parrentId = this.id.replace('btn', 'menu-btn');
+        this.parrentBtn = document.querySelector(`#${parrentId}`);
         let pageId = button.id.replace('btn', 'page');
         this.matchDiv = document.querySelector(`#${pageId}`);
     }
 
     setActive() {
+        this.parrentBtn.classList.remove('inactive');
+        this.parrentBtn.classList.add('active');
         this.button.classList.remove('inactive');
         this.button.classList.add('active');
         this.matchDiv.style.display = 'block';
     }
 
     setInactive() {
+        this.parrentBtn.classList.remove('active');
+        this.parrentBtn.classList.add('inactive');
         this.button.classList.remove('active');
         this.button.classList.add('inactive');
         this.matchDiv.style.display = 'none';
