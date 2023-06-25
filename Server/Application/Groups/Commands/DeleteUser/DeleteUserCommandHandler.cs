@@ -20,13 +20,16 @@ public class DeleteUserCommandHandler : RequestHandler, IRequestHandler<DeleteUs
         if (group == null)
             throw new NotFoundException(nameof(Group), request.GroupId);
 
-        var admin = await context.Users
+        var user = await context.Users
             .FirstOrDefaultAsync(user => user.Login == request.UserLogin, cancellationToken);
 
-        if (admin == null)
+        if (user == null)
             throw new NotFoundException(nameof(User), request.UserLogin);
 
-        group.Users.Remove(admin);
+        if (!group.Users.Contains(user))
+            throw new Exception();
+        
+        group.Users.Remove(user);
 
         await context.SaveChangesAsync(cancellationToken);
 

@@ -14,6 +14,8 @@ public class AddUserInGroupCommandHandler : RequestHandler, IRequestHandler<AddU
     public async Task<int> Handle(AddUserInGroupCommand request, CancellationToken cancellationToken)
     {
         var group = await context.Groups
+            .Include(group => group.Users)
+            .Include(group => group.Admins)
             .FirstOrDefaultAsync(group => group.Id == request.GroupId, cancellationToken);
         
         if (group == null)
@@ -24,6 +26,9 @@ public class AddUserInGroupCommandHandler : RequestHandler, IRequestHandler<AddU
 
         if (user == null)
             throw new NotFoundException(nameof(User), request.Login);
+
+        if (group.Admins.Contains(user) || group.Users.Contains(user))
+            throw new Exception("Вы уже добавлены в группу");
         
         group.Users.Add(user);
 
