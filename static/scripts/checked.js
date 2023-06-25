@@ -4,10 +4,11 @@ const userId = document.querySelector('#user-id').textContent;
 let quizData;
 let quizParser;
 document.addEventListener('DOMContentLoaded', async function(event) {
-    quizData = getQuizDataForOwner();
+    quizData = await getQuizDataForOwner();
     quizParser = new QuizParser(quizData);
     quizParser.parse();
     addCodeMirror();
+    checkedStart()
 });
 
 async function getQuizDataForOwner() {
@@ -298,11 +299,6 @@ class QuizParser {
         return choiceDiv;
     }
 }
-
-const quizData = getQuizDataForOwner();
-const quizParser = new QuizParser(quizData);
-
-quizParser.parse();
 
 function addCodeMirror() {
     quizParser.addCode();

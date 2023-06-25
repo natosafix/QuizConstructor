@@ -29,7 +29,7 @@
     <div>
         <ul class="auth-list">
             <li>
-                <button type="button" class="auth-signup-button">{ userId }</button>
+                <button type="button" class="auth-signup-button" id="user-id">{ userId }</button>
             </li>
             <li>
                 <button type="button" class="auth-logout-button">Выйти</button>
@@ -40,8 +40,7 @@
 </header>
 
 
-<span class="backend-data">{ quizId }</span>
-<span class="backend-data">{ userId }</span>
+<span class="backend-data" id="quiz-id">{ quizId }</span>
 
 <main>
 
@@ -81,5 +80,4 @@
 
 <script src='/scripts/modal.js'></script>
 <script src='/scripts/checked.js'></script>
-<script>checkedStart()</script>
 </html>
