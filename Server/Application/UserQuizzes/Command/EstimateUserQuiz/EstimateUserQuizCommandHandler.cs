@@ -21,10 +21,11 @@ public class EstimateUserQuizCommandHandler : RequestHandler, IRequestHandler<Es
             throw new NotFoundException(nameof(UserQuiz), request.Id);
 
         var score = 0;
-        foreach (var point in request.Points)
+        foreach (var question in userQuiz.Questions)
         {
-            userQuiz.Questions.FirstOrDefault(q => q.Id == point.QuestionId).Score = point.Score;
-            score += point.Score;
+            var pointScore = request.Points.FirstOrDefault(x => x.QuestionId == question.Id).Score;
+            question.Score = pointScore;
+            score += pointScore;
         }
 
         userQuiz.Score = score;
