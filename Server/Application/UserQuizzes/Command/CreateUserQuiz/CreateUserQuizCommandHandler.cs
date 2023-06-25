@@ -52,7 +52,7 @@ public class CreateUserQuizCommandHandler : RequestHandler, IRequestHandler<Crea
                     .Select(x => x.Content)
                     .Intersect(question.CorrectAnswers.
                         Select(answer => answer.Content))
-                    .Count()
+                    .Count() == question.CorrectAnswers.Count ? question.Score : 0
             })
                 .ToList()
         };

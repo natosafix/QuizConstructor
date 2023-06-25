@@ -11,10 +11,8 @@ namespace Application.Quizzes.Queries.GetQuiz;
 
 public class GetQuizQueryHandler : RequestHandler, IRequestHandler<GetQuizQuery, QuizView>
 {
-    public GetQuizQueryHandler(IDbContext context, IMapper mapper) : base(context) => this.mapper = mapper;
+    public GetQuizQueryHandler(IDbContext context) : base(context) {}
     
-    private readonly IMapper mapper;
-
     public async Task<QuizView> Handle(GetQuizQuery request, CancellationToken cancellationToken)
     {
         var entity = await context.Quizzes
