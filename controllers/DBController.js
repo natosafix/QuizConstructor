@@ -44,6 +44,38 @@ class DBController {
         }
     }
 
+    async putRequest(method, body) {
+        const link = this.apiUrl + method;
+        try {
+            return await fetch(link, {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            });
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    async deleteRequest(method, body) {
+        const link = this.apiUrl + method;
+        try {
+            return await fetch(link, {
+                method: 'DELETE',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            });
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
     async getQuizzes(userId) {
         const data =
             {

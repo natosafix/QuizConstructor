@@ -1,5 +1,3 @@
-// TODO сохранить конфигурацию после обновления страницы
-
 const codeMirrorOptions = {
     mode: 'javascript',
     lineNumbers: true,
@@ -258,6 +256,7 @@ function removeQuestion(event) { // удаляет вопрос
 
 class QuizForm {
     id = undefined;
+    login = undefined;
     title = undefined;
     description = undefined;
     questions = [];
@@ -265,23 +264,26 @@ class QuizForm {
 
 class QuizQuestion {
     id = undefined;
-    question = undefined;
-    answerType = undefined;
-    image = undefined;
-    isAutocheckEnabled = undefined;
-    answers = [];
+    content = undefined;
+    typeId = undefined;
+    /*image = undefined;*/
+    required = false;
+    options = [];
+    correctOptions = [];
     maxScore;
 }
 
 class QuizAnswer {
     id = undefined;
     answer = undefined;
-    isCorrect = false;
 }
+
+const login = document.querySelector('.auth-signup-button').textContent
 
 function buildConstructor(event) {
     let quizForm = new QuizForm();
     quizForm.id = getDatabaseId(document);
+    quizForm.login = login;
     quizForm.title = document.getElementsByName('title')[0].value;
     quizForm.description = document.getElementsByName('description')[0].value;
     let questionsHolder = event.target.parentNode;
@@ -289,27 +291,21 @@ function buildConstructor(event) {
     for (const question of questions) {
         let quizQuestion = new QuizQuestion();
         quizQuestion.id = getDatabaseId(question);
-        quizQuestion.question = question.querySelector('.question').value;
+        quizQuestion.content = question.querySelector('.question').value;
         let answerType = question.querySelector('.answer-type-selector').value;
-        quizQuestion.answerType = questionType2Id[answerType];
+        quizQuestion.typeId = questionType2Id[answerType];
         quizQuestion.maxScore = parseInt(question.querySelector("[name='maxScore']").value);
-        quizQuestion.isAutocheckEnabled = false;
         let answerHolder = question.querySelector(`.${answerType}`);
         if (choiceTypes.includes(answerType)) {
             let answers = answerHolder.querySelectorAll(`.${answerType}-option`)
 
             for (const answer of answers) {
-                if (answer.querySelector('.autocheck-choice').checked)
-                    quizQuestion.isAutocheckEnabled = true;
-            }
-
-            for (const answer of answers) {
                 let quizAnswer = new QuizAnswer();
                 quizAnswer.id = getDatabaseId(answer)
                 quizAnswer.answer = answer.querySelector('.answer').value;
-                if (quizQuestion.isAutocheckEnabled)
-                    quizAnswer.isCorrect = answer.querySelector('.autocheck-choice').checked;
-                quizQuestion.answers.push(quizAnswer);
+                if (answer.querySelector('.autocheck-choice').checked)
+                    quizQuestion.correctOptions.push(quizAnswer);
+                quizQuestion.options.push(quizAnswer);
             }
         } else  {
             let autocheckInput;
@@ -322,10 +318,8 @@ function buildConstructor(event) {
             if (autocheckInput.length > 0) {
                 let quizAnswer = new QuizAnswer();
                 quizAnswer.id = getDatabaseId(answerHolder);
-                quizQuestion.isAutocheckEnabled = true;
                 quizAnswer.answer = autocheckInput;
-                quizAnswer.isCorrect = true;
-                quizQuestion.answers.push(quizAnswer);
+                quizQuestion.correctOptions.push(quizAnswer);
             }
         }
         quizForm.questions.push(quizQuestion);
@@ -336,54 +330,58 @@ function buildConstructor(event) {
 
 function getDatabaseId(element) {
     let id = element.querySelector('.databaseId').textContent;
-    return id === 0 ? undefined : id;
+    return id === "0" ? undefined : parseInt(id);
 }
 
 let data =
-{
-    "id": 2,
-    "title": "Леха",
-    "description": "Кулаков",
-    "questions": [
-        {
-            "id": 1,
-            "question": "первый",
-            "answerType": "2",
-            "isAutocheckEnabled": false,
-            "answers": [],
-            "maxScore": 1
-        }, {
-            "id": 2,
-            "question": "второй",
-            "answerType": "4",
-            "isAutocheckEnabled": true,
-            "answers": [
-                {"id": 1, "answer": "Вариант 1", "isCorrect": false},
-                {"id": 2, "answer": "Вариант 2", "isCorrect": true},
-                {"id": 4, "answer": "Вариант 3", "isCorrect": false}
-            ],
-            "maxScore": 1
-        }, {
-            "id": 3,
-            "question": "третий",
-            "answerType": "5",
-            "isAutocheckEnabled": false,
-            "answers": [
-                {"id": 1, "answer": "Вариант 1", "isCorrect": false},
-                {"id": 2, "answer": "Вариант 2", "isCorrect": false},
-                {"id": 3, "answer": "Вариант 3", "isCorrect": false}
-            ],
-            "maxScore": 3
-        }, {
-            "id": "0",
-            "question": "тест",
-            "answerType": 3,
-            "isAutocheckEnabled": true,
-            "answers": [{"id": "0", "answer": "<input>", "isCorrect": true}],
-            "maxScore": 1
-        }
-    ]
-}
+    {
+        "id": 1,
+        "login" : "Egorable",
+        "title": "Леха",
+        "description": "Кулаков",
+        "questions": [
+            {
+                "id": 1,
+                "content": "первый",
+                "typeId": 1,
+                "maxScore": 1,
+                "required" : false,
+                "options": [],
+                "correctOptions" : [
+                    {"id": 6, "answer": "Вариант 1"}
+                ]
+            },
+            {
+                "id": 3,
+                "content": "второй",
+                "typeId": 4,
+                "maxScore": 1,
+                "required" : true,
+                "options": [
+                    {"id": 1, "answer": "Вариант 1"},
+                    {"id": 2, "answer": "Вариант 2"},
+                    {"id": 4, "answer": "Вариант 3"}
+                ],
+                "correctOptions" : [
+                    {"id": 2, "answer" : "Вариант 2"}
+                ]
+
+            },
+            {
+                "id": 5,
+                "content": "третий",
+                "typeId": 5,
+                "maxScore": 3,
+                "required" : true,
+                "options": [
+                    {"id": 1, "answer": "Вариант 1"},
+                    {"id": 2, "answer": "Вариант 2"},
+                    {"id": 3, "answer": "Вариант 3"}
+                ],
+                "correctOptions" : []
+            }
+        ]
+    }
 
 createConstructorFromJson();
 function createConstructorFromJson() {
@@ -401,8 +399,8 @@ function createConstructorFromJson() {
         let questions = document.querySelectorAll('.quiz-question');
         let question = questions[questions.length - 1];
         question.querySelector('.databaseId').textContent = questionData.id;
-        question.querySelector('.question').value = questionData.question;
-        let answerType = id2QuestionType[questionData.answerType];
+        question.querySelector('.question').value = questionData.content;
+        let answerType = id2QuestionType[questionData.typeId];
         let answerTypeSelect = question.querySelector('.answer-type-selector');
         answerTypeSelect.value = answerType;
         let changeEvent = new Event('change');
@@ -410,34 +408,35 @@ function createConstructorFromJson() {
         question.querySelector("[name='maxScore']").value = questionData.maxScore;
         let answerHolder = question.querySelector(`.${answerType}`);
 
-        if (questionData.answers.length === 0)
+        if (questionData.options.length === 0 && questionData.correctOptions.length === 0)
             continue;
         if (choiceTypes.includes(answerType)) {
             let addOptionButton = question.querySelector('.add-option-btn');
-            for (let i = 1; i <= questionData.answers.length - 1; i++) {
+            for (let i = 1; i <= questionData.options.length - 1; i++) {
                 addOptionButton.dispatchEvent(clickEvent);
             }
             let answers = answerHolder.querySelectorAll(`.${answerType}-option`);
             let answerCount = 0;
-            for (const answerData of questionData.answers) {
+            let correctOptionsCount = 0;
+            for (const answerData of questionData.options) {
                 let answer = answers[answerCount];
                 answer.querySelector('.databaseId').textContent = answerData.id;
                 answer.querySelector('.answer').value = answerData.answer;
-                if (answerData.isCorrect) {
+                if (correctOptionsCount !== questionData.correctOptions.length && questionData.correctOptions[correctOptionsCount].id === answerData.id) {
                     answer.querySelector('.autocheck-choice').checked = true;
+                    correctOptionsCount++;
                 }
                 answerCount++;
             }
-        } else if (questionData.isAutocheckEnabled) {
-            let autocheckInput;
+        } else if (questionData.correctOptions.length > 0) {
+            let autocheckInput = answerHolder.querySelector(".correct-answer");
             if (answerType === 'codeEditor') {
-                autocheckInput = answerHolder.querySelector(".correct-answer");
-                autocheckInput.CodeMirror.setValue(questionData.answers[0].answer);
+                autocheckInput.CodeMirror.setValue(questionData.correctOptions[0].answer);
             } else {
-                answerHolder.querySelector('.correct-answer').value = questionData.answers[0].answer;
+                autocheckInput.value = questionData.correctOptions[0].answer;
             }
 
-            answerHolder.querySelector('.databaseId').textContent = questionData.answers[0].answer;
+            answerHolder.querySelector('.databaseId').textContent = questionData.correctOptions[0].id;
         }
     }
 }

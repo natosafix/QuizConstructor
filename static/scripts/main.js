@@ -37,9 +37,14 @@ document.body.addEventListener('keyup', function (e) {
 const user = document.querySelector('.auth-signup-button').textContent;
 document.addEventListener('DOMContentLoaded', async function(event) {
     try {
-        let response = await fetch('http://localhost:8080/db/apiRequest?' + new URLSearchParams({method: "group/getGroups", data: JSON.stringify({login: user})}), {
-            method: 'GET',
-        });
+        let response = await fetch('http://localhost:8080/db/apiRequest?' + new URLSearchParams(
+            {
+                method: "group/getGroups",
+                data: JSON.stringify({login: user})
+            }),
+            {
+                method: 'GET',
+            });
         data = await response.json();
         /*data = {
             "groups": [
@@ -196,8 +201,16 @@ document.addEventListener('DOMContentLoaded', async function(event) {
                 }
             ]
         }*/
-
-        adminQuizzes = {
+        response = await fetch('http://localhost:8080/db/apiRequest?' + new URLSearchParams(
+            {
+                method: "quiz/getQuizzesByLogin",
+                data: JSON.stringify({login: user})
+            }),
+            {
+                method: 'GET',
+            });
+        adminQuizzes = await response.json();
+        /*adminQuizzes = {
             "quizVms": [
                 {
                     "id": 1,
@@ -210,7 +223,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
                     "desctoption": "опять не нужен",
                 },
             ]
-        }
+        }*/
 
         for (let currentGroup of data) {
             if (currentGroup.isAdmin) {
@@ -612,7 +625,7 @@ class GroupCreateModalWindow extends CustomDOMElement {
             .withClass('auth-signup-button')
             .withClass('modal_btn')
             .withContent("Создать");
-        createBtn.addEvent('click', () => this.createGroup());
+        createBtn.addEvent('click', async () => await this.createGroup());
         this.appendChild(createBtn);
     }
 
@@ -627,8 +640,16 @@ class GroupCreateModalWindow extends CustomDOMElement {
         this.input.element.value = '';
     }
 
-    createGroup() {
-        let newGroupId = 1; // TODO request to db for create new group, get newGroupId
+    async createGroup() {
+        let newGroupName; //TODO: получить из модала
+        let newGroupId = await fetch('http://localhost:8080/db/apiRequest?',
+            {
+                body: {
+                    method: "group/create",
+                    data: JSON.stringify({login: user, name: newGroupName})
+                },
+                method: 'POST'
+            });
         window.location.href = `http://localhost:8080/group/settings/${newGroupId}`;
         this.hide();
     }
@@ -660,7 +681,7 @@ class PlanModalWindow extends CustomDOMElement {
             .withClass('auth-signup-button')
             .withClass('modal_btn')
             .withContent("Запланировать");
-        planBtn.addEvent('click', () => this.quizSchedule());
+        planBtn.addEvent('click', async () => await this.quizSchedule());
         this.appendChild(planBtn);
     }
 
@@ -681,11 +702,19 @@ class PlanModalWindow extends CustomDOMElement {
         this._timeSelector.clearSelection();
     }
 
-    quizSchedule() {
-        // TODO routing, skip if empty
+    async quizSchedule() {
         alert(`Groups: ${this._groupsSelector.getSelectedGroupsId()}\n
         Start: ${this._timeSelector.getStartTime()}\n
         End: ${this._timeSelector.getEndTime()}`);
+        await fetch('http://localhost:8080/db/apiRequest?', {
+            body: {
+                method: "group/assign",
+                data: JSON.stringify(
+                    {quizId: this._activeQuizId, groupId: this._groupsSelector.getSelectedGroupsId(),
+                        startTime: this._timeSelector.getStartTime(), endTime: this._timeSelector.getEndTime()})
+            },
+            method: 'POST'
+        });
         this.hide();
     }
 
@@ -841,4 +870,21 @@ if (['check', 'settings'].includes(prevPage)) {
 } else if (['edit'].includes(prevPage)) {
     navButtonsGroup.setActiveById('nav-groups-btn');
     groupsNavButtonsGroup.setActiveById('groups-quiz-nav-quizzes-btn');
+}
+
+document.querySelector('.create-quiz-btn').addEventListener('click', createQuiz);
+async function createQuiz() {
+    let response = await fetch('http://localhost:8080/db/apiRequest',
+        {
+            method: 'POST',
+            body: JSON.stringify(
+                {
+                    login: user,
+                    title: "",
+                    description: "",
+                    questions: []
+                })
+        });
+    let respJson = await response.json();
+    window.location.href = `http://localhost:8080/quiz/edit/${respJson.quizId}`;
 }
