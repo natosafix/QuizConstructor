@@ -458,7 +458,7 @@ class GroupHeaderDiv extends CustomDOMElement {
 
         if (isAdmin)  {
             let groupSettingsHref = new CustomDOMElement('a');
-            groupSettingsHref.element.href = `http://localhost:8080/group/settings/${groupId}`; // TODO Страница с настройкой группы, где будет инвайт сслыка, участники
+            groupSettingsHref.element.href = `http://localhost:8080/group/settings/${groupId}`;
             let img = new CustomDOMElement('img').withClass('admin-group-settings-btn');
             img.element.src = "img/svg/settings.svg";
             img.element.alt = "Настройки группы";
@@ -584,7 +584,7 @@ class AdminQuizDiv extends CustomDOMElement {
         let quizEditsHref = new CustomDOMElement('a')
             .withClass('quiz-edit-href');
         quizEditsHref.element.href = `http://localhost:8080/quiz/edit/${this.quizId}` // TODO поставить норм адрес;
-        let img = new CustomDOMElement('img').withClass();
+        let img = new CustomDOMElement('img')
         img.element.src = "img/svg/edit.svg";
         img.element.alt = "Редактировать опрос";
         quizEditsHref.appendChild(img);
@@ -841,17 +841,9 @@ for (let navButton of navButtons) {
 const navButtonsGroup = new ButtonsGroupHandler(navButtonsHandler);
 
 
-const groupsNavButtons = document.querySelectorAll('.groups-quiz-nav-button');
-let groupsNavButtonsHandlers = [];
-for (let navButton of groupsNavButtons) {
-    groupsNavButtonsHandlers.push(new NavButton(navButton));
-}
-const groupsNavButtonsGroup = new ButtonsGroupHandler(groupsNavButtonsHandlers);
 
 if (['check', 'settings'].includes(prevPage)) {
     navButtonsGroup.setActiveById('nav-groups-btn');
-    groupsNavButtonsGroup.setActiveById('groups-quiz-nav-groups-btn');
 } else if (['edit'].includes(prevPage)) {
-    navButtonsGroup.setActiveById('nav-groups-btn');
-    groupsNavButtonsGroup.setActiveById('groups-quiz-nav-quizzes-btn');
+    navButtonsGroup.setActiveById('nav-admin-quizzes-btn');
 }

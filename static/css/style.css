@@ -1,10 +1,25 @@
 @import 'constants.css';
 
+@font-face {
+    font-family: 'Inter';
+    src: url("../fonts/Inter/Inter-VariableFont_slnt,wght.ttf") format("truetype");
+}
+
 html {
     box-sizing: border-box;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
 }
 *, *::before, *::after{
     box-sizing: border-box;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
 }
 
 body {
@@ -14,28 +29,25 @@ body {
 html {
     overflow-y: scroll;  /* Без этого на маленьких страницах без скролла шапка сдвигается на несколько пикселей */
     background-color: var(--page-bg-color);
-    font-family: Trebuchet MS, serif;
-    font-size: 18px;
 }
 
 .header {
     width: 100%;
-    height: 50px;
+    height: 70px;
 
-    padding: 5px 15%;
+    padding: 5px 10% 5px 5%;
 
     z-index: 1000;
     top: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: var(--header-color);
-    box-shadow: var(--box-shadow);
+    background-color: var(--page-bg-color);
 }
 
 
 .header-logo-img {
-    width: 70%;
+    width: 100%;
 }
 
 
@@ -48,8 +60,6 @@ html {
 }
 
 button {
-    padding: 10px 20px;
-    margin: 10px 10px;
     justify-content: center;
     display: block;
     outline: none;
@@ -60,15 +70,19 @@ button {
 }
 
 .auth-signup-button {
-    background-color: var(--accent-color);
     text-decoration: none;
-    color: white;
+    color: var(--accent-color);
     margin: 0 10px;
-    padding: 0;
+    padding: 5px 15px;
+    border-radius: 8px;
 }
 
 .auth-logout-button {
     text-align: center;
+    background-color: var(--accent-color);
+    color: white;
+    padding: 5px 15px;
+    border-radius: 8px;
 }
 
 .auth-logout-button:hover {
@@ -83,8 +97,9 @@ h2 {
 
 hr {
     border: none;
-    border-top: 2px solid var(--accent-color);
+    border-top: 3px solid var(--accent-color);
     margin: 4px 0;
+    color: var(--accent-color);
 }
 
 

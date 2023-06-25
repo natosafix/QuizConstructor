@@ -1,3 +1,8 @@
+h2 {
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
 .blocks-wrapper {
     width: 100%;
     display: flex;
@@ -14,6 +19,12 @@
     padding: 20px 40px;
     width: 75%;
     background-color: var(--block-bg-color);
+    transition: transform 0.3s ease;
+}
+
+.block:hover {
+    transform: scale(1.01);
+    transition: transform 0.3s ease;
 }
 
 .admin-group-header-wrapper {
@@ -54,7 +65,7 @@
     align-items: center;
 
     border-radius: var(--border-radius);
-    background-color: var(--accent2-color);
+    background-color: var(--accent3-color);
 }
 
 .group-member-wrapper .member-name {

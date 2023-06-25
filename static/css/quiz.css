@@ -1,16 +1,10 @@
 @import 'constants.css';
 
 :root {
-    --main-color: var(--accent-color);
     --white-color: whitesmoke;
-    --custom-border: solid 2px var(--main-color)
+    --custom-border: solid 2px var(--accent-color)
 }
 
-html {
-    background-color: var(--block-bg-color);
-    font-family: Trebuchet MS, serif;
-    font-size: 16px;
-}
 
 .main {
     width: 35%;
@@ -82,7 +76,7 @@ img {
 
 .submit-button {
     padding: 15px 20px;
-    background-color: var(--main-color);
+    background-color: var(--accent-color);
     border: none;
     border-radius: 13px;
     cursor: pointer;
@@ -124,7 +118,7 @@ input[type='checkbox'] {
 }
 
 input[type='radio']:checked, input[type='checkbox']:checked {
-    border: 6px solid var(--main-color);
+    border: 6px solid var(--accent-color);
     outline: unset !important; /* Edge (chromium) support */
 }
 
@@ -182,7 +176,7 @@ input[type='radio']:checked, input[type='checkbox']:checked {
     }
 
     input[type='radio']:checked, input[type='checkbox']:checked {
-        border: 13px solid var(--main-color);
+        border: 13px solid var(--accent-color);
     }
 
     h2 {

@@ -13,27 +13,23 @@
 <span id="time"></span>
 
 <header class="header">
-    <div class="overlay js-overlay-modal"></div>
+    <a href="/">
+        <img class="header-logo-img" src="/img/svg/quiz-logo.svg" alt="logo">
+    </a>
 
-    <div class="header-wrapper">
-        <div class="header-logo">
-            <a href="/" class="header-logo-link">
-                <img class="header-logo-img" src="/img/svg/quiz-logo.svg" alt="logo">
-            </a>
-        </div>
-
-        <div class="header-auth">
-            <ul class="auth-list">
-                <li class="auth-list-item">
-                    <button type="button" class="auth-signup-button">{ userId }</button>
-                </li>
-                <li class="auth-list-item">
-                    <button type="button" class="auth-login-button">Выйти</button>
-                </li>
-            </ul>
-        </div>
+    <div>
+        <ul class="auth-list">
+            <li>
+                <button type="button" class="auth-signup-button">{ userId }</button>
+            </li>
+            <li>
+                <button type="button" class="auth-logout-button">Выйти</button>
+            </li>
+        </ul>
     </div>
+
 </header>
+
 
 <div class="main">
 
