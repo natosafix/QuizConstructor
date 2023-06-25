@@ -23,7 +23,7 @@ public class EstimateUserQuizCommandHandler : RequestHandler, IRequestHandler<Es
         var score = 0;
         foreach (var question in userQuiz.Questions)
         {
-            var pointScore = request.Points.FirstOrDefault(x => x.QuestionId == question.Id).Score;
+            var pointScore = request.Points.FirstOrDefault(x => x.QuestionId == question.QuestionId).Score;
             question.Score = pointScore;
             score += pointScore;
         }
