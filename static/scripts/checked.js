@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
     quizParser = new QuizParser(quizData);
     quizParser.parse();
     addCodeMirror();
-    checkedStart()
+    await checkedStart()
 });
 
 async function getQuizDataForOwner() {
@@ -311,35 +311,50 @@ function addCodeMirror() {
 class AnswerGetter {
     constructor() {
         this.i = 0;
-        this.getAllAnswerIds();
     }
 
-    getAllAnswerIds() {
+    async getAllAnswerIds() {
         // брать инфу с сервера
-
-        this.answerIds = [0, 1, 2]; // мок
+        let response = await fetch('http://localhost:8080/db/apiRequest?' + new URLSearchParams(
+            {
+                method: "quizGroup/getUserQuizIds",
+                data: JSON.stringify({id: quizId})
+            }),
+            {
+                method: 'GET',
+            });
+        this.answerIds = await response.json(); // мок
         this.answersCount = this.answerIds.length;
     }
 
-    getNext() {
+    async getNext() {
         if (this.i === this.answersCount - 1)
             return null;
 
-        return this.getAnswers(this.answerIds[++this.i]);
+        return await this.getAnswers(this.answerIds[++this.i]);
     }
 
-    getPrev() {
+    async getPrev() {
         if (this.i === 0)
             return null;
 
-        return this.getAnswers(this.answerIds[--this.i]);
+        return await this.getAnswers(this.answerIds[--this.i]);
     }
 
-    getAnswers(answerId) {
+    async getAnswers(answerId) {
         // звонить на сервер и вызывать соответствующие ответы c id == answerId
         // ниже мок
+        let response = await fetch('http://localhost:8080/db/apiRequest?' + new URLSearchParams(
+            {
+                method: "quizGroup/getUserQuizIds",
+                data: JSON.stringify({id: quizId})
+            }),
+            {
+                method: 'GET',
+            });
+        return  await response.json();
 
-        return [
+        /*return [
             {
                 id: 11,
                 name: "Полный Попуск", // так надо было тиму назвать кста
@@ -470,7 +485,7 @@ class AnswerGetter {
                     }
                 ]
             }
-        ][answerId];
+        ][answerId];*/
     }
 
     getById(answerId) {
@@ -621,10 +636,11 @@ class AnswerGetter {
 let answerGetter;
 let answersJson;
 
-function checkedStart() {
+async function checkedStart() {
     answerGetter = new AnswerGetter();
-    answersJson = answerGetter.getAnswers(0);
-    addElements();
+    await answerGetter.getAllAnswerIds();
+    answersJson = await answerGetter.getAnswers(answerGetter.answerIds[0]);
+    await addElements();
     fillResultsTable();
 }
 
@@ -750,14 +766,14 @@ function setMaxScore() {
     document.getElementById("max-score").innerText = "/" + maxScore.toString();
 }
 
-function nextPressed() {
-    answersJson = answerGetter.getNext();
+async function nextPressed() {
+    answersJson = await answerGetter.getNext();
     adjustNextPrevButtons();
     redrawWithNewAnswers();
 }
 
-function previousPressed() {
-    answersJson = answerGetter.getPrev();
+async function previousPressed() {
+    answersJson = await answerGetter.getPrev();
     adjustNextPrevButtons();
     redrawWithNewAnswers();
 }
@@ -857,3 +873,6 @@ function tableNamePressed(event) {
     adjustNextPrevButtons();
     redrawWithNewAnswers();
 }
+
+document.querySelector('#prev-button').addEventListener('click', previousPressed)
+document.querySelector('#next-button').addEventListener('click', nextPressed)
