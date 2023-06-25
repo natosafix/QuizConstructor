@@ -1,32 +1,25 @@
 @import 'constants.css';
 
 :root {
-    --main-color: var(--accent-color);
     --white-color: whitesmoke;
-    --custom-border: solid 2px var(--main-color)
+    --custom-border: solid 2px var(--accent-color)
 }
 
-html {
-    background-color: var(--block-bg-color);
-    font-family: Trebuchet MS, serif;
-    font-size: 16px;
-}
-
-.main {
-    width: 35%;
+main {
+    width: 55%;
     margin: 0 auto;
 }
 
 .block {
     background-color: var(--white-color);
-    border-radius: 10px;
-    margin-bottom: 25px;
-    padding: 15px;
+    border-radius: var(--border-radius);
+    margin-bottom: 40px;
+    padding: 30px;
 }
 
 .element-input {
     background-color: var(--white-color);
-    font-size: 15px;
+    font-size: 1.2rem;
     width: 99%;
 }
 
@@ -82,7 +75,7 @@ img {
 
 .submit-button {
     padding: 15px 20px;
-    background-color: var(--main-color);
+    background-color: var(--accent-color);
     border: none;
     border-radius: 13px;
     cursor: pointer;
@@ -97,10 +90,19 @@ img {
 }
 
 .question-number {
-    color: darkgrey;
+    opacity: 0.5;
+    margin-bottom: 4px;
+    font-size: 1.1rem;
+}
+
+.question-header {
+    font-size: 1.4rem;
     margin-bottom: 10px;
 }
 
+.quiz-title {
+    font-size: 1.4rem;
+}
 
 input[type='radio'], input[type='checkbox']  {
     -webkit-appearance: none;
@@ -124,8 +126,28 @@ input[type='checkbox'] {
 }
 
 input[type='radio']:checked, input[type='checkbox']:checked {
-    border: 6px solid var(--main-color);
+    border: 6px solid var(--accent-color);
     outline: unset !important; /* Edge (chromium) support */
+}
+
+.correct-option {
+    border-color: darkseagreen !important;
+}
+
+.element-correct-answer {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    color: darkseagreen;
+}
+
+.correct-option {
+    border-color: darkseagreen !important;
+}
+
+.element-correct-answer {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    color: darkseagreen;
 }
 
 #time {
@@ -144,7 +166,7 @@ input[type='radio']:checked, input[type='checkbox']:checked {
 }
 
 @media screen and (max-width: 980px) {
-    .main {
+    main {
         width: 97%;
         font-size: 1.5em;
     }
@@ -164,7 +186,7 @@ input[type='radio']:checked, input[type='checkbox']:checked {
     }
 
     input[type="text"] {
-        font-size:50px;
+        font-size: 50px;
     }
 
     .element-input {
@@ -182,7 +204,7 @@ input[type='radio']:checked, input[type='checkbox']:checked {
     }
 
     input[type='radio']:checked, input[type='checkbox']:checked {
-        border: 13px solid var(--main-color);
+        border: 13px solid var(--accent-color);
     }
 
     h2 {

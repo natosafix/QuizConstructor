@@ -1,4 +1,4 @@
-document.querySelector('.auth-login-button').addEventListener('click', logOut);
+document.querySelector('.auth-logout-button').addEventListener('click', logOut);
 
 function logOut() {
     CookieChanger.deleteCookie('auth');

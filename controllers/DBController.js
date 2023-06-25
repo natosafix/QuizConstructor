@@ -16,11 +16,11 @@ class DBController {
         return userData;
     }
 
-    async getRequest(method, body) {
+    async getRequest(method, params) {
+        const link = this.apiUrl + method + '?' + new URLSearchParams(params);
         try {
-            return await fetch(this.apiUrl + method, {
-                method: 'GET',
-                body: body
+            return await fetch(link, {
+                method: 'GET'
             });
         } catch (e) {
             console.error(e);
@@ -29,10 +29,47 @@ class DBController {
     }
 
     async postRequest(method, body) {
+        const link = this.apiUrl + method;
         try {
-            return await fetch(this.apiUrl + method, {
+            return await fetch(link, {
                 method: 'POST',
-                body: body
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            });
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    async putRequest(method, body) {
+        const link = this.apiUrl + method;
+        try {
+            return await fetch(link, {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            });
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    async deleteRequest(method, body) {
+        const link = this.apiUrl + method;
+        try {
+            return await fetch(link, {
+                method: 'DELETE',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
             });
         } catch (e) {
             console.error(e);

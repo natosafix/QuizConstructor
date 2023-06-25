@@ -22,27 +22,23 @@
 
 
 <header class="header">
-    <div class="overlay js-overlay-modal"></div>
+    <a href="/">
+        <img class="header-logo-img" src="/img/svg/quiz-logo.svg" alt="logo">
+    </a>
 
-    <div class="header-wrapper">
-        <div class="header-logo">
-            <a href="/" class="header-logo-link">
-                <img class="header-logo-img" src="/img/svg/quiz-logo.svg" alt="logo">
-            </a>
-        </div>
-
-        <div class="header-auth">
-            <ul class="auth-list">
-                <li class="auth-list-item">
-                    <button type="button" class="auth-signup-button">{ userId }</button>
-                </li>
-                <li class="auth-list-item">
-                    <button type="button" class="auth-login-button">Выйти</button>
-                </li>
-            </ul>
-        </div>
+    <div>
+        <ul class="auth-list">
+            <li>
+                <button type="button" class="auth-signup-button">{ userId }</button>
+            </li>
+            <li>
+                <button type="button" class="auth-logout-button">Выйти</button>
+            </li>
+        </ul>
     </div>
+
 </header>
+
 
 <span class="backend-data" id="quiz-id">{ quizId }</span>
 <span class="backend-data" id="user-id">{ userId }</span>
@@ -124,7 +120,7 @@
                 <label class="quiz-group-header vertical" for="codeEditor1" id="labelForCodeEditor1">Код</label>
 
                 <div class="select">
-                    <select class="quiz-element-input standard-select" onchange="onModeChange(event)">
+                    <select class="quiz-element-input code-type-select standard-select" onchange="onModeChange(event)">
                         <option value="javascript">JavaScript</option>
                         <option value="xml">HTML/XML</option>
                         <option value="css">CSS</option>
@@ -196,7 +192,7 @@
 
     </form>
     <button type="button" class="myButton" id="add-unit-button" name="add-unit">Добавить вопрос</button>
-    <button type="button" class="build-button myButton" onclick="buildConstructor(event)">Сохранить изменения</button>
+    <button type="button" class="build-button myButton">Сохранить изменения</button>
 </div>
 
 <script src="/scripts/quizConstructor.js"></script>

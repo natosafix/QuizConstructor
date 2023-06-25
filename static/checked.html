@@ -8,41 +8,47 @@
     <link rel="stylesheet" href="/css/quiz.css">
     <link rel="stylesheet" href="/css/checked.css">
     <link rel="stylesheet" href="/css/modal.css">
+
+    <script src="/node_modules/codemirror/lib/codemirror.js"></script>
+    <link href="/node_modules/codemirror/lib/codemirror.css" rel="stylesheet"/>
+    <script src="/node_modules/codemirror/mode/javascript/javascript.js"></script>
+    <script src="/node_modules/codemirror/mode/xml/xml.js"></script>
+    <script src="/node_modules/codemirror/mode/css/css.js"></script>
+    <script src="/node_modules/codemirror/addon/edit/matchbrackets.js"></script>
+    <script src="/node_modules/codemirror/addon/display/placeholder.js"></script>
+    <link href="/node_modules/codemirror/theme/eclipse.css" rel="stylesheet"/>
+
 </head>
 <body>
+
 <header class="header">
-    <div class="overlay js-overlay-modal"></div>
+    <a href="/">
+        <img class="header-logo-img" src="/img/svg/quiz-logo.svg" alt="logo">
+    </a>
 
-    <div class="header-wrapper">
-        <div class="header-logo">
-            <a href="/" class="header-logo-link">
-                <img class="header-logo-img" src="/img/svg/quiz-logo.svg" alt="logo">
-            </a>
-        </div>
-
-        <div class="header-auth">
-            <ul class="auth-list">
-                <li class="auth-list-item">
-                    <button type="button" class="auth-signup-button">{ userId }</button>
-                </li>
-                <li class="auth-list-item">
-                    <button type="button" class="auth-login-button">Выйти</button>
-                </li>
-            </ul>
-        </div>
+    <div>
+        <ul class="auth-list">
+            <li>
+                <button type="button" class="auth-signup-button" id="user-id">{ userId }</button>
+            </li>
+            <li>
+                <button type="button" class="auth-logout-button">Выйти</button>
+            </li>
+        </ul>
     </div>
+
 </header>
+<div class="overlay js-overlay-modal"></div>
 
-<span class="backend-data">{ quizId }</span>
-<span class="backend-data">{ userId }</span>
+<span class="backend-data" id="quiz-id">{ quizId }</span>
 
-<div class="main">
+<main>
 
     <div class="under-blocks">
-        <button class="submit-button" id="save-button" onclick="savePressed()">Сохранить</button>
+        <button class="submit-button" id="save-button">Сохранить</button>
         <div class="next-prev-buttons-container">
-            <button class="submit-button" id="prev-button" onclick="previousPressed()">❮ Назад</button>
-            <button class="submit-button" id="next-button" onclick="nextPressed()">Вперед ❯</button>
+            <button class="submit-button" id="prev-button">❮ Назад</button>
+            <button class="submit-button" id="next-button">Вперед ❯</button>
         </div>
     </div>
 
@@ -63,14 +69,16 @@
 
         <div class="results-table">
             <table>
+                <tbody>
+                </tbody>
             </table>
         </div>
     </div>
-</div>
+</main>
 
 </body>
 
 <script src='/scripts/modal.js'></script>
-<script src='/scripts/quizParser.js'></script>
-<script>checkedStart()</script>
+<script src='/scripts/checked.js'></script>
+<script src="/scripts/logOut.js"></script>
 </html>

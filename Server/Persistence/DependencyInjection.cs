@@ -16,7 +16,7 @@ public static class DependencyInjection
         {
             options.UseNpgsql(connectionString);
         });
-
+    
         services.AddScoped<IDbContext>(provider => provider.GetService<QuizDbContext>());
         return services;
     }

@@ -7,8 +7,6 @@ public class Group
 
     public List<User> Users { get; set; } = new();
     public List<User> Admins { get; set; } = new();
-    public List<Quiz> Quizzes { get; set; } = new();
-    
     public List<QuizGroup> QuizGroups { get; set; } = new();
 
 }

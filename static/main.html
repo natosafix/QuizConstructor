@@ -16,104 +16,91 @@
 <header class="header">
     <div class="overlay js-overlay-modal"></div>
 
-    <div class="header-wrapper">
-        <div class="header-logo">
-            <a href="/" class="header-logo-link">
-                <img class="header-logo-img" src="/img/svg/quiz-logo.svg" alt="logo">
-            </a>
-        </div>
+    <a href="/">
+        <img class="header-logo-img" src="/img/svg/quiz-logo.svg" alt="logo">
+    </a>
 
-        <div class="header-auth">
-            <ul class="auth-list">
-                <li class="auth-list-item">
-                    <button type="button" class="auth-signup-button">{ userId }</button>
-                </li>
-                <li class="auth-list-item">
-                    <button type="button" class="auth-login-button">Выйти</button>
-                </li>
-            </ul>
-        </div>
+    <div>
+        <ul class="auth-list">
+            <li>
+                <button type="button" class="auth-signup-button">{ userId }</button>
+            </li>
+            <li>
+                <button type="button" class="auth-logout-button">Выйти</button>
+            </li>
+        </ul>
     </div>
+
 </header>
+
+
 <span class="backend-data" id="prevPage">{ prevPage }</span>
 
-<div class="index-nav-wrapper">
-    <button class="nav-button active" id="nav-active-btn">Активные</button>
-    <button class="nav-button inactive" id="nav-ended-btn">Завершённые</button>
-    <button class="nav-button inactive" id="nav-groups-btn">Группы</button>
-</div>
+<div class="index-wrapper">
 
-<div class="hidder" id="nav-active-page" style="display: block;">
-
-    <div class="blocks-wrapper" id="active-paste-place">
-
+    <div class="index-nav-wrapper">
+        <button class="nav-button active" id="nav-active-btn">Активные</button>
+        <button class="nav-button inactive" id="nav-ended-btn">Завершённые</button>
+        <button class="nav-button inactive" id="nav-groups-btn">Группы</button>
+        <button class="nav-button inactive" id="nav-admin-quizzes-btn">Мои опросы</button>
     </div>
 
-</div>
+    <div class="index-page-wrapper">
 
+        <div class="hidder" id="nav-active-page" style="display: block;">
 
-<div class="hidder" id="nav-ended-page" style="display: none">
+            <div class="blocks-wrapper" id="active-paste-place">
 
-    <div class="blocks-wrapper">
-
-        <div class="block" id="ended-paste-place">
-
-        </div>
-
-    </div>
-
-</div>
-
-
-<div class="hidder" id="nav-groups-page" style="display: none">
-
-    <div class="groups-quiz-wrapper">
-
-        <div class="groups-quiz-nav-wrapper">
-
-            <div class="groups-quiz-nav-buttons-wrapper">
-                <button class="groups-quiz-nav-button active"
-                        id="groups-quiz-nav-groups-btn">Группы</button>
-                <button class="groups-quiz-nav-button inactive"
-                        id="groups-quiz-nav-quizzes-btn">Опросы</button>
             </div>
 
         </div>
 
-        <div class="hidder" id="groups-quiz-nav-groups-page">
 
-            <div class="groups-quiz-blocks-wrapper" id="groups-paste-place">
+        <div class="hidder" id="nav-ended-page" style="display: none;">
 
-                <div class="group-create-group-btn-wrapper">
-                    <button class="block js-open-modal" id="group-create-modal-window-open-btn">
-                        Создать новую группу
-                    </button>
+            <div class="blocks-wrapper">
+
+                <div class="block" id="ended-paste-place">
+
                 </div>
 
             </div>
 
         </div>
 
-        <div class="hidder" id="groups-quiz-nav-quizzes-page" style="display: none;">
 
-            <div class="groups-quiz-blocks-wrapper">
+        <div class="hidder" id="nav-groups-page" style="display: none">
+
+            <div class="blocks-wrapper" id="groups-paste-place">
+
+                <button id="group-create-modal-window-open-btn">
+                    Создать новую группу
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="hidder" id="nav-admin-quizzes-page" style="display: none">
+
+            <div class="blocks-wrapper">
 
                 <div class="block" id="admin-quizzes-paste-place">
 
                     <div class="quiz-search-and-create-wrapper">
 
                         <label>
-                            <input type="search" placeholder="Поиск..." class="search-field" />
+                            <input type="search" placeholder="Поиск..." class="search-field" oninput="onSearch(event)" />
                         </label>
 
                         <a href="https://norebesach.beget.app/quiz/edit/0">
                             <img src="img/svg/create-plus.svg" class="create-quiz-btn"
                                  alt="Создать новый опрос">
-                        </a>
+                        </button>
 
                     </div>
-
-                    <hr>
+                    <hr style="margin-bottom: 15px">
 
                 </div>
 
@@ -126,11 +113,12 @@
 </div>
 
 
+
+
 <div id="plan-modal-window-paste-place"></div>
 <div id="group-create-modal-window-paste-place"></div>
 
 
-<!-- <script src="/scripts/modal.js"></script> -->
 <script src="/scripts/main.js"></script>
 <script src="/scripts/logOut.js"></script>
 

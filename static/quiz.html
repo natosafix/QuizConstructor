@@ -6,36 +6,39 @@
     <link rel="stylesheet" href="/css/reset.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/quiz.css">
+
+    <script src="/node_modules/codemirror/lib/codemirror.js"></script>
+    <link href="/node_modules/codemirror/lib/codemirror.css" rel="stylesheet"/>
+    <script src="/node_modules/codemirror/mode/javascript/javascript.js"></script>
+    <script src="/node_modules/codemirror/mode/xml/xml.js"></script>
+    <script src="/node_modules/codemirror/mode/css/css.js"></script>
+    <script src="/node_modules/codemirror/addon/edit/matchbrackets.js"></script>
+    <script src="/node_modules/codemirror/addon/display/placeholder.js"></script>
+    <link href="/node_modules/codemirror/theme/eclipse.css" rel="stylesheet"/>
+
 </head>
 <body>
-<span class="backend-data">{ quizId }</span>
-<span class="backend-data">{ userId }</span>
+<span class="backend-data" id="quiz-id">{ quizId }</span>
 <span id="time"></span>
 
 <header class="header">
-    <div class="overlay js-overlay-modal"></div>
+    <a href="/">
+        <img class="header-logo-img" src="/img/svg/quiz-logo.svg" alt="logo">
+    </a>
 
-    <div class="header-wrapper">
-        <div class="header-logo">
-            <a href="/" class="header-logo-link">
-                <img class="header-logo-img" src="/img/svg/quiz-logo.svg" alt="logo">
-            </a>
-        </div>
-
-        <div class="header-auth">
-            <ul class="auth-list">
-                <li class="auth-list-item">
-                    <button type="button" class="auth-signup-button">{ userId }</button>
-                </li>
-                <li class="auth-list-item">
-                    <button type="button" class="auth-login-button">Выйти</button>
-                </li>
-            </ul>
-        </div>
+    <div>
+        <ul class="auth-list">
+            <li>
+                <button type="button" class="auth-signup-button" id="user-id">{ userId }</button>
+            </li>
+            <li>
+                <button type="button" class="auth-logout-button">Выйти</button>
+            </li>
+        </ul>
     </div>
 </header>
 
-<div class="main">
+<main>
 
     <div class="thanks">
         <div class="block">
@@ -50,9 +53,8 @@
             <button class="submit-button" id="main-page-button">На главную</button>
         </div>
     </div>
-</div>
-<script src='/scripts/quizParser.js'></script>
+</main>
 <script src='/scripts/quiz.js'></script>
+<script src="/scripts/logOut.js"></script>
 </body>
-<script>setTimer()</script>
 </html>

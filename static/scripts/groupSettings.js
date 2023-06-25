@@ -1,11 +1,19 @@
-
-const groupId = document.querySelector("#group-id").textContent;
+const groupId = parseInt(document.querySelector("#group-id").textContent);
 let inviteLinkInput = document.querySelector('#inviteLink');
 let data;
 
 document.addEventListener('DOMContentLoaded', async function(event) {
-    // TODO db request
-    data = {
+    let response = await fetch('http://localhost:8080/db/apiRequest?' +
+        new URLSearchParams({
+            method: "group/getUsers",
+            data: JSON.stringify({"groupId": groupId})
+        }),
+        {
+        method: 'GET',
+        }
+    );
+    data = await response.json();
+    /*data = {
         name: "Контора",
         members: [
             {
@@ -24,14 +32,13 @@ document.addEventListener('DOMContentLoaded', async function(event) {
                 lastName: "Брррым брррымм.."
             },
         ]
-    }
+    }*/
 
     document.querySelector('#groupName').textContent = data.name;
-    const groupId = document.querySelector('.backend-data').textContent;
-    inviteLinkInput.value = `https://norebesach.beget.app/groupInvite/${groupId}`;
+    inviteLinkInput.value = `https://norebesach.beget.app/group/invite/${groupId}`;
     inviteLinkInput.addEventListener('click', copyLink, false);
 
-    fillMembers(data['members']);
+    fillMembers(data['userInfos']);
 });
 
 function copyLink() {
@@ -42,7 +49,7 @@ function fillMembers(members) {
     const pastePlace = document.querySelector("#member-paste-place");
 
     for (let member of members) {
-        pastePlace.appendChild(new GroupMemberDiv(member.id, member.firstName, member.lastName).element);
+        pastePlace.appendChild(new GroupMemberDiv(member.login, member.firstName, member.lastName).element);
     }
 }
 
@@ -76,7 +83,6 @@ class CustomDOMElement {
     }
 }
 
-
 class GroupMemberDiv extends CustomDOMElement {
     constructor(memberId, firstName, secondName) {
         super('div').withClass('group-member-wrapper');
@@ -89,14 +95,25 @@ class GroupMemberDiv extends CustomDOMElement {
         let btn = new CustomDOMElement('button')
             .withClass('remove-btn')
             .withContent("Удалить участника");
-        btn.addEvent('click', () => this.removeMember());
+        btn.addEvent('click', async () => await this.removeMember());
 
         this.appendChild(btn);
     }
 
-    removeMember() {
-        // TODO request to remove this.memberId from groupId (global variable).
-        // Need to check that current user is really admin for this groupId
+    async removeMember() {
+        await fetch('http://localhost:8080/db/apiRequest?',
+            {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body:
+                    JSON.stringify({
+                        method: "group/deleteUser",
+                        data: {userLogin: this.memberId, groupId: groupId}
+                    }),
+                method: 'DELETE',
+            });
         this.element.remove();
     }
 }

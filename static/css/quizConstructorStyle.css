@@ -7,7 +7,7 @@
 }
 
 .main {
-    width: 35%;
+    width: 55%;
     margin: 0 auto;
 }
 
@@ -28,13 +28,13 @@
 
 .block {
     background-color: var(--block-bg-color);
-    border-radius: 10px;
-    margin-bottom: 25px;
-    padding: 15px;
+    border-radius: var(--border-radius);
+    margin-bottom: 40px;
+    padding: 40px 30px 30px;
 }
 
 .quiz-group {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .quiz-group:nth-last-child(1) {
@@ -63,13 +63,13 @@
 .oneList-option {
     display: flex;
     justify-content: space-between;
-    margin: 10px 0;
+    margin: 20px 0;
 }
 
 .severalList-option {
     display: flex;
     justify-content: space-between;
-    margin: 10px 0;
+    margin: 20px 0;
 }
 
 .autocheck-choice {
@@ -174,14 +174,27 @@ input, textarea {
     margin-top: 5px;
 }
 
-.myButton {
-    background-color: var(--accent-color);
+.add-option-btn {
+    background-color: var(--accent2-color);
+    border-radius: 8px;
+    margin: 10px;
+    padding: 10px 20px;
 }
 
 .remove-unit {
-    margin: 0;
+    background-color: var(--accent2-color);
+    border-radius: 8px;
+    margin: 10px;
+    padding: 10px 20px;
 }
 
+#add-unit-button, .build-button {
+    width: 100%;
+    border-radius: 8px;
+    background-color: var(--accent2-color);
+    margin: 0 0 1em;
+    padding: 10px 20px;
+}
 #add-unit-button, .build-button {
     width: 100%;
     margin: 0 0 1em;

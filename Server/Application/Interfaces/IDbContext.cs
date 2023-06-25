@@ -14,5 +14,9 @@ public interface IDbContext
     DbSet<UserQuiz> UserQuizzes { get; set; }
     DbSet<Quiz> Quizzes { get; set; }
     
+    DbSet<QuizGroup> QuizGroups { get; set; }
+    DbSet<UserQuestion> UserQuestions { get; set; }
+    DbSet<UserAnswer> UserAnswers { get; set; }
+
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

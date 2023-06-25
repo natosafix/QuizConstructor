@@ -15,11 +15,11 @@ public class QuizDbContext : DbContext, IDbContext
     public DbSet<QuestionType> QuestionTypes { get; set; }
     public DbSet<UserQuiz> UserQuizzes { get; set; }
     public DbSet<Quiz> Quizzes { get; set; }
+    public DbSet<QuizGroup> QuizGroups { get; set; }
+    public DbSet<UserAnswer> UserAnswers { get; set; }
+    public DbSet<UserQuestion> UserQuestions { get; set; }
 
-    public QuizDbContext(DbContextOptions<QuizDbContext> options) : base(options)
-    {
-        Database.EnsureCreated();
-    }
+    public QuizDbContext(DbContextOptions<QuizDbContext> options) : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -31,29 +31,8 @@ public class QuizDbContext : DbContext, IDbContext
         modelBuilder.ApplyConfiguration(new UserQuizConfiguration());
         modelBuilder.ApplyConfiguration(new QuestionTypeConfiguration());
         modelBuilder.ApplyConfiguration(new GroupConfiguration());
-        modelBuilder
-            .Entity<Group>()
-            .HasMany(g => g.Quizzes)
-            .WithMany(q => q.Groups)
-            .UsingEntity<QuizGroup>(
-                j => j
-                    .HasOne(pt => pt.Quiz)
-                    .WithMany(t => t.QuizGroups)
-                    .HasForeignKey(pt => pt.QuizId),
-                j => j
-                    .HasOne(pt => pt.Group)
-                    .WithMany(p => p.QuizGroups)
-                    .HasForeignKey(pt => pt.GroupId),
-                j =>
-                {
-                    j.Property(pt => pt.Duration);
-                    j.Property(pt => pt.EndTime);
-                    j.Property(pt => pt.StartTime);
-                    j.HasKey(t => new { t.QuizId, t.GroupId });
-                    j.ToTable("QuizGroup");
-                });
-        
-        
+        modelBuilder.ApplyConfiguration(new QuizGroupConfiguration());
+
         base.OnModelCreating(modelBuilder);
      }
 }

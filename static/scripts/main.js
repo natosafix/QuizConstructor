@@ -12,7 +12,8 @@ const dateTimeOptions = {
 };
 
 let data;
-let adminQuizzes;
+let adminQuizzesData;
+let adminQuizzes = [];
 let planModalWindow;
 let createGroupModalWindow;
 let adminGroupId2Name = {};
@@ -34,13 +35,19 @@ document.body.addEventListener('keyup', function (e) {
 }, false);
 
 
+const user = document.querySelector('.auth-signup-button').textContent;
 document.addEventListener('DOMContentLoaded', async function(event) {
     try {
-        /*let response = await fetch('https://norebesach.beget.app/db/apiRequest?' + new URLSearchParams({method: "mainPage"}), {
-            method: 'GET',
-        });
-        data = await response.json();*/
-        data = {
+        let response = await fetch('http://localhost:8080/db/apiRequest?' + new URLSearchParams(
+            {
+                method: "group/getGroups",
+                data: JSON.stringify({login: user})
+            }),
+            {
+                method: 'GET',
+            });
+        data = await response.json();
+        /*data = {
             "groups": [
                 {
                     "id": 1,
@@ -194,9 +201,17 @@ document.addEventListener('DOMContentLoaded', async function(event) {
                     ]
                 }
             ]
-        }
-
-        adminQuizzes = {
+        }*/
+        response = await fetch('http://localhost:8080/db/apiRequest?' + new URLSearchParams(
+            {
+                method: "quiz/getQuizzesByLogin",
+                data: JSON.stringify({login: user})
+            }),
+            {
+                method: 'GET',
+            });
+        adminQuizzesData = await response.json();
+        /*adminQuizzes = {
             "quizVms": [
                 {
                     "id": 1,
@@ -209,9 +224,9 @@ document.addEventListener('DOMContentLoaded', async function(event) {
                     "desctoption": "опять не нужен",
                 },
             ]
-        }
+        }*/
 
-        for (let currentGroup of data['groups']) {
+        for (let currentGroup of data) {
             if (currentGroup.isAdmin) {
                 adminGroupId2Name[currentGroup.id] = currentGroup.name;
             }
@@ -238,8 +253,9 @@ function buildPage() {
 
 function fillActiveQuizzes() {
     let activePaste = document.querySelector('#active-paste-place');
+    let shownGroupsCount = 0;
 
-    for (let currentGroup of data['groups']) {
+    for (let currentGroup of data) {
         if (currentGroup['isAdmin'])
             continue;
         let group = new GroupBlockDiv(currentGroup.id, currentGroup.name);
@@ -258,10 +274,18 @@ function fillActiveQuizzes() {
         }
         if (group.activeCount > 0) {
             activePaste.appendChild(group.element);
+            shownGroupsCount++;
             group.show();
         } else {
             group.remove();
         }
+    }
+
+    if (shownGroupsCount === 0) {
+        let emptyBlock = new CustomDOMElement('div')
+            .withClass('block')
+            .withContent("Нет активных опросов");
+        activePaste.appendChild(emptyBlock.element);
     }
 }
 
@@ -269,7 +293,7 @@ function fillEndedQuizzes() {
     let endedPaste = document.querySelector('#ended-paste-place');
     let quizzes = [];
 
-    for (let currentGroup of data['groups']) {
+    for (let currentGroup of data) {
         if (currentGroup['isAdmin'])
             continue;
 
@@ -284,6 +308,12 @@ function fillEndedQuizzes() {
             finishedDiv.hide();
             quizzes.push(finishedDiv);
         }
+    }
+
+    if (quizzes.length === 0) {
+        endedPaste.appendChild(new CustomDOMElement('label')
+            .withContent('Нет завершённых опросов').element);
+        return;
     }
 
     quizzes.sort((a, b) => {
@@ -305,7 +335,7 @@ function fillEndedQuizzes() {
 function fillGroupsPage() {
     let pastePlace = document.querySelector('#groups-paste-place');
 
-    for (let currentGroup of data['groups']) {
+    for (let currentGroup of data) {
         let group = new GroupBlockDiv(currentGroup.id, currentGroup.name, currentGroup['isAdmin']);
         for (let quizKey in currentGroup.quizVms) {
             let currentQuiz = currentGroup.quizVms[quizKey];
@@ -334,8 +364,9 @@ function fillGroupsPage() {
 function fillAdminQuizzes() {
     let pastePlace = document.querySelector("#admin-quizzes-paste-place");
 
-    for (let currentQuiz of adminQuizzes['quizVms']) {
+    for (let currentQuiz of adminQuizzesData['quizVms']) {
         let quizDiv = new AdminQuizDiv(currentQuiz.id, currentQuiz.name);
+        adminQuizzes.push(quizDiv);
         pastePlace.appendChild(quizDiv.element);
     }
 }
@@ -348,11 +379,13 @@ function getFormatDateStr(date) {
 class CustomDOMElement {
     constructor(tag) {
         this.element = document.createElement(tag);
-        this._displayStyle = 'block';
+        this._displayStyle = null;
     }
 
     hide() {
-        this._displayStyle = this.element.style.display;
+        if (this._displayStyle === null) {
+            this._displayStyle = window.getComputedStyle(this.element).display;
+        }
         this.element.style.display = 'none';
     }
 
@@ -444,7 +477,7 @@ class GroupHeaderDiv extends CustomDOMElement {
 
         if (isAdmin)  {
             let groupSettingsHref = new CustomDOMElement('a');
-            groupSettingsHref.element.href = `http://norebesach.beget.app/group/settings/${groupId}`; // TODO Страница с настройкой группы, где будет инвайт сслыка, участники
+            groupSettingsHref.element.href = `http://norebesach.beget.app/group/settings/${groupId}`;
             let img = new CustomDOMElement('img').withClass('admin-group-settings-btn');
             img.element.src = "img/svg/settings.svg";
             img.element.alt = "Настройки группы";
@@ -556,6 +589,7 @@ class AdminQuizDiv extends CustomDOMElement {
         super('div').withClass('admin-quiz').withClass('clamped-info');
         this.quizId = quizId;
         this.header = header;
+        this.lowerHeader = header.toLowerCase();
         let name = new CustomDOMElement('label')
             .withClass('quiz-header')
             .withContent(header);
@@ -570,7 +604,7 @@ class AdminQuizDiv extends CustomDOMElement {
         let quizEditsHref = new CustomDOMElement('a')
             .withClass('quiz-edit-href');
         quizEditsHref.element.href = `https://norebesach.beget.app/quiz/edit/${this.quizId}` // TODO поставить норм адрес;
-        let img = new CustomDOMElement('img').withClass();
+        let img = new CustomDOMElement('img')
         img.element.src = "img/svg/edit.svg";
         img.element.alt = "Редактировать опрос";
         quizEditsHref.appendChild(img);
@@ -580,6 +614,19 @@ class AdminQuizDiv extends CustomDOMElement {
     startPlaning() {
         planModalWindow.acceptQuiz(this.quizId, this.header);
         planModalWindow.show();
+    }
+}
+
+
+
+function onSearch(event) {
+    let value = event.target.value.toLowerCase();
+    for (let adminQuiz of adminQuizzes) {
+        if (value.length === 0 || adminQuiz.lowerHeader.includes(value)) {
+            adminQuiz.show();
+        } else {
+            adminQuiz.hide();
+        }
     }
 }
 
@@ -611,7 +658,7 @@ class GroupCreateModalWindow extends CustomDOMElement {
             .withClass('auth-signup-button')
             .withClass('modal_btn')
             .withContent("Создать");
-        createBtn.addEvent('click', () => this.createGroup());
+        createBtn.addEvent('click', async () => await this.createGroup());
         this.appendChild(createBtn);
     }
 
@@ -626,9 +673,22 @@ class GroupCreateModalWindow extends CustomDOMElement {
         this.input.element.value = '';
     }
 
-    createGroup() {
-        let newGroupId = 1; // TODO request to db for create new group, get newGroupId
-        window.location.href = `http://norebesach.beget.app/group/settings/${newGroupId}`;
+    async createGroup() {
+        let newGroupName = createGroupModalWindow.input.element.value;
+        let response = await fetch('http://localhost:8080/db/apiRequest?',
+            {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    method: "group/create",
+                    data: {login: user, name: newGroupName}
+                }),
+                method: 'POST'
+            });
+        let newGroupId = await response.json();
+        window.location.href = `http://localhost:8080/group/settings/${newGroupId}`;
         this.hide();
     }
 }
@@ -659,7 +719,7 @@ class PlanModalWindow extends CustomDOMElement {
             .withClass('auth-signup-button')
             .withClass('modal_btn')
             .withContent("Запланировать");
-        planBtn.addEvent('click', () => this.quizSchedule());
+        planBtn.addEvent('click', async () => await this.quizSchedule());
         this.appendChild(planBtn);
     }
 
@@ -680,11 +740,23 @@ class PlanModalWindow extends CustomDOMElement {
         this._timeSelector.clearSelection();
     }
 
-    quizSchedule() {
-        // TODO routing, skip if empty
+    async quizSchedule() {
         alert(`Groups: ${this._groupsSelector.getSelectedGroupsId()}\n
         Start: ${this._timeSelector.getStartTime()}\n
         End: ${this._timeSelector.getEndTime()}`);
+        await fetch('http://localhost:8080/db/apiRequest?', {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                method: "group/assign",
+                data:
+                    {quizId: parseInt(this._activeQuizId), groupsId: this._groupsSelector.getSelectedGroupsId(),
+                        startTime: this._timeSelector.getStartTime(), endTime: this._timeSelector.getEndTime()}
+            }),
+            method: 'POST'
+        });
         this.hide();
     }
 
@@ -725,6 +797,9 @@ class PlanGroupsPicker extends CustomDOMElement {
             if (this._selector.element.options[groupId].selected) {
                 result.push(this._selector.element.options[groupId].value);
             }
+        }
+        for (let i = 0; i < result.length; i++) {
+            result[i] = (parseInt(result[i]));
         }
         return result;
     }
@@ -827,17 +902,33 @@ for (let navButton of navButtons) {
 const navButtonsGroup = new ButtonsGroupHandler(navButtonsHandler);
 
 
-const groupsNavButtons = document.querySelectorAll('.groups-quiz-nav-button');
-let groupsNavButtonsHandlers = [];
-for (let navButton of groupsNavButtons) {
-    groupsNavButtonsHandlers.push(new NavButton(navButton));
-}
-const groupsNavButtonsGroup = new ButtonsGroupHandler(groupsNavButtonsHandlers);
 
 if (['check', 'settings'].includes(prevPage)) {
     navButtonsGroup.setActiveById('nav-groups-btn');
-    groupsNavButtonsGroup.setActiveById('groups-quiz-nav-groups-btn');
 } else if (['edit'].includes(prevPage)) {
-    navButtonsGroup.setActiveById('nav-groups-btn');
-    groupsNavButtonsGroup.setActiveById('groups-quiz-nav-quizzes-btn');
+    navButtonsGroup.setActiveById('nav-admin-quizzes-btn');
+}
+
+document.querySelector('.create-quiz-btn').addEventListener('click', createQuiz);
+async function createQuiz() {
+    let response = await fetch('http://localhost:8080/db/apiRequest',
+        {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify(
+                {
+                    method: 'quiz/createQuiz',
+                    data: {
+                        login: user,
+                        title: "",
+                        description: "",
+                        questions: []
+                    }
+                })
+        });
+    let quizId = await response.json();
+    window.location.href = `http://localhost:8080/quiz/edit/${quizId}`;
 }
