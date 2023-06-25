@@ -13,11 +13,12 @@ public class AssignQuizCommandHandler : RequestHandler, IRequestHandler<AssignQu
 
     public async Task<int> Handle(AssignQuizCommand request, CancellationToken cancellationToken)
     {
-        var group = await context.Groups
-            .FirstOrDefaultAsync(group => group.Id == request.GroupId, cancellationToken);
+        var groups = await context.Groups
+            .Where(group => request.GroupsId.Contains(group.Id))
+            .ToListAsync(cancellationToken);
         
-        if (group == null)
-            throw new NotFoundException(nameof(Group), request.GroupId);
+        if (groups == null)
+            throw new NotFoundException(nameof(Group), request.GroupsId);
 
         var quiz = await context.Quizzes
             .FirstOrDefaultAsync(quiz => quiz.Id == request.QuizId, cancellationToken);
@@ -25,15 +26,19 @@ public class AssignQuizCommandHandler : RequestHandler, IRequestHandler<AssignQu
         if (quiz == null)
             throw new NotFoundException(nameof(Quiz), request.QuizId);
 
-        var quizGroup = new QuizGroup
+        foreach (var group in groups)
         {
-            Quiz = quiz,
-            Group = group,
-            StartTime = request.StartTime,
-            EndTime = request.EndTime
-        };
+            var quizGroup = new QuizGroup
+            {
+                Quiz = quiz,
+                Group = group,
+                StartTime = request.StartTime,
+                EndTime = request.EndTime
+            };
+            
+            group.QuizGroups.Add(quizGroup);
+        }
         
-        group.QuizGroups.Add(quizGroup);
         await context.SaveChangesAsync(cancellationToken);
         return 1;
     }
