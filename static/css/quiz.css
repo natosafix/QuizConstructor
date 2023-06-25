@@ -53,6 +53,7 @@ textarea {
 
 input:focus, textarea:focus {
     outline: none;
+    border: solid red 1px;
 }
 
 img {
@@ -151,6 +152,14 @@ input[type='radio']:checked, input[type='checkbox']:checked {
 
 .thanks {
     display: none;
+}
+
+*:focus {
+    border: solid red 1px;
+}
+
+*[tabindex] {
+    border: solid red 1px;
 }
 
 @media screen and (max-width: 980px) {
