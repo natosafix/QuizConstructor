@@ -22,10 +22,6 @@ html {
     line-height: 24px;
 }
 
-*:focus {
-     border: solid var(--accent-color);
-}
-
 body {
 
 }
