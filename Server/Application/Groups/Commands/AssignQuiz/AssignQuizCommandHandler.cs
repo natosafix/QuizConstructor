@@ -40,6 +40,6 @@ public class AssignQuizCommandHandler : RequestHandler, IRequestHandler<AssignQu
         }
         
         await context.SaveChangesAsync(cancellationToken);
-        return 1;
+        return quiz.Id;
     }
 }

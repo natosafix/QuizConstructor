@@ -29,6 +29,5 @@ public class GetUserScoresQueryHandler : RequestHandler, IRequestHandler<GetUser
                 Score = userQuizzes.Score
             })
             .ToList();
-
     }
 }

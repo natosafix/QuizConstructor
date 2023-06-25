@@ -30,7 +30,7 @@ public class CreateQuizCommandHandler : RequestHandler, IRequestHandler<CreateQu
             Creator = user,
             Questions = request.Questions.Select( input => new Question
             {
-                Type = types.FirstOrDefault(type => type.Id == input.TypeId),
+                Type = types.FirstOrDefault(type => type.Id == input.TypeId, new QuestionType()),
                 Content = input.Content,
                 Required = input.Required,
                 Score = input.MaxScore,
