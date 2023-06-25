@@ -8,31 +8,32 @@
     <link rel="stylesheet" href="/css/authorization.css">
 </head>
 <body>
-    <div class="login">
+<main>
+
+    <form method="post" class="login-form" action="http://localhost:8080/login/check">
         <h1>Войдите</h1>
-        <section class="login-and-registration-form">
-            <form method="post" action="http://localhost:8080/login/check">
-                <div class="form-group">
-                    <label>
-                        <input id="username" name="username" placeholder="Имя пользователя" type="text" required/>
-                    </label>
-                    <span id="username-error"></span>
-                </div>
+        <div class="form-group">
+            <label>
+                <input id="username" name="username" placeholder="Имя пользователя" type="text" required/>
+            </label>
+            <span id="username-error"></span>
+        </div>
 
-                <div class="form-group">
-                    <label>
-                        <input id="password" name="password" placeholder="Пароль" type="password" required/>
-                    </label>
-                    <span id="password-error" style="color: red"></span>
-                </div>
+        <div class="form-group">
+            <label>
+                <input id="password" name="password" placeholder="Пароль" type="password" required/>
+            </label>
+            <span id="password-error" style="color: red"></span>
+        </div>
 
-                <div class="buttons">
-                    <button type="submit" class="auth-signup-button myButton">Войти</button>
-                    <button type="button" class="myButton redirect-button" id="registration-redirect-button">Регистрация</button>
-                </div>
-            </form>
-        </section>
-    </div>
+        <div class="buttons">
+            <button type="submit" class="auth-signup-button login">Войти</button>
+            <button type="button" class="auth-logout-button signup" id="registration-redirect-button">Регистрация</button>
+        </div>
+    </form>
+
+</main>
+
     <script src="/scripts/login.js"></script>
 </body>
 </html>
