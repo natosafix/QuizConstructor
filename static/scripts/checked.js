@@ -129,7 +129,7 @@ async function getQuizDataForOwner() {
 
 class QuizParser {
     constructor(quizData) {
-        this.quizData = quizData
+        this.quizData = quizData;
     }
 
     parse() {
@@ -504,145 +504,14 @@ class AnswerGetter {
         ][answerId];*/
     }
 
-    getById(answerId) {
-        const copiedFromAbove = [
-            {
-                id: 11,
-                name: "Полный Попуск", // так надо было тиму назвать кста
-                questions: [
-                    {
-                        score: 0,
-                        answers: [
-                            {
-                                content: "числ",
-                                id: 123 // id ответа в бд
-                            }
-                        ],
-                    },
-                    {
-                        score: 1,
-                        answers: [
-                            {
-                                content: "Срань",
-                                id: 96 // id ответа в бд
-                            },
-                            {
-                                content: "язык",
-                                id: 96 // id ответа в бд
-                            }
-                        ],
-                    },
-                    {
-                        score: 0,
-                        answers: [
-                            {
-                                content: "JS - говно",
-                                id: 32 // id ответа в бд
-                            }
-                        ]
-                    },
-                    {
-                        score: 0,
-                        answers: [
-                            {
-                                content: "Матвей полный леха и точка я сказал",
-                                id: 32 // id ответа в бд
-                            }
-                        ]
-                    }
-                ]
-            },
-            { // тут должен вызываться getAnswers с новыми ответами
-                id: 22,
-                name: "Мэтью Алексеевич",
-                questions: [
-                    {
-                        score: 0,
-                        answers: [
-                            {
-                                content: "глагол",
-                                id: 123 // id ответа в бд
-                            }
-                        ],
-                    },
-                    {
-                        score: 1,
-                        answers: [
-                            {
-                                content: "язык",
-                                id: 96 // id ответа в бд
-                            }
-                        ],
-                    },
-                    {
-                        score: 0,
-                        answers: [
-                            {
-                                content: "Мой любимый язык",
-                                id: 32 // id ответа в бд
-                            }
-                        ]
-                    },
-                    {
-                        score: 0,
-                        answers: [
-                            {
-                                content: "Это очевидно",
-                                id: 32 // id ответа в бд
-                            }
-                        ]
-                    }
-                ]
-            },
-            { // тут должен вызываться getAnswers с новыми ответами
-                id: 33,
-                name: "Жээс Говнович",
-                questions: [
-                    {
-                        score: 0,
-                        answers: [
-                            {
-                                content: "сущ",
-                                id: 123 // id ответа в бд
-                            }
-                        ],
-                    },
-                    {
-                        score: 1,
-                        answers: [
-                            {
-                                content: "гавна",
-                                id: 96 // id ответа в бд
-                            }
-                        ],
-                    },
-                    {
-                        score: 0,
-                        answers: [
-                            {
-                                content: "Да",
-                                id: 32 // id ответа в бд
-                            }
-                        ]
-                    },
-                    {
-                        score: 0,
-                        answers: [
-                            {
-                                content: "Сам пиши",
-                                id: 32 // id ответа в бд
-                            }
-                        ]
-                    }
-                ]
-            }
-        ];
+    async getById(answerId) {
+        const data = await this.getAnswers(answerId);
 
         let i = 0;
-        for (const e of copiedFromAbove) {
-            if (answerId === e.id) {
+        for (const id of this.answerIds) {
+            if (id === data.id) {
                 this.i = i;
-                return e;
+                return data;
             }
             i++;
         }
@@ -658,6 +527,7 @@ async function checkedStart() {
     answersJson = await answerGetter.getAnswers(answerGetter.answerIds[0]);
     await addElements();
     fillResultsTable();
+    adjustNextPrevButtons();
 }
 
 function addElements() {
@@ -844,7 +714,16 @@ function fillResultsTable() {
 }
 
 function getScoresFromDB() {
-    return [
+   /* let response = await fetch('http://localhost:8080/db/apiRequest?' + new URLSearchParams(
+        {
+            method: "quiz/getUserQuiz",
+            data: JSON.stringify({id: answerId})
+        }),
+        {
+            method: 'GET',
+        });
+    return  await response.json();*/
+    /*return [
         {
             name: "Полный Попуск",
             answerId: 11,
@@ -860,7 +739,7 @@ function getScoresFromDB() {
             answerId: 33,
             score: 40
         }
-    ];
+    ];*/
 }
 
 function addScoreToTable(name, answerId, score) {
@@ -883,9 +762,9 @@ function addScoreToTable(name, answerId, score) {
     table.append(row);
 }
 
-function tableNamePressed(event) {
+async function tableNamePressed(event) {
     const answerId = +event.target.getAttribute("answerId");
-    answersJson = answerGetter.getById(answerId);
+    answersJson = await answerGetter.getById(answerId);
     adjustNextPrevButtons();
     redrawWithNewAnswers();
 }
