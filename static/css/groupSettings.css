@@ -68,6 +68,10 @@ h2 {
     background-color: var(--accent3-color);
 }
 
+.group-member-wrapper:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
 .group-member-wrapper .member-name {
     grid-area: A;
 }

@@ -7,20 +7,20 @@
 
 
 .main {
-    width: 35%;
+    width: 55%;
     margin: 0 auto;
 }
 
 .block {
     background-color: var(--white-color);
-    border-radius: 10px;
-    margin-bottom: 25px;
-    padding: 15px;
+    border-radius: var(--border-radius);
+    margin-bottom: 40px;
+    padding: 30px;
 }
 
 .element-input {
     background-color: var(--white-color);
-    font-size: 15px;
+    font-size: 1.2rem;
     width: 99%;
 }
 
@@ -91,10 +91,19 @@ img {
 }
 
 .question-number {
-    color: darkgrey;
+    opacity: 0.5;
+    margin-bottom: 4px;
+    font-size: 1.1rem;
+}
+
+.question-header {
+    font-size: 1.4rem;
     margin-bottom: 10px;
 }
 
+.quiz-title {
+    font-size: 1.4rem;
+}
 
 input[type='radio'], input[type='checkbox']  {
     -webkit-appearance: none;
@@ -158,7 +167,7 @@ input[type='radio']:checked, input[type='checkbox']:checked {
     }
 
     input[type="text"] {
-        font-size:50px;
+        font-size: 50px;
     }
 
     .element-input {
