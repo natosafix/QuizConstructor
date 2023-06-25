@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
     quizData = getQuizDataForFiller();
     quizParser = new QuizParser(quizData);
     quizParser.parse();
+    quizParser.addCode();
 });
 async function getQuizDataForFiller() {
     let response = await fetch('http://localhost:8080/db/apiRequest?' + new URLSearchParams(
@@ -140,7 +141,7 @@ class QuizParser {
             const name = "q" + i;
             let element;
 
-            if (["shortText", "longText"].includes(question.type.name)) {
+            if (["shortText", "longText"].includes(question.type.name) || codeTypes.includes(question.type.name)) {
                 element = this.createLineElement(question, name);
             } else if (["oneList", "severalList"].includes(question.type.name)) {
                 element = this.createChoiceElement(question, name);
@@ -153,6 +154,29 @@ class QuizParser {
             form.append(element);
 
             i++;
+        }
+    }
+
+    addCode() {
+        let i = 0
+        for (const question of quizParser.quizData.questions) {
+            i++;
+            if (!codeTypes.includes(question.type.name))
+                continue;
+
+            const codeMirrorOptions = {
+                mode: question.type.name,
+                lineNumbers: true,
+                indentUnit: 4,
+                matchBrackets: true,
+                theme: 'eclipse',
+                extraKeys: { "Tab": "insertSoftTab" }
+            };
+
+            let textarea = document.getElementsByName("q" + i)[0];
+            textarea.CodeMirror = CodeMirror.fromTextArea(textarea, codeMirrorOptions);
+            textarea.CodeMirror.setSize("100%", "100%");
+            textarea.required = false; // TODO: workaround, cannot set code field to be required
         }
     }
 
@@ -215,7 +239,7 @@ class QuizParser {
         if (question.type.name === "shortText") {
             inputElement = document.createElement("input");
             inputElement.type = "text";
-        } else if (question.type.name === "longText") {
+        } else if (question.type.name === "longText"  || codeTypes.includes(question.type.name)) {
             inputElement = document.createElement("textarea");
         } else {
             console.log("unknown line type: " + question.type.name);
