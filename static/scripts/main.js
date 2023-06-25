@@ -641,20 +641,15 @@ class GroupCreateModalWindow extends CustomDOMElement {
     }
 
     async createGroup() {
-        let newGroupName = createGroupModalWindow.input.element.value;
-        let response = await fetch('http://localhost:8080/db/apiRequest?',
+        let newGroupName; //TODO: получить из модала
+        let newGroupId = await fetch('http://localhost:8080/db/apiRequest?',
             {
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
+                body: {
                     method: "group/create",
-                    data: {login: user, name: newGroupName}
-                }),
+                    data: JSON.stringify({login: user, name: newGroupName})
+                },
                 method: 'POST'
             });
-        let newGroupId = await response.json();
         window.location.href = `http://localhost:8080/group/settings/${newGroupId}`;
         this.hide();
     }

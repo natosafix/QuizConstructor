@@ -16,11 +16,19 @@ class GroupController {
 
     async acceptInvite(req, res) {
         let user = req.user.userId;
-        let groupId = req.params.groupId;
-        user2Page[user] = 'invite';
-        htmlChanger.changeKeys(path.resolve(__dirname, '../static', 'pageRedirector.html'),
-            {userId: user, groupId: groupId},
-            (changedHtml) => res.send(changedHtml));
+        user2Page[user] = 'invite'
+        let response = await DBController.getRequest('groups/addUser',
+            {userId: user, groupId: req.params.groupId});
+        if (!response.ok) {
+            htmlChanger.changeKeys(path.resolve(__dirname, '../static', 'pageRedirector.html'),
+                {text: "Вы не можете воспользоваться приглашением", userId: user},
+                (changedHtml) => res.send(changedHtml));
+            return res.status(response.status);
+        } else {
+            return htmlChanger.changeKeys(path.resolve(__dirname, '../static', 'pageRedirector.html'),
+                {text: "Вы были добавлены в группу", userId: user},
+                (changedHtml) => res.send(changedHtml));
+        }
     }
 }
 
