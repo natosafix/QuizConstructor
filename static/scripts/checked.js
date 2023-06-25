@@ -1,4 +1,4 @@
-function getQuizData() {
+function getQuizDataForOwner() {
     return {
         id: 1,
         title: "Анкета",
@@ -255,7 +255,7 @@ class QuizParser {
     }
 }
 
-const quizData = getQuizData();
+const quizData = getQuizDataForOwner();
 const quizParser = new QuizParser(quizData);
 
 quizParser.parse();

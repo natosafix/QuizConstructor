@@ -1,3 +1,267 @@
+function getQuizDataForFiller() {
+    return {
+        id: 1,
+        title: "Анкета",
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        startTime: new Date("Jan 5, 2024 15:00:20"),
+        endTime: new Date("Jan 5, 2024 15:04:10"),
+        questions: [
+            {
+                content: "Что такое tilted?",
+                id: 23, // id вопроса в бд
+                type: {
+                    typeId: 1,
+                    name: "oneList"
+                },
+                required: true,
+                maxScore: 2,
+                answers: [
+                    {
+                        content: "глагол",
+                        id: 123 // id ответа в бд
+                    },
+                    {
+                        content: "сущ",
+                        id: 234 // id ответа в бд
+                    },
+                    {
+                        content: "числ",
+                        id: 21234 // id ответа в бд
+                    }
+                ],
+                correctAnswers: [
+                    {
+                        content: "глагол",
+                        id: 456 // id правильного ответа в бд
+                    },
+                ],
+                isAutoCheck: true
+            },
+            {
+                content: "Что такое JS ?",
+                id: 2233, // id вопроса в бд
+                type: {
+                    typeId: 2,
+                    name: "severalList"
+                },
+                required: true,
+                maxScore: 1,
+                answers: [
+                    {
+                        content: "Срань",
+                        id: 96 // id ответа в бд
+                    },
+                    {
+                        content: "язык",
+                        id: 196 // id ответа в бд
+                    },
+                    {
+                        content: "гавна",
+                        id: 199 // id ответа в бд
+                    }
+                ],
+                correctAnswers: [
+                    {
+                        content: "Срань",
+                        id: 100 // id ответа в бд
+                    },
+                    {
+                        content: "гавна",
+                        id: 101 // id ответа в бд
+                    }
+                ],
+                isAutoCheck: true
+            },
+            {
+                content: "Что такое JS ?",
+                id: 1234, // id вопроса в бд
+                type: {
+                    typeId: 3,
+                    name: "shortText"
+                },
+                required: true,
+                maxScore: 1,
+                answers: null,
+                correctAnswers: null,
+                isAutoCheck: false
+            },
+            {
+                content: "Напишите сочинение на тему 'Почему Матвей леха?'",
+                id: 124, // id вопроса в бд
+                type: {
+                    typeId: 4,
+                    name: "longText"
+                },
+                required: true,
+                maxScore: 5,
+                answers: null,
+                correctAnswers: null,
+                isAutoCheck: false
+            }
+        ]
+    };
+}
+
+class QuizParser {
+    constructor(quizData) {
+        this.quizData = quizData
+    }
+
+    parse() {
+        const form = document.createElement("form");
+        form.id = "myForm";
+        form.addEventListener("submit", (event) => event.preventDefault());
+
+        document.querySelector(".main").prepend(form);
+
+        form.append(this.createHeader());
+
+        let i = 1;
+        for (const question of this.quizData.questions) {
+            const name = "q" + i;
+            let element;
+
+            if (["shortText", "longText"].includes(question.type.name)) {
+                element = this.createLineElement(question, name);
+            } else if (["oneList", "severalList"].includes(question.type.name)) {
+                element = this.createChoiceElement(question, name);
+            } else {
+                console.log("unknown question type: " + question.type.name)
+            }
+
+            element.prepend(this.createQuestionNumber(i));
+
+            form.append(element);
+
+            i++;
+        }
+    }
+
+    createQuestionNumber(i) {
+        const div = document.createElement("h2");
+        div.className = "question-number";
+        div.textContent = "Вопрос №" + i;
+        return div;
+    }
+
+    createHeader() {
+        const div = document.createElement("div");
+        div.className = "block";
+
+        const h2 = document.createElement("h2");
+        h2.innerHTML = this.quizData.title;
+        h2.classList.add("quiz-title");
+        h2.classList.add("quiz-title");
+
+        const description = document.createElement("span");
+        description.innerHTML = this.quizData.description;
+
+        div.append(h2);
+        div.append(description);
+
+        return div;
+    }
+
+    createElementMainDiv(question) {
+        const div = document.createElement("div");
+        div.classList.add("element", "block", question.type.name);
+        return div;
+    }
+
+    createElementDescription(question) {
+        const header = document.createElement("div");
+        header.classList.add("question-header");
+
+        const e = document.createElement("div");
+        e.className = "element-description";
+        e.innerHTML = question.content;
+
+        header.append(e);
+
+        return header;
+    }
+
+    isRequired(question) {
+        const required = question["required"];
+        return required === undefined ? false : required;
+    }
+
+    createLineElement(question, questionName) {
+        const div = this.createElementMainDiv(question);
+        const label = document.createElement("label");
+        const descriptionDiv = this.createElementDescription(question);
+
+        let inputElement;
+
+        if (question.type.name === "shortText") {
+            inputElement = document.createElement("input");
+            inputElement.type = "text";
+        } else if (question.type.name === "longText") {
+            inputElement = document.createElement("textarea");
+        } else {
+            console.log("unknown line type: " + question.type.name);
+        }
+
+        inputElement.classList.add("element-input", "any-element")
+        inputElement.name = questionName;
+        inputElement.required = this.isRequired(question);
+
+        label.append(descriptionDiv);
+        label.append(inputElement);
+
+        div.append(label);
+
+        return div;
+    }
+
+    createChoiceElement(question, questionName) {
+        const div = this.createElementMainDiv(question);
+        div.append(this.createElementDescription(question));
+
+        for (const answer of question.answers) {
+            const choiceDiv = this.createOption(question, answer.content, questionName);
+            div.append(choiceDiv);
+        }
+
+        return div;
+    }
+
+    createOption(question, answer, questionName) {
+        const choiceDiv = document.createElement("div");
+        choiceDiv.className = "element-choice";
+
+        const label = document.createElement("label");
+        const input = document.createElement("input");
+
+        if (question.type.name === "oneList") {
+            input.type = "radio";
+            input.required = this.isRequired(question);
+        } else if (question.type.name === "severalList") {
+            input.type = "checkbox";
+        } else {
+            console.log("unknown question type when input.type: " + question.type.name);
+        }
+
+        input.className = "any-element"
+        input.name = questionName;
+        input.value = answer;
+
+        label.append(input);
+        label.append(answer);
+
+        choiceDiv.append(label);
+
+        return choiceDiv;
+    }
+}
+
+const quizData = getQuizDataForFiller();
+const quizParser = new QuizParser(quizData);
+
+quizParser.parse();
+
+
+
 class Timer {
     constructor(durationInSeconds, display, onFinish) {
         this.seconds = durationInSeconds;
