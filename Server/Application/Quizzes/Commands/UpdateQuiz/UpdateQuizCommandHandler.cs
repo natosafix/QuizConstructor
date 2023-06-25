@@ -15,6 +15,7 @@ public class UpdateQuizCommandHandler : RequestHandler, IRequestHandler<UpdateQu
     {
         var quizToUpdate = await context.Quizzes
             .Include(q => q.Questions)
+            .ThenInclude(q => q.Answers)
             .FirstOrDefaultAsync(q => q.Id == request.Id, cancellationToken);
         
         var types = await context.QuestionTypes.ToListAsync(cancellationToken);
