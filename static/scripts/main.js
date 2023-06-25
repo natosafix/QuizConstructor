@@ -266,8 +266,10 @@ function fillActiveQuizzes() {
     }
 
     if (shownGroupsCount === 0) {
-        activePaste.appendChild(new CustomDOMElement('label')
-            .withContent("Пусто").element)
+        let emptyBlock = new CustomDOMElement('div')
+            .withClass('block')
+            .withContent("Нет активных опросов");
+        activePaste.appendChild(emptyBlock.element);
     }
 }
 
@@ -290,6 +292,12 @@ function fillEndedQuizzes() {
             finishedDiv.hide();
             quizzes.push(finishedDiv);
         }
+    }
+
+    if (quizzes.length === 0) {
+        endedPaste.appendChild(new CustomDOMElement('label')
+            .withContent('Нет завершённых опросов').element);
+        return;
     }
 
     quizzes.sort((a, b) => {
