@@ -4,6 +4,7 @@
     width: 100%;
     display: flex;
     justify-content: center;
+    margin: 10px 0;
 }
 
 .nav-button {
@@ -39,6 +40,8 @@
     padding: 20px 40px;
     width: 75%;
     background-color: var(--block-bg-color);
+
+    transition: transform 0.3s ease;
 }
 
 .clamped-info {
@@ -75,10 +78,10 @@
 }
 
 .base-quiz {
-    width: 100%;
+    width: calc(100% - 10px);
 
     padding: 15px 40px;
-    margin: 10px 0;
+    margin: 10px 5px;
 
     display: grid;
     grid-template-columns: 40% 25% 35%;
@@ -110,6 +113,10 @@
 
     overflow-y: hidden;
     overflow-x: hidden;
+}
+
+.quiz-plan-btn {
+    transition: transform 0.3s ease;
 }
 
 .admin-quiz .quiz-plan-btn,
@@ -200,7 +207,7 @@
 
 .groups-quiz-nav-buttons-wrapper {
     position: sticky;
-    top: 120px;
+    top: 60px;
     width: 70%;
 
     display: flex;
@@ -255,6 +262,7 @@
     color: black;
     text-decoration: underline black solid;
     text-decoration-thickness: 1px;
+    transition: transform 0.3s ease;
 }
 
 .quiz-search-and-create-wrapper {
@@ -267,6 +275,58 @@
     width: 70%;
 }
 
+.create-quiz-btn {
+    transition: transform 0.3s ease;
+}
+
 .quiz-search-and-create-wrapper .create-quiz-btn {
     width: 40px;
+}
+
+
+
+
+/* index navigation */
+.nav-button:hover {
+    background-color: var(--hover-color);
+    color: var(--hover-text-color);
+}
+
+/* blocks wrapper */
+.block:hover {
+    transform: scale(1.01);
+    transition: transform 0.3s ease;
+}
+
+/* Quizzes */
+.admin-quiz:hover,
+.base-quiz:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.quiz-plan-btn:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
+
+/* Group Page */
+.admin-group-settings-btn:hover {
+    transform: rotate(90deg);
+    transition: transform 0.3s ease;
+}
+
+.groups-quiz-nav-button:hover {
+    color: var(--hover-text-color);
+    background-color: var(--hover-color);
+}
+
+/* admin quizzes page */
+.quiz-check-href:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
+
+.create-quiz-btn:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
 }

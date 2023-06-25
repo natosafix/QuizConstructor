@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
                     ]
                 }
             ]
-        data = [];
+
 
         adminQuizzes = {
             "quizVms": [
