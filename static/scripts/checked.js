@@ -526,7 +526,7 @@ async function checkedStart() {
     await answerGetter.getAllAnswerIds();
     answersJson = await answerGetter.getAnswers(answerGetter.answerIds[0]);
     await addElements();
-    fillResultsTable();
+    await fillResultsTable();
     adjustNextPrevButtons();
 }
 
@@ -679,10 +679,22 @@ function adjustNextPrevButtons() {
         document.querySelector("#next-button").style.visibility = "hidden";
 }
 
-function savePressed() {
+async function savePressed() {
     // TODO: send to egorable
     const q = collectCheckedAnswers();
-
+    let response = await fetch('http://localhost:8080/db/apiRequest?',
+        {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                method: "quiz/estimateUserQuiz",
+                data: {id: q.id, points: q.points}
+            }),
+            method: 'POST'
+        });
+    let newGroupId = await response.json();
     // addScoreToTable(document.querySelector(".quiz-filler-name").innerText, getCurrentScore()); // TODO: add third argument
 }
 
@@ -691,7 +703,7 @@ function collectCheckedAnswers() {
     const points = [];
     for (const quantity of document.querySelectorAll(".quantity")) {
         points.push({
-            questionId: quizData.questions[i].id,
+            questionId: quizData.questionVms[i].id,
             score: +quantity.innerText
         });
         i++;
@@ -705,24 +717,24 @@ function collectCheckedAnswers() {
 
 
 
-function fillResultsTable() {
-    const data = getScoresFromDB();
+async function fillResultsTable() {
+    const data = await getScoresFromDB();
 
     for (const e of data) {
         addScoreToTable(e.name, e.answerId, e.score);
     }
 }
 
-function getScoresFromDB() {
-   /* let response = await fetch('http://localhost:8080/db/apiRequest?' + new URLSearchParams(
+async function getScoresFromDB() {
+    let response = await fetch('http://localhost:8080/db/apiRequest?' + new URLSearchParams(
         {
-            method: "quiz/getUserQuiz",
-            data: JSON.stringify({id: answerId})
+            method: "quizGroup/getUserScores",
+            data: JSON.stringify({id: quizId})
         }),
         {
             method: 'GET',
         });
-    return  await response.json();*/
+    return  await response.json();
     /*return [
         {
             name: "Полный Попуск",
@@ -769,5 +781,6 @@ async function tableNamePressed(event) {
     redrawWithNewAnswers();
 }
 
-document.querySelector('#prev-button').addEventListener('click', previousPressed)
-document.querySelector('#next-button').addEventListener('click', nextPressed)
+document.querySelector('#prev-button').addEventListener('click', previousPressed);
+document.querySelector('#next-button').addEventListener('click', nextPressed);
+document.querySelector('#save-button').addEventListener('click', savePressed);
