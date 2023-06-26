@@ -55,5 +55,5 @@ function createGroup() {
     const input = document.querySelector(".modal__input");
     const value = input.value;
 
-    alert(value);
+    // alert(value);
 }
