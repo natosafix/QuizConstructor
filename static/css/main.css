@@ -12,9 +12,9 @@
 }
 
 .nav-button-hidder-overlay.active {
-     opacity: 1;
-     visibility: visible;
- }
+    opacity: 1;
+    visibility: visible;
+}
 
 .index-wrapper {
     width: 100%;
@@ -50,8 +50,8 @@
 }
 
 .nav-button-hidder.active {
-     background-color: var(--accent2-color);
- }
+    background-color: var(--accent2-color);
+}
 
 .nav-button-hidder.inactive {
     background-color: rgba(0, 0, 0, 0);
@@ -240,6 +240,8 @@
     text-align: start;
 }
 
+
+
 .admin-quiz .quiz-mark,
 .base-quiz .quiz-mark {
     display: grid;
@@ -303,8 +305,8 @@
 }
 
 .base-quiz:not(:has(.quiz-mark)) {
-     grid-template-areas: "A . C";
- }
+    grid-template-areas: "A . C";
+}
 
 
 /* Group Page */
@@ -357,7 +359,7 @@
     width: 100%;
 }
 
-.quiz-search-and-create-wrapper .create-quiz-btn-img {
+.quiz-search-and-create-wrapper .create-quiz-btn {
     width: 40px;
     transition: transform 0.3s ease;
 }
@@ -401,19 +403,6 @@
 .create-quiz-btn:hover {
     transform: scale(1.1);
     transition: transform 0.3s ease;
-}
-
-.create-quiz-btn-img {
-    position: relative;
-    left: -20px;
-    top: -10px;
-    pointer-events: none;
-}
-
-.create-quiz-btn {
-    width: 40px;
-    height: 40px;
-    background: rgba(0,0,0,0);
 }
 
 .admin-quiz .quiz-edit-href img:hover {
