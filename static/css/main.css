@@ -40,7 +40,7 @@
     transition: width 0.3s ease;
     overflow-x: hidden;
 
-    font-size: 1.5rem;
+    font-size: var(--font-header-size);
 }
 
 .nav-button-hidder {
@@ -313,6 +313,7 @@
     display: flex;
     width: 100%;
     justify-content: space-between;
+    align-items: center;
     height: 30px;
     margin-bottom: 10px;
 }
@@ -332,6 +333,7 @@
 
 .group-create-group-btn-wrapper .block button {
     width: 100%;
+    color: rgba(0, 0, 0, 0);
 }
 
 
@@ -390,6 +392,10 @@
 .quiz-check-href:hover {
     transform: scale(1.05);
     transition: transform 0.3s ease;
+}
+
+.create-quiz-btn {
+    background-color: rgba(0, 0, 0, 0);
 }
 
 .create-quiz-btn:hover {

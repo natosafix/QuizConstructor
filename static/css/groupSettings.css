@@ -31,6 +31,7 @@ h2 {
     display: flex;
     width: 100%;
     justify-content: space-between;
+    align-items: center;
     height: 30px;
     margin-top: 20px;
 }
@@ -68,6 +69,7 @@ h2 {
 
     border-radius: var(--border-radius);
     background-color: var(--accent3-color);
+    overflow-x: hidden;
 }
 
 .group-member-wrapper:hover {
