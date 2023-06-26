@@ -54,7 +54,7 @@
 }
 
 .modal__title {
-    font-size: 21px;
+    font-size: var(--font-header-size);
 }
 
 .modal__input {
@@ -83,5 +83,7 @@
 }
 
 @media screen and (max-width: 980px) {
-
+    .modal {
+        max-width: 800px;
+    }
 }

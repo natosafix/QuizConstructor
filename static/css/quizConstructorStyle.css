@@ -56,15 +56,15 @@ main {
 }
 
 .quiz-header-label {
-    font-size: 26px;
+    font-size: var(--font-header-size);
 }
 
 .quiz-question-header-label {
-    font-size: 22px;
+    font-size: var(--font-regular-size);
 }
 
 .quiz-group-header {
-    font-size: 20px;
+    font-size: var(--font-regular-size);
 }
 
 .oneList-option {

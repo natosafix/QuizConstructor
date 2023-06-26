@@ -10,7 +10,7 @@ html {
     font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
-    font-size: 20px;
+    font-size: var(--font-regular-size);
     line-height: 24px;
 }
 *, *::before, *::after{
@@ -18,7 +18,7 @@ html {
     font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
-    font-size: 20px;
+    font-size: var(--font-regular-size);
     line-height: 24px;
 }
 
@@ -106,6 +106,7 @@ button {
     margin: 0 10px;
     padding: 7px 20px;
     border-radius: 8px;
+    font-size: var(--font-regular-size);
     font-weight: bold;
 }
 
@@ -115,6 +116,7 @@ button {
     color: white;
     padding: 7px 20px;
     border-radius: 8px;
+    font-size: var(--font-regular-size);
 }
 
 .auth-logout-button:hover {
@@ -124,7 +126,7 @@ button {
 
 h2 {
     color: black;
-    font-size: 24px;
+    font-size: var(--font-header-size);
 }
 
 hr {
@@ -142,7 +144,7 @@ hr {
     border: none;
     color: var(--accent-color); /* цвет крестика */
     cursor: pointer;
-    font-size: 30px;
+    font-size: var(--font-title-size);
     outline: none;
     box-shadow: none;
     margin: 0;
@@ -151,7 +153,7 @@ hr {
 
 .delete-option::after {
     content: "×"; /* символ крестика */
-    font-size: 30px;
+    font-size: var(--font-title-size);
 }
 
 /* Стиль для кнопки при наведении курсора */
@@ -171,4 +173,26 @@ hr {
     border: none;
     border-radius: 100px;
     outline: none;
+}
+
+
+@media screen and (max-width: 980px) {
+    .header {
+        height: 120px;
+    }
+
+    :root {
+        --font-title-size: 60px;
+        --font-header-size: 48px;
+        --font-regular-size: 40px;
+        --font-mini-size: 32px;
+    }
+
+    .auth-signup-button {
+        padding: 0.5rem 1rem;
+    }
+
+    .auth-logout-button {
+        padding: 0.5rem 1rem;
+    }
 }
