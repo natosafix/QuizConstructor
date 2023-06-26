@@ -178,7 +178,7 @@ hr {
 
 @media screen and (max-width: 980px) {
     .header {
-        height: 120px;
+        height: 150px;
     }
 
     :root {
@@ -194,5 +194,10 @@ hr {
 
     .auth-logout-button {
         padding: 0.5rem 1rem;
+    }
+
+    hr {
+        border-top: 6px;
+        margin: 8px 0;
     }
 }

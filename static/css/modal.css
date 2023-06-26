@@ -49,7 +49,7 @@
 .modal__top {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: start;
     margin-bottom: 15px;
 }
 
