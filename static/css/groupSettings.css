@@ -40,6 +40,7 @@ h2 {
     height: 100%;
     cursor: pointer;
     overflow-x: hidden;
+    max-width: 40%;
 }
 
 .invite-wrapper .share-link-input {
