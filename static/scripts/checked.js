@@ -562,6 +562,7 @@ function addCheckingElements() {
 
         for (const input of element.querySelectorAll(".any-element")) {
             input.disabled = true;
+            input.readOnly = true;
 
             const allAnswers = answersJson.questions[i].answers.map(x => x.content);
 
