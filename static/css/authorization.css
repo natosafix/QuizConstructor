@@ -27,6 +27,7 @@ input {
     background-color: var(--accent3-color);
     width: 100%;
     padding: 1rem;
+    font-size: var(--font-header-size);
 }
 
 .form-group {
@@ -57,12 +58,14 @@ h1 {
     padding: 20px 40px;
     width: auto;
     text-align: center;
+    font-size: var(--font-header-size);
 }
 
 .signup {
     padding: 20px 40px;
     width: auto;
     text-align: center;
+    font-size: var(--font-header-size);
 }
 
 a {
@@ -71,6 +74,7 @@ a {
 
 #username-error, #password-error, #repeat-password-error {
     padding-top: 10px;
+    font-size: var(--font-mini-size);
     display: none;
     color: red;
 }
@@ -82,5 +86,11 @@ a {
 @media screen and (max-width: 980px){
     .login-form {
         width: 85%;
+        margin-top: 10%;
+    }
+
+    h1 {
+
+        font-size: calc(1.5 * var(--font-title-size));
     }
 }

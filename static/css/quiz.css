@@ -199,9 +199,6 @@ input[type='radio']:checked, input[type='checkbox']:checked {
         border: 13px solid var(--accent-color);
     }
 
-    h2 {
-    }
-
     .submit-button {
         font-size: var(--font-header-size);
         padding: 30px;
@@ -213,8 +210,5 @@ input[type='radio']:checked, input[type='checkbox']:checked {
     .question-number, .element-description, span, .element-choice {
 
         font-size: var(--font-header-size);
-    }
-
-    h2 {
     }
 }

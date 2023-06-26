@@ -6,7 +6,7 @@
     display: none;
 }
 
-.main {
+main {
     width: 55%;
     margin: 5% auto;
 }
@@ -224,7 +224,7 @@ input:hover, textarea:hover {
 }
 
 @media screen and (max-width: 980px) {
-    .main {
+    main {
         width: 90%;
     }
 }
