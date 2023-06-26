@@ -256,7 +256,7 @@ class QuizParser {
 
         label.append(descriptionDiv);
 
-        if (question.correctOptions) {
+        if (question.correctOptions && question.correctOptions.length !== 0) {
             const correctAnswer = document.createElement("div");
             correctAnswer.className = "element-correct-answer";
             correctAnswer.innerHTML = question.correctOptions[0].content;
@@ -299,7 +299,7 @@ class QuizParser {
         }
 
         input.classList.add("any-element");
-        if (question.correctOptions) {
+        if (question.correctOptions && question.correctOptions.length !== 0) {
             for (const e of question.correctOptions)
                 if (e.content === answer) {
                     input.classList.add("correct-option");
