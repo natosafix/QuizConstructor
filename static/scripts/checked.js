@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', async function(event) {
     quizData = await getQuizDataForOwner();
     quizParser = new QuizParser(quizData);
     quizParser.parse();
-    addCodeMirror();
     await checkedStart()
 });
 
