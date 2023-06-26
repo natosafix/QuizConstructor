@@ -47,12 +47,9 @@ public class CreateUserQuizCommandHandler : RequestHandler, IRequestHandler<Crea
                         Content = x.Content
                     })
                     .ToList(),
-                Score = request.Questions
+                Score = AutoCheck(question.CorrectAnswers.Select(x => x.Content).ToList(),request.Questions
                     .FirstOrDefault(userQuestion => userQuestion.Id == question.Id, new UserQuestionInput()).Answers
-                    .Select(x => x.Content)
-                    .Intersect(question.CorrectAnswers.
-                        Select(answer => answer.Content))
-                    .Count() == question.CorrectAnswers.Count ? question.Score : 0
+                    .Select(x => x.Content).ToList()) ? question.Score : 0
             })
                 .ToList()
         };
@@ -61,5 +58,12 @@ public class CreateUserQuizCommandHandler : RequestHandler, IRequestHandler<Crea
         await context.SaveChangesAsync(cancellationToken);
         
         return userQuiz.Id;
+    }
+
+    public bool AutoCheck(List<string> correctAnswers, List<string> answers)
+    {
+        var result = correctAnswers.Intersect(answers).ToList();
+
+        return result.Count >= correctAnswers.Count && answers.Count <= correctAnswers.Count;
     }
 }
