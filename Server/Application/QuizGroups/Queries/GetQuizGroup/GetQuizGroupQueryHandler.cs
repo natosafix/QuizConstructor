@@ -42,7 +42,7 @@ public class GetQuizGroupQueryHandler : RequestHandler, IRequestHandler<GetQuizG
                     Content = question.Content,
                     Required = question.Required,
                     MaxScore = question.Score,
-                    IsAutoCheck = question.CorrectAnswers == null ? false : true,
+                    IsAutoCheck = question.CorrectAnswers.Count != 0,
                     Options = question.Answers.Select(option => new Option
                         {
                             Content = option.Content,
