@@ -671,6 +671,10 @@ async function redrawWithNewAnswers() {
     quizParser.parse();
     addElements();
 
+    await refillTable();
+}
+
+async function refillTable() {
     // remove all children
     const myNode = document.querySelector(".results-table table");
     while (myNode.firstChild) {
@@ -705,6 +709,7 @@ async function savePressed() {
             method: 'POST'
         });
     let newGroupId = await response.json();
+    await refillTable();
     // addScoreToTable(document.querySelector(".quiz-filler-name").innerText, getCurrentScore()); // TODO: add third argument
 }
 
