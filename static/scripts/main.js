@@ -335,10 +335,10 @@ function fillEndedQuizzes() {
 
     quizzes.sort((a, b) => {
         if (a.finishTime < b.finishTime) {
-            return -1;
+            return 1;
         }
         if (a.finishTime > b.finishTime) {
-            return 1;
+            return -1;
         }
         return 0;
     });
