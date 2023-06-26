@@ -656,7 +656,7 @@ async function nextPressed() {
     await savePressed()
     answersJson = await answerGetter.getNext();
     adjustNextPrevButtons();
-    redrawWithNewAnswers();
+    await redrawWithNewAnswers();
 }
 
 async function previousPressed() {
