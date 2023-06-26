@@ -663,13 +663,21 @@ async function previousPressed() {
     await savePressed();
     answersJson = await answerGetter.getPrev();
     adjustNextPrevButtons();
-    redrawWithNewAnswers();
+    await redrawWithNewAnswers();
 }
 
-function redrawWithNewAnswers() {
+async function redrawWithNewAnswers() {
     document.querySelector("#myForm").remove();
     quizParser.parse();
     addElements();
+
+    // remove all children
+    const myNode = document.querySelector(".results-table table");
+    while (myNode.firstChild) {
+        myNode.removeChild(myNode.lastChild);
+    }
+
+    await fillResultsTable();
 }
 
 function adjustNextPrevButtons() {
@@ -780,7 +788,7 @@ async function tableNamePressed(event) {
     const answerId = +event.target.getAttribute("answerId");
     answersJson = await answerGetter.getById(answerId);
     adjustNextPrevButtons();
-    redrawWithNewAnswers();
+    await redrawWithNewAnswers();
 }
 
 document.querySelector('#prev-button').addEventListener('click', previousPressed);
