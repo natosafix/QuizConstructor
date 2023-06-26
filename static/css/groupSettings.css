@@ -39,13 +39,15 @@ h2 {
 .invite-wrapper {
     height: 100%;
     cursor: pointer;
+    overflow-x: hidden;
+    max-width: 40%;
 }
 
 .invite-wrapper .share-link-input {
     text-align: center;
     height: 100%;
     background: rgba(0, 0, 0, 0);
-    align-self: center;
+    align-self: end;
     font-weight: bold;
     border: 0px;
     cursor: inherit;
@@ -86,4 +88,14 @@ h2 {
     padding: 10px 0;
     background-color: rgba(0, 0, 0, 0);
     text-decoration: underline solid black;
+}
+
+@media screen and (max-width: 980px) {
+    .block {
+        width: 90%;
+    }
+
+    hr {
+
+    }
 }

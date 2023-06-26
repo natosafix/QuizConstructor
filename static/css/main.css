@@ -449,6 +449,10 @@
     .menu-btn {
         visibility: visible;
     }
+
+    .clamped-info {
+        max-height: 500px;
+    }
 }
 
 
