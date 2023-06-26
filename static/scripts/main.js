@@ -758,9 +758,9 @@ class PlanModalWindow extends CustomDOMElement {
     }
 
     async quizSchedule() {
-        alert(`Groups: ${this._groupsSelector.getSelectedGroupsId()}\n
-        Start: ${this._timeSelector.getStartTime()}\n
-        End: ${this._timeSelector.getEndTime()}`);
+        // alert(`Groups: ${this._groupsSelector.getSelectedGroupsId()}\n
+        // Start: ${this._timeSelector.getStartTime()}\n
+        // End: ${this._timeSelector.getEndTime()}`);
         await fetch('https://norebesach.beget.app/db/apiRequest?', {
             headers: {
                 'Accept': 'application/json',

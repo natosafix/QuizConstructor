@@ -357,7 +357,7 @@ function setTimer() {
     const startTime = new Date(quizData.startTime);
     const endTime = new Date(quizData.endTime);
 
-    const seconds = (endTime - startTime) / 1000;
+    const seconds = (endTime - new Date()) / 1000;
 
     timer = new Timer(seconds, document.querySelector("#time"), quizFinished);
     timer.startTimer();

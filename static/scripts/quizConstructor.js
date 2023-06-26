@@ -329,7 +329,7 @@ async function buildConstructor(event) {
         }
         quizForm.questions.push(quizQuestion);
     }
-    alert(JSON.stringify(quizForm));
+    // alert(JSON.stringify(quizForm));
     await saveConstructorBuild(quizForm)
     window.location.href = 'https://norebesach.beget.app/';
 }
