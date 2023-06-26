@@ -40,7 +40,7 @@ public class GroupController : BaseController
     }
     
     [HttpPost("addUser")]
-    public async Task<ActionResult<int>> AddUser([FromBody] AddUserInGroupCommand command)
+    public async Task<ActionResult<int?>> AddUser([FromBody] AddUserInGroupCommand command)
     {
         try
         {
@@ -49,9 +49,7 @@ public class GroupController : BaseController
         }
         catch (Exception ex)
         {
-            if (ex is NotFoundException)
-                return NotFound();
-            return Forbid();
+            return NotFound(0);
         }
     }
     
