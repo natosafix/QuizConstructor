@@ -224,7 +224,7 @@ input:hover, textarea:hover {
 }
 
 @media screen and (max-width: 980px) {
-    .main {
+    main {
         width: 90%;
     }
 }
